@@ -6,8 +6,10 @@ body
 
   main.application#application
     include ../components/header/header.pug
+
     div.application-content
-      block content
+      block page-content
+
     include ../components/footer/footer.pug
   
 include ./scripts.pug
