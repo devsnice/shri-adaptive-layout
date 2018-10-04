@@ -1,0 +1,42 @@
+@import "./vars";
+
+/**
+ *  Media mixin
+ *  
+ *  How to use:
+ *  @include media("mobile") - @media screen and (max-width: 768px)
+ *  @include media("desktop")- @media screen and (min-width: 768px)
+**/
+
+@mixin media($screenType) {
+  $query: "screen and";
+
+  @if ($screenType == "mobile") {
+    $query: "(max-width:" + $mobileMaxWidth ")";
+  } @else {
+    $query: "(min-width:" + $mobileMaxWidth + ")";
+  }
+
+  @media #{$query} {
+    @content;
+  }
+}
+
+/**
+ *  Rem function, from pixels to rem
+ *  
+ *  How to use:
+ *  rem(32) - 2rem
+**/
+
+@function rem($pixels, $context: $baseFontSize) {
+  @if (unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+
+  @if (unitless($context)) {
+    $context: $context * 1px;
+  }
+
+  @return $pixels / $context * 1rem;
+}

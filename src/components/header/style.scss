@@ -1,5 +1,5 @@
 @import "../../styles/vars";
-@import "../../styles/media";
+@import "../../styles/utils";
 
 .header {
   background: #fff;
@@ -63,9 +63,8 @@
       &__item {
         display: inline-block;
         margin-right: 28px;
-        font-size: 16px;
         color: #333333;
-        line-height: 20px;
+        line-height: rem(20);
         opacity: 0.6;
         font-weight: 700;
 
@@ -96,7 +95,7 @@
             display: block;
             height: 40px;
             line-height: 40px;
-            font-size: 24px;
+            font-size: rem(24);
             text-align: center;
             margin-right: 0;
           }
