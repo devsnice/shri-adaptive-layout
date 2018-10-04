@@ -1,4 +1,5 @@
 @import "vars";
+@import "utils";
 
 h1,
 h2,
@@ -24,10 +25,14 @@ body {
 
 html {
   font-size: $baseFontSize;
+
+  @include media("mobile") {
+    font-size: $mobileFontSize;
+  }
 }
 
 body {
-  font-family: Arial;
+  font-family: $fontRegular;
 }
 
 * {

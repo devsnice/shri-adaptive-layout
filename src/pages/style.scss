@@ -24,5 +24,9 @@
     grid-auto-flow: dense;
     grid-row-gap: 20px;
     grid-column-gap: 14px;
+
+    @include media("mobile") {
+      display: block;
+    }
   }
 }
