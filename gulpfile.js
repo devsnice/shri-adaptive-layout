@@ -20,7 +20,7 @@ const svgSymbols = require("gulp-svg-symbols");
 const browserSync = require("browser-sync").create();
 
 const paths = {
-  public: "./doc",
+  public: "./docs",
   views: "./src/**/*.pug",
   pages: "./src/pages/**/*.pug",
   styles: "./src/**/*.scss",

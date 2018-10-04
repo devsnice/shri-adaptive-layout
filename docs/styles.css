@@ -608,6 +608,168 @@ template {
  *  rem(32) - 2rem
 **/
 
+.header {
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  height: 92px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .header {
+    height: 51px;
+    top: 0;
+    position: fixed;
+    border-bottom: none;
+  }
+
+@supports ((position: -webkit-sticky) or (position: sticky)) {
+    .header {
+      position: -webkit-sticky;
+      position: sticky;
+    }
+}
+}
+
+.header-content {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0 40px;
+}
+
+@media (max-width: 768px) {
+  .header-content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+}
+
+.header-logotype {
+  padding: 32px 0;
+  float: left;
+}
+
+@media (max-width: 768px) {
+  .header-logotype {
+    padding: 0;
+  }
+}
+
+.header-menu {
+  margin-left: 52px;
+  padding: 36px 0;
+}
+
+@media (max-width: 768px) {
+  .header-menu {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-menu-list {
+    display: none;
+  }
+}
+
+.header-menu-list__item {
+  display: inline-block;
+  margin-right: 28px;
+  color: #333333;
+  line-height: 1.25rem;
+  opacity: 0.6;
+  font-weight: 700;
+}
+
+.header-menu-list__item_state-active {
+  opacity: 1;
+}
+
+.header-menu-list__item:hover,
+.header-menu-list__item:focus {
+  color: #333333;
+}
+
+.header-menu-list_state-mobile {
+  position: absolute;
+  top: 51px;
+  width: 100%;
+  height: auto;
+  background: #fff;
+  padding: 50px 0;
+  left: 0;
+  -webkit-box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.5);
+  box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.5);
+}
+
+.header-menu-list_state-mobile .header-menu-list__item {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-right: 0;
+}
+
+.header-menu-list_state-mobile-opened {
+  display: block;
+}
+
+.header-menu__burger {
+  cursor: pointer;
+  display: none;
+}
+
+.header-menu__burger img {
+  width: 16px;
+  height: 13px;
+}
+
+@media (max-width: 768px) {
+  .header-menu__burger {
+    display: block;
+  }
+}
+
+.logotype {
+  width: 127px;
+  height: 27px;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .logotype {
+    width: 110px;
+  }
+}
+/**
+ *  Media mixin
+ *  
+ *  How to use:
+ *  @include media("mobile") - @media screen and (max-width: 768px)
+ *  @include media("desktop")- @media screen and (min-width: 768px)
+**/
+
+/**
+ *  Rem function, from pixels to rem
+ *  
+ *  How to use:
+ *  rem(32) - 2rem
+**/
+
 .footer {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -652,19 +814,6 @@ template {
   .footer-copyright {
     margin-top: 15px;
   }
-}
-.icon {
-  vertical-align: middle;
-}
-
-.icon_rotate-180 {
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
-}
-
-.icon_rotate-270 {
-  -webkit-transform: rotate(270deg);
-  transform: rotate(270deg);
 }
 /**
  *  Media mixin
@@ -920,165 +1069,16 @@ template {
   -webkit-transform: rotate(180deg);
   transform: rotate(180deg);
 }
-/**
- *  Media mixin
- *  
- *  How to use:
- *  @include media("mobile") - @media screen and (max-width: 768px)
- *  @include media("desktop")- @media screen and (min-width: 768px)
-**/
-
-/**
- *  Rem function, from pixels to rem
- *  
- *  How to use:
- *  rem(32) - 2rem
-**/
-
-.header {
-  background: #fff;
-  border-bottom: 1px solid #f0f0f0;
-  height: 92px;
-  width: 100%;
+.icon {
+  vertical-align: middle;
 }
 
-@media (max-width: 768px) {
-  .header {
-    height: 51px;
-    top: 0;
-    position: fixed;
-    border-bottom: none;
-  }
-
-@supports ((position: -webkit-sticky) or (position: sticky)) {
-    .header {
-      position: -webkit-sticky;
-      position: sticky;
-    }
-}
+.icon_rotate-180 {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
-.header-content {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding: 0 40px;
-}
-
-@media (max-width: 768px) {
-  .header-content {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    padding: 0 20px;
-  }
-}
-
-.header-logotype {
-  padding: 32px 0;
-  float: left;
-}
-
-@media (max-width: 768px) {
-  .header-logotype {
-    padding: 0;
-  }
-}
-
-.header-menu {
-  margin-left: 52px;
-  padding: 36px 0;
-}
-
-@media (max-width: 768px) {
-  .header-menu {
-    padding: 0;
-    margin: 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .header-menu-list {
-    display: none;
-  }
-}
-
-.header-menu-list__item {
-  display: inline-block;
-  margin-right: 28px;
-  color: #333333;
-  line-height: 1.25rem;
-  opacity: 0.6;
-  font-weight: 700;
-}
-
-.header-menu-list__item_state-active {
-  opacity: 1;
-}
-
-.header-menu-list__item:hover,
-.header-menu-list__item:focus {
-  color: #333333;
-}
-
-.header-menu-list_state-mobile {
-  position: absolute;
-  top: 51px;
-  width: 100%;
-  height: auto;
-  background: #fff;
-  padding: 50px 0;
-  left: 0;
-  -webkit-box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.5);
-  box-shadow: 0 2px 6px 0 rgba(197, 186, 186, 0.5);
-}
-
-.header-menu-list_state-mobile .header-menu-list__item {
-  display: block;
-  height: 40px;
-  line-height: 40px;
-  font-size: 1.5rem;
-  text-align: center;
-  margin-right: 0;
-}
-
-.header-menu-list_state-mobile-opened {
-  display: block;
-}
-
-.header-menu__burger {
-  cursor: pointer;
-  display: none;
-}
-
-.header-menu__burger img {
-  width: 16px;
-  height: 13px;
-}
-
-@media (max-width: 768px) {
-  .header-menu__burger {
-    display: block;
-  }
-}
-
-.logotype {
-  width: 127px;
-  height: 27px;
-  display: block;
-}
-
-@media (max-width: 768px) {
-  .logotype {
-    width: 110px;
-  }
+.icon_rotate-270 {
+  -webkit-transform: rotate(270deg);
+  transform: rotate(270deg);
 }
