@@ -1,5 +1,28 @@
 @import "../styles/vars";
+@import "../styles/utils";
 
-.test {
-  background: green;
+.dashboard {
+  padding: 0 $paddingSideDesktop;
+  max-width: 1280px;
+  margin: 0 auto 80px;
+  width: 100%;
+
+  @include media("mobile") {
+    padding: 0 $paddingSideMobile;
+  }
+
+  &-title {
+    font-family: $fontBold;
+    font-size: rem(36);
+    color: #333333;
+    margin: 34px 0 32px;
+  }
+
+  &-list {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-flow: dense;
+    grid-row-gap: 20px;
+    grid-column-gap: 14px;
+  }
 }

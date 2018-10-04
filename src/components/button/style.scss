@@ -1,0 +1,29 @@
+@import "../../styles/vars";
+@import "../../styles/utils";
+
+.button {
+  display: block;
+  width: 132px;
+  height: 54px;
+  line-height: 54px;
+  border-radius: 8px;
+  font-size: rem(18);
+  color: #000000;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+
+  &_type {
+    &-yellow {
+      background: $colorYellow;
+    }
+
+    &-grey {
+      background: $colorGreyDark;
+    }
+  }
+
+  &_m-r-18 {
+    margin-right: 18px;
+  }
+}
