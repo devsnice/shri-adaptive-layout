@@ -1,13 +1,15 @@
+@import "../../styles/utils";
+
 .icon {
-	vertical-align: middle;
+  vertical-align: middle;
 
-	&_rotate {
-		&-180 {
-			transform: rotate(180deg);
-		}
+  &_rotate {
+    &-180 {
+      transform: rotate(180deg);
+    }
 
-		&-270 {
-			transform: rotate(270deg);
-		}
-	}
+    &-270 {
+      transform: rotate(270deg);
+    }
+  }
 }

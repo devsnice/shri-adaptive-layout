@@ -13,6 +13,60 @@
  *  rem(32) - 2rem
 **/
 
+.dashboard {
+  padding: 0 40px;
+  max-width: 1280px;
+  margin: 0 auto 80px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 0 20px;
+  }
+}
+
+.dashboard-title {
+  font-family: Helvetica-Bold;
+  font-size: 2.25rem;
+  color: #333333;
+  margin: 34px 0 32px;
+}
+
+@media (max-width: 768px) {
+  .dashboard-title {
+    margin: 20px 0;
+  }
+}
+
+.dashboard-list {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-flow: dense;
+  grid-row-gap: 20px;
+  grid-column-gap: 14px;
+}
+
+@media (max-width: 768px) {
+  .dashboard-list {
+    display: block;
+  }
+}
+/**
+ *  Media mixin
+ *  
+ *  How to use:
+ *  @include media("mobile") - @media screen and (max-width: 768px)
+ *  @include media("desktop")- @media screen and (min-width: 768px)
+**/
+
+/**
+ *  Rem function, from pixels to rem
+ *  
+ *  How to use:
+ *  rem(32) - 2rem
+**/
+
 .application {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -57,54 +111,6 @@
 .application_state-blured {
   -webkit-filter: blur(3px);
   filter: blur(3px);
-}
-/**
- *  Media mixin
- *  
- *  How to use:
- *  @include media("mobile") - @media screen and (max-width: 768px)
- *  @include media("desktop")- @media screen and (min-width: 768px)
-**/
-
-/**
- *  Rem function, from pixels to rem
- *  
- *  How to use:
- *  rem(32) - 2rem
-**/
-
-.dashboard {
-  padding: 0 40px;
-  max-width: 1280px;
-  margin: 0 auto 80px;
-  width: 100%;
-}
-
-@media (max-width: 768px) {
-  .dashboard {
-    padding: 0 20px;
-  }
-}
-
-.dashboard-title {
-  font-family: Arial-BoldMT;
-  font-size: 2.25rem;
-  color: #333333;
-  margin: 34px 0 32px;
-}
-
-.dashboard-list {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-auto-flow: dense;
-  grid-row-gap: 20px;
-  grid-column-gap: 14px;
-}
-
-@media (max-width: 768px) {
-  .dashboard-list {
-    display: block;
-  }
 }
 /**
  *  Media mixin
@@ -815,6 +821,21 @@ template {
     width: 110px;
   }
 }
+/**
+ *  Media mixin
+ *  
+ *  How to use:
+ *  @include media("mobile") - @media screen and (max-width: 768px)
+ *  @include media("desktop")- @media screen and (min-width: 768px)
+**/
+
+/**
+ *  Rem function, from pixels to rem
+ *  
+ *  How to use:
+ *  rem(32) - 2rem
+**/
+
 .icon {
   vertical-align: middle;
 }
@@ -873,13 +894,31 @@ template {
 }
 
 .widget-header-about__title {
-  font-family: Arial-BoldMT;
+  font-family: Helvetica-Bold;
   font-size: 1.5rem;
   text-align: left;
 }
 
 .widget-header-about__icon {
   margin-right: 18px;
+  width: 55px;
+  height: 55px;
+}
+
+@media (max-width: 768px) {
+  .widget-header-about__icon {
+    width: 35px;
+    height: auto;
+  }
+
+  .widget-header-about__icon.icon_stats {
+    height: 50px;
+    width: auto;
+  }
+
+  .widget-header-about__icon.icon_air-conditioner {
+    height: 40px;
+  }
 }
 
 .widget-header-data {
@@ -892,15 +931,15 @@ template {
   color: #333333;
 }
 
-@media (max-width: 768px) {
-  .widget-header-data {
-    display: block;
-  }
-}
-
 .widget-header__type {
   font-size: 1.125rem;
   margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .widget-header__type {
+    margin-bottom: 0;
+  }
 }
 
 .widget-header__date {
@@ -966,7 +1005,7 @@ template {
 }
 
 .widget-sensor__name {
-  font-family: Arial-BoldMT;
+  font-family: Helvetica-Bold;
 }
 
 .widget-sensor__value {
@@ -989,6 +1028,14 @@ template {
 
 .widget_size-s .widget-header-data {
   display: block;
+}
+
+@media (max-width: 768px) {
+  .widget_size-s .widget-header-data {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
 }
 
 .widget_type-critical .widget-header {
@@ -1088,6 +1135,11 @@ template {
   -ms-flex-positive: 1;
   flex-grow: 1;
   margin-left: 12px;
+}
+
+.player-control__icon {
+  width: 55px;
+  height: 55px;
 }
 
 .player-control_prev {
