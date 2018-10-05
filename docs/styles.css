@@ -608,6 +608,66 @@ template {
  *  rem(32) - 2rem
 **/
 
+.footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 0 40px 27px;
+  background: #fff;
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    display: block;
+    margin-top: 30px;
+    padding: 0 0 20px 27px;
+  }
+}
+
+.footer-links__item {
+  display: inline-block;
+  font-size: 0.75rem;
+  color: #858585;
+  text-align: left;
+  padding-right: 15px;
+}
+
+@media (max-width: 768px) {
+  .footer-links__item {
+    display: block;
+    line-height: 20px;
+  }
+}
+
+.footer-copyright {
+  font-size: 0.75rem;
+  color: #858585;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .footer-copyright {
+    margin-top: 15px;
+  }
+}
+/**
+ *  Media mixin
+ *  
+ *  How to use:
+ *  @include media("mobile") - @media screen and (max-width: 768px)
+ *  @include media("desktop")- @media screen and (min-width: 768px)
+**/
+
+/**
+ *  Rem function, from pixels to rem
+ *  
+ *  How to use:
+ *  rem(32) - 2rem
+**/
+
 .header {
   background: #fff;
   border-bottom: 1px solid #f0f0f0;
@@ -755,65 +815,18 @@ template {
     width: 110px;
   }
 }
-/**
- *  Media mixin
- *  
- *  How to use:
- *  @include media("mobile") - @media screen and (max-width: 768px)
- *  @include media("desktop")- @media screen and (min-width: 768px)
-**/
-
-/**
- *  Rem function, from pixels to rem
- *  
- *  How to use:
- *  rem(32) - 2rem
-**/
-
-.footer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  padding: 0 40px 27px;
-  background: #fff;
+.icon {
+  vertical-align: middle;
 }
 
-@media screen and (max-width: 768px) {
-  .footer {
-    display: block;
-    margin-top: 30px;
-    padding: 0 0 20px 27px;
-  }
+.icon_rotate-180 {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
-.footer-links__item {
-  display: inline-block;
-  font-size: 0.75rem;
-  color: #858585;
-  text-align: left;
-  padding-right: 15px;
-}
-
-@media (max-width: 768px) {
-  .footer-links__item {
-    display: block;
-    line-height: 20px;
-  }
-}
-
-.footer-copyright {
-  font-size: 0.75rem;
-  color: #858585;
-  text-align: left;
-}
-
-@media (max-width: 768px) {
-  .footer-copyright {
-    margin-top: 15px;
-  }
+.icon_rotate-270 {
+  -webkit-transform: rotate(270deg);
+  transform: rotate(270deg);
 }
 /**
  *  Media mixin
@@ -834,6 +847,9 @@ template {
   background: #fafafa;
   border-radius: 20px;
   padding: 20px;
+  display: grid;
+  grid-template-rows: -webkit-min-content 1fr;
+  grid-template-rows: min-content 1fr;
 }
 
 @media (max-width: 768px) {
@@ -884,6 +900,7 @@ template {
 
 .widget-header__type {
   font-size: 1.125rem;
+  margin-bottom: 20px;
 }
 
 .widget-header__date {
@@ -891,7 +908,18 @@ template {
 }
 
 .widget-content {
-  margin-top: 25px;
+  margin-top: 5px;
+  display: grid;
+}
+
+.widget-content > *:first-child {
+  -ms-flex-item-align: start;
+  align-self: start;
+}
+
+.widget-content > *:last-child {
+  -ms-flex-item-align: end;
+  align-self: end;
 }
 
 .widget-content__text {
@@ -925,6 +953,7 @@ template {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  margin-top: 10px;
 }
 
 .widget-sensor {
@@ -1068,17 +1097,4 @@ template {
 .player-control_next {
   -webkit-transform: rotate(180deg);
   transform: rotate(180deg);
-}
-.icon {
-  vertical-align: middle;
-}
-
-.icon_rotate-180 {
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
-}
-
-.icon_rotate-270 {
-  -webkit-transform: rotate(270deg);
-  transform: rotate(270deg);
 }
