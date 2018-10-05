@@ -5,16 +5,28 @@
  *  
  *  How to use:
  *  @include media("mobile") - @media screen and (max-width: 768px)
- *  @include media("desktop")- @media screen and (min-width: 768px)
 **/
 
 @mixin media($screenType) {
   $query: "screen and";
 
+  // mobile
   @if ($screenType == "mobile") {
     $query: "(max-width:" + $mobileMaxWidth ")";
-  } @else {
-    $query: "(min-width:" + $mobileMaxWidth + ")";
+    // tablet
+  } @else if ($screenType == "tablet") {
+    $query: "(min-width:" +
+      $mobileMaxWidth +
+      ") and (max-width:" +
+      $tabletMaxWidth
+      ")";
+    // desktop
+  } @else if($screenType == "desktop") {
+    $query: "(min-width:" + $tabletMaxWidth + ")";
+  }
+  // big desktop
+  @else if($screenType == "bigDesktop") {
+    $query: "(min-width:" + $bigDesktopMinWidth + ")";
   }
 
   @media #{$query} {
@@ -26,7 +38,7 @@
  *  Rem function, from pixels to rem
  *  
  *  How to use:
- *  rem(32) - 2rem
+ *  rem(30) - 3rem
 **/
 
 @function rem($pixels, $context: $baseFontSize) {

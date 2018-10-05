@@ -20,10 +20,18 @@
       align-items: center;
       margin-bottom: 23px;
 
+      @include media("mobile") {
+        margin-bottom: 16px;
+      }
+
       &__title {
         font-family: $fontBold;
         font-size: rem(24);
         text-align: left;
+
+        @include media("mobile") {
+          font-size: rem(14);
+        }
       }
 
       &__icon {
@@ -59,17 +67,26 @@
 
       @include media("mobile") {
         margin-bottom: 0;
+        font-size: rem(12);
       }
     }
 
     &__date {
       font-size: rem(18);
+
+      @include media("mobile") {
+        font-size: rem(12);
+      }
     }
   }
 
   &-content {
-    margin-top: 5px;
+    margin-top: 15px;
     display: grid;
+
+    @include media("mobile") {
+      margin-top: 15px;
+    }
 
     // it isn't perfect
 
@@ -88,9 +105,21 @@
       line-height: rem(23);
       max-width: 430px;
 
+      @include media("mobile") {
+        font-size: rem(18);
+      }
+
       &_width {
-        &-max {
+        &-l {
           max-width: 640px;
+        }
+
+        font-size: rem(24);
+        line-height: rem(28);
+
+        @include media("mobile") {
+          font-size: rem(18);
+          font-size: rem(22);
         }
       }
     }
@@ -113,23 +142,30 @@
     &__buttons {
       display: flex;
       margin-top: 10px;
+
+      @include media("mobile") {
+        justify-content: space-between;
+        margin-top: 24px;
+      }
     }
   }
 
   &-sensor {
     margin-right: 55px;
     margin-top: 30px;
+    font-size: rem(18);
 
     &:last-child {
       margin-right: 0;
     }
 
-    &__name {
+    &__value {
+      margin-left: 5px;
       font-family: $fontBold;
     }
 
-    &__value {
-      margin-left: 5px;
+    @include media("mobile") {
+      font-size: rem(14);
     }
   }
 
@@ -188,6 +224,10 @@
   &__title {
     font-size: rem(20);
     margin-bottom: 23px;
+
+    @include media("mobile") {
+      font-size: rem(18);
+    }
   }
 
   &-now {
@@ -198,6 +238,14 @@
 
     &__title {
       font-size: rem(20);
+
+      @include media("mobile") {
+        font-size: rem(18);
+        display: block;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
     }
   }
 

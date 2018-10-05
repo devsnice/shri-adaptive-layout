@@ -12,6 +12,11 @@
   text-align: center;
   cursor: pointer;
   border: none;
+  font-family: $fontBold;
+
+  @include media("mobile") {
+    font-size: rem(20);
+  }
 
   &_type {
     &-yellow {

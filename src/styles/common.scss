@@ -24,10 +24,14 @@ body {
 }
 
 html {
-  font-size: $baseFontSize;
+  font-size: 62.5%; // 10 / 16 = 62.5
 
-  @include media("mobile") {
-    font-size: $mobileFontSize;
+  @include media("tablet") {
+    font-size: 50%;
+  }
+
+  @include media("bigDesktop") {
+    font-size: 75%;
   }
 }
 
