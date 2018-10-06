@@ -71,6 +71,66 @@
  *  rem(30) - 3rem
 **/
 
+.dashboard {
+  padding: 0 40px;
+  max-width: 1400px;
+  margin: 0 auto 80px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 0 20px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .dashboard {
+    min-width: 1600px;
+  }
+}
+
+.dashboard-title {
+  font-family: Arial-BoldMT;
+  font-size: 3.6rem;
+  color: #333333;
+  margin: 34px 0 32px;
+}
+
+@media (max-width: 768px) {
+  .dashboard-title {
+    margin: 20px 0;
+    font-size: 2.4rem;
+  }
+}
+
+.dashboard-list {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-flow: dense;
+  grid-row-gap: 20px;
+  grid-column-gap: 14px;
+}
+
+@media (max-width: 768px) {
+  .dashboard-list {
+    display: block;
+  }
+}
+/**
+ *  Media mixin
+ *  
+ *  How to use:
+ *  @include media("mobile") - @media screen and (max-width: 768px)
+**/
+
+/**
+ *  Rem function, from pixels to rem
+ *  
+ *  How to use:
+ *  rem(30) - 3rem
+**/
+
 h1,
 h2,
 h3,
@@ -524,66 +584,6 @@ template {
  *  rem(30) - 3rem
 **/
 
-.dashboard {
-  padding: 0 40px;
-  max-width: 1400px;
-  margin: 0 auto 80px;
-  width: 100%;
-}
-
-@media (max-width: 768px) {
-  .dashboard {
-    padding: 0 20px;
-  }
-}
-
-@media (min-width: 1920px) {
-  .dashboard {
-    min-width: 1600px;
-  }
-}
-
-.dashboard-title {
-  font-family: Arial-BoldMT;
-  font-size: 3.6rem;
-  color: #333333;
-  margin: 34px 0 32px;
-}
-
-@media (max-width: 768px) {
-  .dashboard-title {
-    margin: 20px 0;
-    font-size: 2.4rem;
-  }
-}
-
-.dashboard-list {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-auto-flow: dense;
-  grid-row-gap: 20px;
-  grid-column-gap: 14px;
-}
-
-@media (max-width: 768px) {
-  .dashboard-list {
-    display: block;
-  }
-}
-/**
- *  Media mixin
- *  
- *  How to use:
- *  @include media("mobile") - @media screen and (max-width: 768px)
-**/
-
-/**
- *  Rem function, from pixels to rem
- *  
- *  How to use:
- *  rem(30) - 3rem
-**/
-
 .button {
   display: block;
   width: 132px;
@@ -614,6 +614,65 @@ template {
 
 .button_m-r-18 {
   margin-right: 18px;
+}
+/**
+ *  Media mixin
+ *  
+ *  How to use:
+ *  @include media("mobile") - @media screen and (max-width: 768px)
+**/
+
+/**
+ *  Rem function, from pixels to rem
+ *  
+ *  How to use:
+ *  rem(30) - 3rem
+**/
+
+.footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 0 40px 27px;
+  background: #fff;
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    display: block;
+    margin-top: 30px;
+    padding: 0 0 20px 27px;
+  }
+}
+
+.footer-links__item {
+  display: inline-block;
+  font-size: 1.2rem;
+  color: #858585;
+  text-align: left;
+  padding-right: 15px;
+}
+
+@media (max-width: 768px) {
+  .footer-links__item {
+    display: block;
+    line-height: 20px;
+  }
+}
+
+.footer-copyright {
+  font-size: 1.2rem;
+  color: #858585;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .footer-copyright {
+    margin-top: 15px;
+  }
 }
 /**
  *  Media mixin
@@ -775,65 +834,6 @@ template {
 @media (max-width: 768px) {
   .logotype {
     width: 110px;
-  }
-}
-/**
- *  Media mixin
- *  
- *  How to use:
- *  @include media("mobile") - @media screen and (max-width: 768px)
-**/
-
-/**
- *  Rem function, from pixels to rem
- *  
- *  How to use:
- *  rem(30) - 3rem
-**/
-
-.footer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  padding: 0 40px 27px;
-  background: #fff;
-}
-
-@media screen and (max-width: 768px) {
-  .footer {
-    display: block;
-    margin-top: 30px;
-    padding: 0 0 20px 27px;
-  }
-}
-
-.footer-links__item {
-  display: inline-block;
-  font-size: 1.2rem;
-  color: #858585;
-  text-align: left;
-  padding-right: 15px;
-}
-
-@media (max-width: 768px) {
-  .footer-links__item {
-    display: block;
-    line-height: 20px;
-  }
-}
-
-.footer-copyright {
-  font-size: 1.2rem;
-  color: #858585;
-  text-align: left;
-}
-
-@media (max-width: 768px) {
-  .footer-copyright {
-    margin-top: 15px;
   }
 }
 /**

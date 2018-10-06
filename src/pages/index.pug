@@ -21,7 +21,12 @@ block page-content
 						| Так держать! За последнюю неделю вы потратили
 						| на 10% меньше ресурсов, чем неделей ранее.
 					
-					img.widget-content__image.widget-content__image_type-stats(src="/images/richdata@3x.png", alt="statistic")
+					img(
+						srcset="/images/richdata.png 590w, /images/richdata@2x.png 1180w, /images/richdata@3x.png 1770w"
+						sizes="(max-width: 590px), (max-width: 1180px)"
+						src="/images/richdata.png"
+						alt="statistic"
+					).widget-content__image.widget-content__image_type-stats
 
 			
 			section.widget.widget_size-s
@@ -165,7 +170,13 @@ block page-content
 						|Робопылесос не смог сменить свое местоположение
 						| в течение последних 3 минут. Похоже, ему нужно помощь.
 
-					img.widget-content__image(src="/images/image.jpg", alt="Webcam")
+					img(
+						srcset="/images/image.jpg 728w, /images/image@2x.jpg 1600w, /images/image@3x.jpg 2400w"
+						sizes="(max-width: 728px), (max-width: 1600px)"
+						src="/images/image.jpg"
+						alt="Webcam"
+					).widget-content__image
+			
 
 			section.widget.widget_size-s
 				header.widget-header
