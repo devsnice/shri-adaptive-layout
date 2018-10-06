@@ -584,6 +584,65 @@ template {
  *  rem(30) - 3rem
 **/
 
+.footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 0 40px 27px;
+  background: #fff;
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    display: block;
+    margin-top: 30px;
+    padding: 0 0 20px 27px;
+  }
+}
+
+.footer-links__item {
+  display: inline-block;
+  font-size: 1.2rem;
+  color: #858585;
+  text-align: left;
+  padding-right: 15px;
+}
+
+@media (max-width: 768px) {
+  .footer-links__item {
+    display: block;
+    line-height: 20px;
+  }
+}
+
+.footer-copyright {
+  font-size: 1.2rem;
+  color: #858585;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .footer-copyright {
+    margin-top: 15px;
+  }
+}
+/**
+ *  Media mixin
+ *  
+ *  How to use:
+ *  @include media("mobile") - @media screen and (max-width: 768px)
+**/
+
+/**
+ *  Rem function, from pixels to rem
+ *  
+ *  How to use:
+ *  rem(30) - 3rem
+**/
+
 .button {
   display: block;
   width: 132px;
@@ -629,50 +688,8 @@ template {
  *  rem(30) - 3rem
 **/
 
-.footer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  padding: 0 40px 27px;
-  background: #fff;
-}
-
-@media screen and (max-width: 768px) {
-  .footer {
-    display: block;
-    margin-top: 30px;
-    padding: 0 0 20px 27px;
-  }
-}
-
-.footer-links__item {
-  display: inline-block;
-  font-size: 1.2rem;
-  color: #858585;
-  text-align: left;
-  padding-right: 15px;
-}
-
-@media (max-width: 768px) {
-  .footer-links__item {
-    display: block;
-    line-height: 20px;
-  }
-}
-
-.footer-copyright {
-  font-size: 1.2rem;
-  color: #858585;
-  text-align: left;
-}
-
-@media (max-width: 768px) {
-  .footer-copyright {
-    margin-top: 15px;
-  }
+.icon {
+  vertical-align: middle;
 }
 /**
  *  Media mixin
@@ -850,33 +867,6 @@ template {
  *  rem(30) - 3rem
 **/
 
-.icon {
-  vertical-align: middle;
-}
-
-.icon_rotate-180 {
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
-}
-
-.icon_rotate-270 {
-  -webkit-transform: rotate(270deg);
-  transform: rotate(270deg);
-}
-/**
- *  Media mixin
- *  
- *  How to use:
- *  @include media("mobile") - @media screen and (max-width: 768px)
-**/
-
-/**
- *  Rem function, from pixels to rem
- *  
- *  How to use:
- *  rem(30) - 3rem
-**/
-
 .widget {
   background: #fafafa;
   border-radius: 20px;
@@ -968,16 +958,10 @@ template {
 @media (max-width: 768px) {
   .widget-header-about__icon {
     width: 35px;
-    height: auto;
   }
 
   .widget-header-about__icon.icon_stats {
-    height: 50px;
-    width: auto;
-  }
-
-  .widget-header-about__icon.icon_air-conditioner {
-    height: 40px;
+    width: 45px;
   }
 }
 
@@ -1070,6 +1054,10 @@ template {
 .widget-content__image_type-stats {
   border-radius: 0 0 20px 20px;
   margin-top: 52px;
+}
+
+.widget-content__image_type-cam {
+  border-radius: 20px;
 }
 
 .widget-content__sensors {
@@ -1177,20 +1165,16 @@ template {
   display: block;
 }
 
-.player__title {
-  font-size: 2rem;
-  margin-bottom: 23px;
-}
-
-@media (max-width: 768px) {
-  .player__title {
-    font-size: 1.8rem;
-  }
+.player {
+  margin-top: 23px;
 }
 
 .player-now__cover {
   float: left;
   margin-right: 16px;
+  width: 52px;
+  height: 52px;
+  border-radius: 4px;
 }
 
 .player-now__title {

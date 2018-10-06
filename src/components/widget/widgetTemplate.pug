@@ -1,0 +1,87 @@
+// Widget template
+template(id="widget-template")
+  section.widget
+    header.widget-header
+      .widget-header-about
+        svg(
+          role="img"
+          class="widget-header-about__icon icon"
+        )
+          use(xlink:href="#")
+
+        h4.widget-header-about__title
+
+      .widget-header-data
+        .widget-header__type
+        .widget-header__date
+
+    main.widget-content
+      p.widget-content__text.widget-content__text_width-l
+
+    .widget__control.widget__control_close
+      +icon("cross", "widget__control-icon")
+    
+    .widget__control.widget__control_link
+      +icon("next", "widget__control-icon")
+
+
+// Stats template
+template(id="widget-stats-template")
+  img(
+    srcset="/images/richdata.png 590w, /images/richdata@2x.png 1180w, /images/richdata@3x.png 1770w"
+    sizes="(max-width: 590px), (max-width: 1180px)"
+    src="/images/richdata.png"
+    alt="statistic"
+  ).widget-content__image.widget-content__image_type-stats
+
+// Camera template
+
+template(id="widget-camera-template")
+  img(
+    srcset="/images/image.jpg 728w, /images/image@2x.jpg 1600w, /images/image@3x.jpg 2400w"
+    sizes="(max-width: 728px), (max-width: 1600px)"
+    src="/images/image.jpg"
+    alt="Webcam"
+  ).widget-content__image.widget-content__image_type-cam
+
+
+// Player template
+template(id="widget-player-template")
+  .player
+    .player-now
+      img.player-now__cover(src="/images/album-cover.png", alt="Album cover")
+      span.player-now__title
+
+      .player-progress
+        input.player-progress__track(type="range")
+        label.player-progress__time
+
+    .player-controls
+      .player-controls__nav
+        button.player-control.player-control_prev
+          +icon("prev", "player-control__icon")
+        button.player-control.player-control_next
+          +icon("prev", "player-control__icon")
+      
+      .player-controls__volume
+        .player-volume
+          input.player-volume__track(type="range")
+          label.player-volume__percentage
+
+
+// Questions template
+template(id="widget-questions-template")
+  .widget-content__buttons
+    button.button.button_type-yellow.button_m-r-18
+    button.button.button_type-grey
+
+// Thermal template
+template(id="widget-thermal-template")
+  ul.widget-content__sensors
+    li.widget-sensor.widget-sensor_type-temp
+      span.widget-sensor__name Температура:
+      span.widget-sensor__value
+
+    li.widget-sensor.widget-sensor_type-humidity
+      span.widget-sensor__name Влажность:
+      span.widget-sensor__value
