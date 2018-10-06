@@ -28,9 +28,9 @@ template(id="widget-template")
 // Stats template
 template(id="widget-stats-template")
   img(
-    srcset="/images/richdata.png 590w, /images/richdata@2x.png 1180w, /images/richdata@3x.png 1770w"
+    srcset="./images/richdata.png 590w, ./images/richdata@2x.png 1180w, ./images/richdata@3x.png 1770w"
     sizes="(max-width: 590px), (max-width: 1180px)"
-    src="/images/richdata.png"
+    src="./images/richdata.png"
     alt="statistic"
   ).widget-content__image.widget-content__image_type-stats
 
@@ -38,9 +38,9 @@ template(id="widget-stats-template")
 
 template(id="widget-camera-template")
   img(
-    srcset="/images/image.jpg 728w, /images/image@2x.jpg 1600w, /images/image@3x.jpg 2400w"
+    srcset="./images/image.jpg 728w, ./images/image@2x.jpg 1600w, ./images/image@3x.jpg 2400w"
     sizes="(max-width: 728px), (max-width: 1600px)"
-    src="/images/image.jpg"
+    src="./images/image.jpg"
     alt="Webcam"
   ).widget-content__image.widget-content__image_type-cam
 
@@ -49,7 +49,7 @@ template(id="widget-camera-template")
 template(id="widget-player-template")
   .player
     .player-now
-      img.player-now__cover(src="/images/album-cover.png", alt="Album cover")
+      img.player-now__cover(src="./images/album-cover.png", alt="Album cover")
       span.player-now__title
 
       .player-progress
