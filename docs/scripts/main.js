@@ -93,7 +93,11 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+function renderDashboardWidgets() {
+  alert("render");
+}
 
+renderDashboardWidgets();
 
 /***/ })
 

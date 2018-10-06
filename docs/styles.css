@@ -688,33 +688,6 @@ template {
  *  rem(30) - 3rem
 **/
 
-.icon {
-  vertical-align: middle;
-}
-
-.icon_rotate-180 {
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
-}
-
-.icon_rotate-270 {
-  -webkit-transform: rotate(270deg);
-  transform: rotate(270deg);
-}
-/**
- *  Media mixin
- *  
- *  How to use:
- *  @include media("mobile") - @media screen and (max-width: 768px)
-**/
-
-/**
- *  Rem function, from pixels to rem
- *  
- *  How to use:
- *  rem(30) - 3rem
-**/
-
 .header {
   background: #fff;
   border-bottom: 1px solid #f0f0f0;
@@ -862,6 +835,33 @@ template {
   .logotype {
     width: 110px;
   }
+}
+/**
+ *  Media mixin
+ *  
+ *  How to use:
+ *  @include media("mobile") - @media screen and (max-width: 768px)
+**/
+
+/**
+ *  Rem function, from pixels to rem
+ *  
+ *  How to use:
+ *  rem(30) - 3rem
+**/
+
+.icon {
+  vertical-align: middle;
+}
+
+.icon_rotate-180 {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.icon_rotate-270 {
+  -webkit-transform: rotate(270deg);
+  transform: rotate(270deg);
 }
 /**
  *  Media mixin
