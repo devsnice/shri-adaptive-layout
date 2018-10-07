@@ -852,6 +852,23 @@ template {
  *  rem(30) - 3rem
 **/
 
+.icon {
+  vertical-align: middle;
+}
+/**
+ *  Media mixin
+ *  
+ *  How to use:
+ *  @include media("mobile") - @media screen and (max-width: 768px)
+**/
+
+/**
+ *  Rem function, from pixels to rem
+ *  
+ *  How to use:
+ *  rem(30) - 3rem
+**/
+
 .widget {
   background: #fafafa;
   border-radius: 20px;
@@ -1052,6 +1069,14 @@ template {
   list-style: none;
 }
 
+@media (max-width: 768px) {
+  .widget-content__sensors {
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+}
+
 .widget-content__buttons {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1086,6 +1111,7 @@ template {
 @media (max-width: 768px) {
   .widget-sensor {
     font-size: 1.4rem;
+    margin-right: 0;
   }
 }
 
@@ -1254,21 +1280,4 @@ template {
 .player-control_next {
   -webkit-transform: rotate(180deg);
   transform: rotate(180deg);
-}
-/**
- *  Media mixin
- *  
- *  How to use:
- *  @include media("mobile") - @media screen and (max-width: 768px)
-**/
-
-/**
- *  Rem function, from pixels to rem
- *  
- *  How to use:
- *  rem(30) - 3rem
-**/
-
-.icon {
-  vertical-align: middle;
 }

@@ -167,6 +167,10 @@
     &__sensors {
       display: flex;
       list-style: none;
+
+      @include media("mobile") {
+        justify-content: space-between;
+      }
     }
 
     &__buttons {
@@ -196,6 +200,7 @@
 
     @include media("mobile") {
       font-size: rem(14);
+      margin-right: 0;
     }
   }
 
