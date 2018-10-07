@@ -59,7 +59,10 @@
       &__title {
         font-family: $fontBold;
         font-size: rem(24);
-        text-align: left;
+        word-break: break-all;
+        -webkit-box-orient: vertical;
+        display: -webkit-inline-box;
+        -webkit-line-clamp: 2;
 
         @include media("mobile") {
           font-size: rem(14);
@@ -161,6 +164,10 @@
 
       &_type-cam {
         border-radius: 20px;
+
+        @include media("mobile") {
+          height: 205px;
+        }
       }
     }
 
@@ -264,96 +271,6 @@
 
     .widget__control {
       display: block;
-    }
-  }
-}
-
-.player {
-  margin-top: 23px;
-
-  &-now {
-    &__cover {
-      float: left;
-      margin-right: 16px;
-      width: 52px;
-      height: 52px;
-      border-radius: 4px;
-    }
-
-    &__title {
-      font-size: rem(20);
-
-      @include media("mobile") {
-        font-size: rem(18);
-        display: block;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-      }
-    }
-  }
-
-  &-progress {
-    display: flex;
-    margin: 10px 0;
-    align-items: center;
-
-    &__track {
-      flex-grow: 1;
-    }
-
-    &__time {
-      margin-left: 16px;
-      font-family: Helvetica;
-      font-size: rem(14);
-      color: rgba(#a1a1a1, 0.84);
-    }
-  }
-
-  &-volume {
-    width: 100%;
-    display: flex;
-
-    &__track {
-      flex-grow: 1;
-    }
-
-    &__percentage {
-      margin-left: 16px;
-      font-family: Helvetica;
-      font-size: rem(14);
-      color: rgba(#a1a1a1, 0.84);
-    }
-  }
-
-  &-controls {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    &__nav {
-    }
-
-    &__volume {
-      display: flex;
-      flex-grow: 1;
-      margin-left: 12px;
-    }
-  }
-
-  &-control {
-    &__icon {
-      width: 55px;
-      height: 55px;
-    }
-
-    &_prev {
-      margin-right: 27px;
-    }
-
-    &_next {
-      transform: rotate(180deg);
     }
   }
 }
