@@ -87,15 +87,30 @@
       </template>
       <!-- Stats template-->
       <template id="widget-stats-template"><img class="widget-content__image widget-content__image_type-stats" srcset="./images/richdata.png 590w, ./images/richdata@2x.png 1180w, ./images/richdata@3x.png 1770w" sizes="(max-width: 590px), (max-width: 1180px)" src="./images/richdata.png" alt="statistic"/></template>
-      <!-- Camera template-->
-      <template id="widget-camera-template"><img class="widget-content__image widget-content__image_type-cam" srcset="./images/image.jpg 728w, ./images/image@2x.jpg 1600w, ./images/image@3x.jpg 2400w" sizes="(max-width: 728px), (max-width: 1600px)" src="./images/image.jpg" alt="Webcam"/></template>
+      <!-- Questions template-->
+      <template id="widget-questions-template">
+        <div class="widget-content__buttons">
+          <button class="button button_type-yellow button_m-r-18"></button>
+          <button class="button button_type-grey"></button>
+        </div>
+      </template>
+      <!-- Thermal template-->
+      <template id="widget-thermal-template">
+        <ul class="widget-content__sensors">
+          <li class="widget-sensor widget-sensor_type-temp"><span class="widget-sensor__name">Температура:</span><span class="widget-sensor__value"></span></li>
+          <li class="widget-sensor widget-sensor_type-humidity"><span class="widget-sensor__name">Влажность:</span><span class="widget-sensor__value"></span></li>
+        </ul>
+      </template>
       <!-- Player template-->
       <template id="widget-player-template">
         <div class="player">
-          <div class="player-now"><img class="player-now__cover" src="./images/album-cover.png" alt="Album cover"/><span class="player-now__title"></span>
-            <div class="player-progress">
-              <input class="player-progress__track" type="range"/>
-              <label class="player-progress__time"></label>
+          <div class="player-now"><img class="player-now__cover" src="./images/album-cover.png" alt="Album cover"/>
+            <div class="player-now__info">
+              <div class="player-now__title"></div>
+              <div class="player-progress">
+                <input class="player-progress__track" type="range"/>
+                <label class="player-progress__time"></label>
+              </div>
             </div>
           </div>
           <div class="player-controls">
@@ -120,19 +135,16 @@
           </div>
         </div>
       </template>
-      <!-- Questions template-->
-      <template id="widget-questions-template">
-        <div class="widget-content__buttons">
-          <button class="button button_type-yellow button_m-r-18"></button>
-          <button class="button button_type-grey"></button>
+      <!-- Camera template-->
+      <template id="widget-camera-template"><img class="widget-content__image widget-content__image_type-cam" srcset="./images/image.jpg 728w, ./images/image@2x.jpg 1600w, ./images/image@3x.jpg 2400w" sizes="(max-width: 728px), (max-width: 1600px)" src="./images/image.jpg" alt="Webcam"/>
+        <div class="camera-info">
+          <div class="camera-info-data">
+            <div class="camera-info-data__label">Приближение: </div><span class="camera-info-data__value">78%</span>
+          </div>
+          <div class="camera-info-data">
+            <div class="camera-info-data__label">Яркость: </div><span class="camera-info-data__value">50%</span>
+          </div>
         </div>
-      </template>
-      <!-- Thermal template-->
-      <template id="widget-thermal-template">
-        <ul class="widget-content__sensors">
-          <li class="widget-sensor widget-sensor_type-temp"><span class="widget-sensor__name">Температура:</span><span class="widget-sensor__value"></span></li>
-          <li class="widget-sensor widget-sensor_type-humidity"><span class="widget-sensor__name">Влажность:</span><span class="widget-sensor__value"></span></li>
-        </ul>
       </template>
     </div>
     <footer class="footer">

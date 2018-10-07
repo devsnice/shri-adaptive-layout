@@ -1,0 +1,23 @@
+@import "../../styles/vars";
+@import "../../styles/utils";
+
+.camera {
+  &-info {
+    display: none;
+    justify-content: space-between;
+    margin-top: 16px;
+
+    @include media("mobile") {
+      display: flex;
+    }
+
+    &-data {
+      display: flex;
+      font-size: rem(12);
+
+      &__value {
+        padding-left: 3px;
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+
+template(id="widget-camera-template")
+  img(
+    srcset="./images/image.jpg 728w, ./images/image@2x.jpg 1600w, ./images/image@3x.jpg 2400w"
+    sizes="(max-width: 728px), (max-width: 1600px)"
+    src="./images/image.jpg"
+    alt="Webcam"
+  ).widget-content__image.widget-content__image_type-cam
+
+  .camera-info
+    .camera-info-data
+      .camera-info-data__label Приближение: 
+      span.camera-info-data__value 78%
+    
+    .camera-info-data
+      .camera-info-data__label Яркость: 
+      span.camera-info-data__value 50%

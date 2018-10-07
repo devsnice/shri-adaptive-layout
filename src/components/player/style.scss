@@ -1,0 +1,96 @@
+@import "../../styles/vars";
+@import "../../styles/utils";
+
+.player {
+  margin-top: 23px;
+
+  &-now {
+    display: grid;
+    grid-template-columns: 68px 1fr;
+
+    &__cover {
+      width: 52px;
+      height: 52px;
+      border-radius: 4px;
+      grid-column: 1 span;
+    }
+
+    &__info {
+      grid-column: 1 span;
+      overflow: hidden;
+    }
+
+    &__title {
+      font-size: rem(20);
+
+      @include media("mobile") {
+        font-size: rem(18);
+        display: block;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  &-progress {
+    display: flex;
+    margin: 10px 0;
+    align-items: center;
+
+    &__track {
+      flex-grow: 1;
+    }
+
+    &__time {
+      margin-left: 16px;
+      font-family: Helvetica;
+      font-size: rem(14);
+      color: rgba(#a1a1a1, 0.84);
+    }
+  }
+
+  &-volume {
+    width: 100%;
+    display: flex;
+
+    &__track {
+      flex-grow: 1;
+      margin-right: 12px;
+    }
+
+    &__percentage {
+      font-family: Helvetica;
+      font-size: rem(14);
+      color: rgba(#a1a1a1, 0.84);
+    }
+  }
+
+  &-controls {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__volume {
+      display: flex;
+      flex-grow: 1;
+      margin-left: 12px;
+    }
+  }
+
+  &-control {
+    &__icon {
+      width: 55px;
+      height: 55px;
+    }
+
+    &_prev {
+      margin-right: 27px;
+    }
+
+    &_next {
+      transform: rotate(180deg);
+    }
+  }
+}

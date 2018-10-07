@@ -1,0 +1,23 @@
+template(id="widget-player-template")
+  .player
+    .player-now
+      img.player-now__cover(src="./images/album-cover.png", alt="Album cover")
+      
+      .player-now__info
+        .player-now__title
+
+        .player-progress
+          input.player-progress__track(type="range")
+          label.player-progress__time
+
+    .player-controls
+      .player-controls__nav
+        button.player-control.player-control_prev
+          +icon("prev", "player-control__icon")
+        button.player-control.player-control_next
+          +icon("prev", "player-control__icon")
+      
+      .player-controls__volume
+        .player-volume
+          input.player-volume__track(type="range")
+          label.player-volume__percentage

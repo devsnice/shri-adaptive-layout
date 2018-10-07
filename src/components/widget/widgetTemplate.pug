@@ -34,40 +34,6 @@ template(id="widget-stats-template")
     alt="statistic"
   ).widget-content__image.widget-content__image_type-stats
 
-// Camera template
-
-template(id="widget-camera-template")
-  img(
-    srcset="./images/image.jpg 728w, ./images/image@2x.jpg 1600w, ./images/image@3x.jpg 2400w"
-    sizes="(max-width: 728px), (max-width: 1600px)"
-    src="./images/image.jpg"
-    alt="Webcam"
-  ).widget-content__image.widget-content__image_type-cam
-
-
-// Player template
-template(id="widget-player-template")
-  .player
-    .player-now
-      img.player-now__cover(src="./images/album-cover.png", alt="Album cover")
-      span.player-now__title
-
-      .player-progress
-        input.player-progress__track(type="range")
-        label.player-progress__time
-
-    .player-controls
-      .player-controls__nav
-        button.player-control.player-control_prev
-          +icon("prev", "player-control__icon")
-        button.player-control.player-control_next
-          +icon("prev", "player-control__icon")
-      
-      .player-controls__volume
-        .player-volume
-          input.player-volume__track(type="range")
-          label.player-volume__percentage
-
 
 // Questions template
 template(id="widget-questions-template")
@@ -85,3 +51,9 @@ template(id="widget-thermal-template")
     li.widget-sensor.widget-sensor_type-humidity
       span.widget-sensor__name Влажность:
       span.widget-sensor__value
+
+// Player template
+include ../player/player.pug
+
+// Camera template
+include ../camera/camera.pug
