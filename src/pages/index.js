@@ -1,3 +1,11 @@
+import layout from "../layout/layout";
+import HeaderNavigation from "../components/header/header";
+
+const headerNavigation = new HeaderNavigation({
+  selector: "#header-menu",
+  layout
+});
+
 function loadEvents() {
   return fetch("./scripts/events.json")
     .then(response => response.json())

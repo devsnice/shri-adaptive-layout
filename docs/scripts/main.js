@@ -86,12 +86,117 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/components/header/header.js":
+/*!*****************************************!*\
+  !*** ./src/components/header/header.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Navigation; });
+const domUtils = {
+  doesNodeContainClick: (node, e) => {
+    if (!node || !e) return false;
+
+    if (node.contains(e.target)) return true;
+  }
+};
+
+class Navigation {
+  constructor({ selector }) {
+    this.menuOpened = false;
+    this.headerMenu = document.querySelector(selector);
+    this.headerBurgerMenu = document.querySelector("#header-burger");
+
+    if (this.isMobile()) {
+      this.initNavigation();
+    }
+  }
+
+  isMobile() {
+    const maxMobileWidth = 768;
+
+    return window.innerWidth < maxMobileWidth;
+  }
+
+  initNavigation() {
+    this.headerMenu.classList.add("header-menu-list_state-mobile");
+
+    this.headerBurgerMenu.addEventListener("click", () => {
+      if (!this.menuOpened) {
+        this.openNavigation();
+      } else {
+        this.closeNavigation();
+      }
+    });
+  }
+
+  openNavigation() {
+    this.headerMenu.classList.add("header-menu-list_state-mobile-opened");
+
+    this.menuOpened = true;
+  }
+
+  closeNavigation() {
+    this.headerMenu.classList.remove("header-menu-list_state-mobile-opened");
+
+    this.menuOpened = false;
+  }
+}
+
+/***/ }),
+
+/***/ "./src/layout/layout.js":
+/*!******************************!*\
+  !*** ./src/layout/layout.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class ApplicationLayout {
+  constructor(selector) {
+    this.layout = document.querySelector(selector);
+  }
+
+  block() {
+    this.layout.classList.add("application_state-frozen");
+    this.layout.classList.add("application_state-blured");
+  }
+
+  unblock() {
+    this.layout.classList.remove("application_state-frozen");
+    this.layout.classList.remove("application_state-blured");
+  }
+}
+
+const Layout = new ApplicationLayout("#application");
+
+/* harmony default export */ __webpack_exports__["default"] = (Layout);
+
+/***/ }),
+
 /***/ "./src/pages/index.js":
 /*!****************************!*\
   !*** ./src/pages/index.js ***!
   \****************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _layout_layout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layout/layout */ "./src/layout/layout.js");
+/* harmony import */ var _components_header_header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/header/header */ "./src/components/header/header.js");
+
+
+
+const headerNavigation = new _components_header_header__WEBPACK_IMPORTED_MODULE_1__["default"]({
+  selector: "#header-menu",
+  layout: _layout_layout__WEBPACK_IMPORTED_MODULE_0__["default"]
+});
 
 function loadEvents() {
   return fetch("./scripts/events.json").then(response => response.json()).then(result => result.events).catch(err => alert(err));
