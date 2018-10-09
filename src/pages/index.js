@@ -26,7 +26,10 @@ const broadcasts = [
   }
 ];
 
-const VideocontrolWidget = new Videocontrol({ broadcasts });
+const VideocontrolWidget = new Videocontrol({
+  broadcasts,
+  element: document.getElementById("dashboard-videocontrol")
+});
 
 // function loadEvents() {
 //   return fetch("./scripts/events.json")
