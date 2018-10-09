@@ -28,7 +28,8 @@ const broadcasts = [
 
 const VideocontrolWidget = new Videocontrol({
   broadcasts,
-  element: document.getElementById("dashboard-videocontrol")
+  element: document.getElementById("vc-list"),
+  elementShowAll: document.getElementById("vc-showall")
 });
 
 // function loadEvents() {

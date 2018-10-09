@@ -1,6 +1,10 @@
-template(id="template-player")
-  .vc-player
-    video.vc-player-video(muted="true" autoplay="true")
+.videocontrol#vc
+  button.videocontrol-show-all#vc-showall Показать все
+
+  .videocontrol-list#vc-list
+    template(id="template-player")
+      .vc-player
+        video.vc-player-video(muted="true" autoplay="true")
 
     
 

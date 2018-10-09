@@ -74,8 +74,25 @@ class Player {
   }
 
   openFullscreen() {
-    this.player.style.width = "100%";
-    this.player.style.height = "100%";
+    const elementBoxStyle = this.video.getBoundingClientRect();
+
+    this.video.style.width = elementBoxStyle.width + "px";
+    this.video.style.height = elementBoxStyle.height + "px";
+    this.video.style.top = elementBoxStyle.top + "px";
+    this.video.style.left = elementBoxStyle.left + "px";
+
+    window.requestAnimationFrame(() => {
+      this.video.style.position = "absolute";
+
+      this.video.style.width = "100%";
+      this.video.style.height = "100%";
+      this.video.style.top = 0;
+      this.video.style.left = 0;
+    });
+  }
+
+  closeFullscreen() {
+    this.video.style.position = "static";
   }
 
   addEventListener(event, callback) {
@@ -88,11 +105,26 @@ class Player {
  * it initializes broadcasts and interact with user's actions
  */
 class Videocontrol {
-  constructor({ broadcasts, element }) {
+  constructor({ broadcasts, elementShowAll, element }) {
     this.broadcasts = broadcasts;
     this.element = element;
+    this.elementShowAll = elementShowAll;
 
-    this.init();
+    this.state = {
+      fullscreenId: null
+    };
+
+    this.initPlayers();
+    this.initEvents();
+  }
+
+  closeFullPlayer() {
+    // play all players
+    this.broadcasts.forEach(broadcast => broadcast.player.play());
+
+    this.broadcasts[this.state.fullscreenId].player.closeFullscreen();
+
+    this.state.fullscreenId = null;
   }
 
   openFullPlayer(id) {
@@ -103,9 +135,17 @@ class Videocontrol {
 
     // open player in fullscreen
     this.broadcasts[id].player.openFullscreen();
+
+    this.state.fullscreenId = id;
   }
 
-  init() {
+  initEvents() {
+    this.elementShowAll.addEventListener("click", () => {
+      this.closeFullPlayer();
+    });
+  }
+
+  initPlayers() {
     this.broadcasts.forEach((broadcast, index) => {
       const VideoTemplate = new PlayerTemplate();
       const videoElement = VideoTemplate.render(`player-${index + 1}`);
