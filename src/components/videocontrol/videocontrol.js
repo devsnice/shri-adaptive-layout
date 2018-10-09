@@ -1,5 +1,11 @@
-function videocontrol() {
-  function initVideo(video, url) {
+class VideoControl {
+  constructor({ broadcasts }) {
+    this.broadcasts = broadcasts;
+
+    this.init();
+  }
+
+  initVideo(video, url) {
     if (Hls.isSupported()) {
       const hls = new Hls();
 
@@ -16,25 +22,14 @@ function videocontrol() {
     }
   }
 
-  initVideo(
-    document.getElementById("video-1"),
-    "http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fsosed%2Fmaster.m3u8"
-  );
-
-  initVideo(
-    document.getElementById("video-2"),
-    "http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fcat%2Fmaster.m3u8"
-  );
-
-  initVideo(
-    document.getElementById("video-3"),
-    "http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fdog%2Fmaster.m3u8"
-  );
-
-  initVideo(
-    document.getElementById("video-4"),
-    "http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fhall%2Fmaster.m3u8"
-  );
+  init() {
+    this.broadcasts.forEach((broadcast, index) => {
+      this.initVideo(
+        document.getElementById(`video-${index + 1}`),
+        broadcast.url
+      );
+    });
+  }
 }
 
-export default videocontrol;
+export default VideoControl;
