@@ -1,6 +1,6 @@
 import layout from "../layout/layout";
 import HeaderNavigation from "../components/header/header";
-import VideoControl from "../components/videocontrol/videocontrol";
+import Videocontrol from "../components/videocontrol/videocontrol";
 
 const headerNavigation = new HeaderNavigation({
   selector: "#header-menu",
@@ -26,7 +26,7 @@ const broadcasts = [
   }
 ];
 
-const VideoControlWidget = new VideoControl({ broadcasts });
+const VideocontrolWidget = new Videocontrol({ broadcasts });
 
 // function loadEvents() {
 //   return fetch("./scripts/events.json")

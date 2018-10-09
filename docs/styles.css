@@ -588,50 +588,37 @@ template {
  *  rem(30) - 3rem
 **/
 
-.footer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  padding: 0 40px 27px;
-  background: #fff;
-}
-
-@media screen and (max-width: 768px) {
-  .footer {
-    display: block;
-    margin-top: 30px;
-    padding: 0 0 20px 27px;
-  }
-}
-
-.footer-links__item {
-  display: inline-block;
-  font-size: 1.2rem;
-  color: #858585;
-  text-align: left;
-  padding-right: 15px;
+.button {
+  display: block;
+  width: 132px;
+  height: 54px;
+  line-height: 54px;
+  border-radius: 8px;
+  font-size: 1.8rem;
+  color: #000000;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  font-family: Arial-BoldMT;
 }
 
 @media (max-width: 768px) {
-  .footer-links__item {
-    display: block;
-    line-height: 20px;
+  .button {
+    font-size: 2rem;
+    width: 100px;
   }
 }
 
-.footer-copyright {
-  font-size: 1.2rem;
-  color: #858585;
-  text-align: left;
+.button_type-yellow {
+  background: #ffd93e;
 }
 
-@media (max-width: 768px) {
-  .footer-copyright {
-    margin-top: 15px;
-  }
+.button_type-grey {
+  background: #e5e5e5;
+}
+
+.button_m-r-18 {
+  margin-right: 18px;
 }
 /**
  *  Media mixin
@@ -687,182 +674,50 @@ template {
  *  rem(30) - 3rem
 **/
 
-.button {
-  display: block;
-  width: 132px;
-  height: 54px;
-  line-height: 54px;
-  border-radius: 8px;
-  font-size: 1.8rem;
-  color: #000000;
-  text-align: center;
-  cursor: pointer;
-  border: none;
-  font-family: Arial-BoldMT;
-}
-
-@media (max-width: 768px) {
-  .button {
-    font-size: 2rem;
-    width: 100px;
-  }
-}
-
-.button_type-yellow {
-  background: #ffd93e;
-}
-
-.button_type-grey {
-  background: #e5e5e5;
-}
-
-.button_m-r-18 {
-  margin-right: 18px;
-}
-/**
- *  Media mixin
- *  
- *  How to use:
- *  @include media("mobile") - @media screen and (max-width: 768px)
-**/
-
-/**
- *  Rem function, from pixels to rem
- *  
- *  How to use:
- *  rem(30) - 3rem
-**/
-
-.icon {
-  vertical-align: middle;
-}
-/**
- *  Media mixin
- *  
- *  How to use:
- *  @include media("mobile") - @media screen and (max-width: 768px)
-**/
-
-/**
- *  Rem function, from pixels to rem
- *  
- *  How to use:
- *  rem(30) - 3rem
-**/
-
-.player {
-  margin-top: 23px;
-}
-
-.player-now {
-  display: grid;
-  grid-template-columns: 68px 1fr;
-}
-
-.player-now__cover {
-  width: 52px;
-  height: 52px;
-  border-radius: 4px;
-  grid-column: 1 span;
-}
-
-.player-now__info {
-  grid-column: 1 span;
-  overflow: hidden;
-}
-
-.player-now__title {
-  font-size: 2rem;
-}
-
-@media (max-width: 768px) {
-  .player-now__title {
-    font-size: 1.8rem;
-    display: block;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-}
-
-.player-progress {
+.footer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin: 10px 0;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.player-progress__track {
-  -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-}
-
-.player-progress__time {
-  margin-left: 16px;
-  font-family: Helvetica;
-  font-size: 1.4rem;
-  color: rgba(161, 161, 161, 0.84);
-}
-
-.player-volume {
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.player-volume__track {
-  -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  margin-right: 12px;
-}
-
-.player-volume__percentage {
-  font-family: Helvetica;
-  font-size: 1.4rem;
-  color: rgba(161, 161, 161, 0.84);
-}
-
-.player-controls {
-  margin-top: 20px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  padding: 0 40px 27px;
+  background: #fff;
 }
 
-.player-controls__volume {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  margin-left: 12px;
+@media screen and (max-width: 768px) {
+  .footer {
+    display: block;
+    margin-top: 30px;
+    padding: 0 0 20px 27px;
+  }
 }
 
-.player-control__icon {
-  width: 55px;
-  height: 55px;
+.footer-links__item {
+  display: inline-block;
+  font-size: 1.2rem;
+  color: #858585;
+  text-align: left;
+  padding-right: 15px;
 }
 
-.player-control_prev {
-  margin-right: 27px;
+@media (max-width: 768px) {
+  .footer-links__item {
+    display: block;
+    line-height: 20px;
+  }
 }
 
-.player-control_next {
-  -webkit-transform: rotate(180deg);
-  transform: rotate(180deg);
+.footer-copyright {
+  font-size: 1.2rem;
+  color: #858585;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .footer-copyright {
+    margin-top: 15px;
+  }
 }
 /**
  *  Media mixin
@@ -1026,6 +881,151 @@ template {
   .logotype {
     width: 110px;
   }
+}
+/**
+ *  Media mixin
+ *  
+ *  How to use:
+ *  @include media("mobile") - @media screen and (max-width: 768px)
+**/
+
+/**
+ *  Rem function, from pixels to rem
+ *  
+ *  How to use:
+ *  rem(30) - 3rem
+**/
+
+.icon {
+  vertical-align: middle;
+}
+/**
+ *  Media mixin
+ *  
+ *  How to use:
+ *  @include media("mobile") - @media screen and (max-width: 768px)
+**/
+
+/**
+ *  Rem function, from pixels to rem
+ *  
+ *  How to use:
+ *  rem(30) - 3rem
+**/
+
+.player {
+  margin-top: 23px;
+}
+
+.player-now {
+  display: grid;
+  grid-template-columns: 68px 1fr;
+}
+
+.player-now__cover {
+  width: 52px;
+  height: 52px;
+  border-radius: 4px;
+  grid-column: 1 span;
+}
+
+.player-now__info {
+  grid-column: 1 span;
+  overflow: hidden;
+}
+
+.player-now__title {
+  font-size: 2rem;
+}
+
+@media (max-width: 768px) {
+  .player-now__title {
+    font-size: 1.8rem;
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+.player-progress {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 10px 0;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.player-progress__track {
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+.player-progress__time {
+  margin-left: 16px;
+  font-family: Helvetica;
+  font-size: 1.4rem;
+  color: rgba(161, 161, 161, 0.84);
+}
+
+.player-volume {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.player-volume__track {
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  margin-right: 12px;
+}
+
+.player-volume__percentage {
+  font-family: Helvetica;
+  font-size: 1.4rem;
+  color: rgba(161, 161, 161, 0.84);
+}
+
+.player-controls {
+  margin-top: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.player-controls__volume {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  margin-left: 12px;
+}
+
+.player-control__icon {
+  width: 55px;
+  height: 55px;
+}
+
+.player-control_prev {
+  margin-right: 27px;
+}
+
+.player-control_next {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 .videocontrol {
   display: -webkit-box;
