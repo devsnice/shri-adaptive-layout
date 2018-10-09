@@ -1,0 +1,9 @@
+.videocontrol {
+  display: flex;
+  flex-wrap: wrap;
+
+  &-video {
+    width: 50%;
+    height: 300px;
+  }
+}
