@@ -1,3 +1,5 @@
+import WebglVideo from "./webglVideo";
+
 /**
  * PlayerTemplate - generate video-player from <template> tag
  */
@@ -17,6 +19,9 @@ class PlayerTemplate {
     // player-{id}-video
     element.querySelector("video").setAttribute("id", `${id}-video`);
 
+    // player-{id}-webgl-video
+    element.querySelector("input").setAttribute("id", `${id}-webgl-video`);
+
     return element;
   }
 }
@@ -26,17 +31,27 @@ class PlayerTemplate {
  * it has special behavior for our application.
  */
 class Player {
-  constructor({ url, playerElement }) {
+  constructor({ id, url, playerElement }) {
     this.settings = {
-      url
+      url,
+      webglInited: false
     };
 
     this.player = playerElement;
     this.video = playerElement.querySelector("video");
+    this.brightnessRange = playerElement.querySelector(
+      ".vc-player__brightness"
+    );
+
+    this.webglVideo = new WebglVideo({
+      video: this.video,
+      videoPlayer: this.player
+    });
 
     this.initPromise = null;
 
     this.init();
+    this.initEvents();
   }
 
   init() {
@@ -84,6 +99,25 @@ class Player {
   closeFullscreen() {
     this.player.style.position = "static";
     this.player.style.zIndex = "1";
+  }
+
+  changeBrightness(value) {
+    if (!this.settings.webglInited) {
+      this.video.classList.add("vc-player__video_state-hidden");
+    }
+
+    this.webglVideo.show({
+      brightness: value,
+      webglInited: this.settings.webglInited
+    });
+
+    this.settings.webglInited = true;
+  }
+
+  initEvents() {
+    this.brightnessRange.addEventListener("change", e => {
+      this.changeBrightness(e.target.value);
+    });
   }
 
   addEventListener(event, callback) {
