@@ -8,11 +8,11 @@ class PlayerTemplate {
 
   render(id) {
     const element = this.template.content
-      .querySelector(".vc-player")
+      .querySelector(".videocontrol-list__item")
       .cloneNode(true);
 
     // player-{id}
-    element.setAttribute("id", id);
+    element.querySelector(".vc-player").setAttribute("id", id);
 
     // player-{id}-video
     element.querySelector("video").setAttribute("id", `${id}-video`);
@@ -74,18 +74,20 @@ class Player {
   }
 
   openFullscreen() {
-    this.video.style.top = 0;
-    this.video.style.left = 0;
+    this.player.style.top = 0;
+    this.player.style.left = 0;
 
-    this.video.style.position = "absolute";
+    this.player.style.position = "absolute";
+    this.player.style.zIndex = "2";
   }
 
   closeFullscreen() {
-    this.video.style.position = "static";
+    this.player.style.position = "static";
+    this.player.style.zIndex = "1";
   }
 
   addEventListener(event, callback) {
-    this.video.addEventListener(event, callback);
+    this.player.addEventListener(event, callback);
   }
 }
 
@@ -137,12 +139,12 @@ class Videocontrol {
   initPlayers() {
     this.broadcasts.forEach((broadcast, index) => {
       const VideoTemplate = new PlayerTemplate();
-      const videoElement = VideoTemplate.render(`player-${index + 1}`);
+      const listVideoElement = VideoTemplate.render(`player-${index + 1}`);
 
-      this.element.appendChild(videoElement);
+      this.element.appendChild(listVideoElement);
 
       const VideoPlayer = new Player({
-        playerElement: videoElement,
+        playerElement: listVideoElement.querySelector(".vc-player"),
         url: broadcast.url
       });
 
