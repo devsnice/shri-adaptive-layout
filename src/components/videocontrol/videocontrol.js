@@ -74,21 +74,10 @@ class Player {
   }
 
   openFullscreen() {
-    const elementBoxStyle = this.video.getBoundingClientRect();
+    this.video.style.top = 0;
+    this.video.style.left = 0;
 
-    this.video.style.width = elementBoxStyle.width + "px";
-    this.video.style.height = elementBoxStyle.height + "px";
-    this.video.style.top = elementBoxStyle.top + "px";
-    this.video.style.left = elementBoxStyle.left + "px";
-
-    window.requestAnimationFrame(() => {
-      this.video.style.position = "absolute";
-
-      this.video.style.width = "100%";
-      this.video.style.height = "100%";
-      this.video.style.top = 0;
-      this.video.style.left = 0;
-    });
+    this.video.style.position = "absolute";
   }
 
   closeFullscreen() {
