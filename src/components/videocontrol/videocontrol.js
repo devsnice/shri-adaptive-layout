@@ -1,4 +1,5 @@
 import WebglVideo from "./webglVideo";
+import Analyse from "./audioAnalyse";
 
 /**
  * PlayerTemplate - generate video-player from <template> tag
@@ -41,6 +42,9 @@ class Player {
     this.video = playerElement.querySelector("video");
     this.brightnessRange = playerElement.querySelector(
       ".vc-player__brightness"
+    );
+    this.noiseLevelRange = playerElement.querySelector(
+      ".vc-player__noise-level"
     );
 
     this.webglVideo = new WebglVideo({
@@ -89,7 +93,7 @@ class Player {
   }
 
   openFullscreen({ listBounds }) {
-    const elementBounds = this.player.getBoundingClientRect();
+    this.video.muted = false;
 
     this.player.style.top = 0;
     this.player.style.left = 0;
@@ -99,6 +103,8 @@ class Player {
   }
 
   closeFullscreen() {
+    this.video.muted = true;
+
     this.player.style.position = "static";
     this.player.style.zIndex = "1";
   }
@@ -119,6 +125,11 @@ class Player {
   initEvents() {
     this.brightnessRange.addEventListener("change", e => {
       this.changeBrightness(e.target.value);
+    });
+
+    this.analyser = new Analyse({
+      video: this.video,
+      noiseLevelRange: this.noiseLevelRange
     });
   }
 
