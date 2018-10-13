@@ -1,3 +1,8 @@
+/**
+ * It's my test solution of processing video with WebGL
+ * https://www.youtube.com/watch?v=_ZQOUQsw_YI - interesting video about webgl
+ * and yes, it works, but there's a problem with quality of video
+ */
 class WebglVideo {
   constructor({ video, videoPlayer }) {
     this.video = video;
@@ -26,6 +31,7 @@ class WebglVideo {
 
     const gl = this.canvas.getContext("webgl");
 
+    // Create new program using gsls
     gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
     gl.clearColor(255, 255, 255, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
@@ -102,7 +108,6 @@ class WebglVideo {
 
     const draw = () => {
       requestAnimationFrame(() => {
-        console.log("draw");
         const texture = gl.createTexture();
 
         gl.activeTexture(gl.TEXTURE0);

@@ -88,7 +88,9 @@ class Player {
     this.video.pause();
   }
 
-  openFullscreen() {
+  openFullscreen({ listBounds }) {
+    const elementBounds = this.player.getBoundingClientRect();
+
     this.player.style.top = 0;
     this.player.style.left = 0;
 
@@ -158,8 +160,10 @@ class Videocontrol {
       .filter(broadcast => broadcast.id !== id)
       .forEach(broadcast => broadcast.player.stop());
 
+    const listBounds = this.element.getBoundingClientRect();
+
     // open player in fullscreen
-    this.broadcasts[id].player.openFullscreen();
+    this.broadcasts[id].player.openFullscreen({ listBounds });
 
     this.state.fullscreenId = id;
   }
