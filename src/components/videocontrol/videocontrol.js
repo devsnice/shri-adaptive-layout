@@ -95,18 +95,48 @@ class Player {
   openFullscreen({ listBounds }) {
     this.video.muted = false;
 
-    this.player.style.top = 0;
-    this.player.style.left = 0;
+    const playerBounds = this.player.getBoundingClientRect();
 
-    this.player.style.position = "absolute";
+    this.player.style.transform = `
+        translateX(0px)
+        translateY(0px)
+    `;
+
+    this.player.style.width = playerBounds.width + "px";
+    this.player.style.height = playerBounds.height + "px";
+    this.player.style.transitionProperty = "";
+    this.player.style.transitionDuration = "";
     this.player.style.zIndex = "2";
+
+    window.requestAnimationFrame(() => {
+      this.player.style.transitionProperty = "transform, width, height";
+      this.player.style.transitionDuration = "0.3s";
+
+      // move element to top/left bounder of the list-container
+      this.player.style.transform = `
+        translateX(-${playerBounds.left - listBounds.left}px)
+        translateY(-${playerBounds.top - listBounds.top}px)
+      `;
+
+      this.player.style.width = listBounds.width + "px";
+      this.player.style.height = listBounds.height + "px";
+    });
   }
 
   closeFullscreen() {
     this.video.muted = true;
 
-    this.player.style.position = "static";
     this.player.style.zIndex = "1";
+
+    window.requestAnimationFrame(() => {
+      this.player.style.width = "100%";
+      this.player.style.height = "100%";
+
+      this.player.style.transform = `
+          translateX(0px)
+          translateY(0px)
+      `;
+    });
   }
 
   changeBrightness(value) {
@@ -183,6 +213,10 @@ class Videocontrol {
     this.elementShowAll.addEventListener("click", () => {
       this.closeFullPlayer();
     });
+
+    this.elementShowAll.addEventListener("tap", () => {
+      this.closeFullPlayer();
+    });
   }
 
   initPlayers() {
@@ -203,6 +237,10 @@ class Videocontrol {
 
           // Init events
           VideoPlayer.addEventListener("click", e => {
+            this.openFullPlayer(index);
+          });
+
+          VideoPlayer.addEventListener("tap", e => {
             this.openFullPlayer(index);
           });
 
