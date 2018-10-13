@@ -1,3 +1,5 @@
+@import "../../styles/utils";
+
 .videocontrol {
   &-show-all {
     font-size: 20px;
@@ -20,6 +22,11 @@
     &__item {
       width: 50%;
       height: 350px;
+
+      @include media("mobile") {
+        width: 100%;
+        height: 200px;
+      }
     }
   }
 }
@@ -35,6 +42,10 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+
+    @include media("mobile") {
+      object-fit: contain;
+    }
 
     &_state-hidden {
       visibility: hidden;

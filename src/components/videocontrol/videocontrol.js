@@ -74,8 +74,7 @@ class Player {
           resolve(this.video);
         });
       } else if (this.video.canPlayType("application/vnd.apple.mpegurl")) {
-        this.video.src =
-          "https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8";
+        this.video.src = this.settings.url;
 
         this.video.addEventListener("loadedmetadata", () => {
           resolve(this.video);
@@ -214,7 +213,7 @@ class Videocontrol {
       this.closeFullPlayer();
     });
 
-    this.elementShowAll.addEventListener("tap", () => {
+    this.elementShowAll.addEventListener("touchend", () => {
       this.closeFullPlayer();
     });
   }
@@ -240,7 +239,7 @@ class Videocontrol {
             this.openFullPlayer(index);
           });
 
-          VideoPlayer.addEventListener("tap", e => {
+          VideoPlayer.addEventListener("touchend", e => {
             this.openFullPlayer(index);
           });
 
