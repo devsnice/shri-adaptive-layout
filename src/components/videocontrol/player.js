@@ -43,7 +43,8 @@ export class Player {
 
     this.videoSettings = {
       brightness: 0,
-      contrast: 0
+      contrast: 0,
+      isFullscreen: false
     };
 
     this.containerElement = containerElement;
@@ -77,6 +78,8 @@ export class Player {
     if (!this.settings.containerBounds) {
       this.settings.containerBounds = this.containerElement.getBoundingClientRect();
     }
+
+    return this.settings.containerBounds;
   }
 
   init() {
@@ -113,7 +116,11 @@ export class Player {
   }
 
   openFullscreen() {
+    if (this.settings.isFullscreen) return false;
+
     this.setContainerBounds();
+
+    const { containerBounds } = this.settings;
 
     this.video.muted = false;
 
@@ -136,16 +143,20 @@ export class Player {
 
       // move element to top/left bounder of the list-container
       this.player.style.transform = `
-        translateX(-${playerBounds.left - this.settings.containerBounds.left}px)
-        translateY(-${playerBounds.top - this.settings.containerBounds.top}px)
+        translateX(-${playerBounds.left - containerBounds.left}px)
+        translateY(-${playerBounds.top - containerBounds.top}px)
       `;
 
-      this.player.style.width = this.settings.containerBounds.width + "px";
-      this.player.style.height = this.settings.containerBounds.height + "px";
+      this.player.style.width = containerBounds.width + "px";
+      this.player.style.height = containerBounds.height + "px";
     });
+
+    this.settings.isFullscreen = true;
   }
 
   closeFullscreen() {
+    if (!this.settings.isFullscreen) return false;
+
     this.video.muted = true;
 
     this.player.style.zIndex = "1";
@@ -159,6 +170,8 @@ export class Player {
           translateY(0px)
       `;
     });
+
+    this.settings.isFullscreen = false;
   }
 
   playVideoOnWebgl() {
