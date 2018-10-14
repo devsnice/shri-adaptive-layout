@@ -6,16 +6,20 @@ const pathToEvents = path.join(__dirname, "/events.json");
 const EVENT_TYPES = ["info", "critical"];
 
 const getEvents = ({ filters }) => {
-  const file = fs.readFileSync(pathToEvents, { encoding: "utf-8" });
-  const parsedFile = JSON.parse(file);
+  try {
+    const file = fs.readFileSync(pathToEvents, { encoding: "utf-8" });
+    const parsedFile = JSON.parse(file);
 
-  const { events } = parsedFile;
+    const { events } = parsedFile;
 
-  if (filters.type) {
-    return events.filter(event => filters.type.includes(event.type));
+    if (filters.type) {
+      return events.filter(event => filters.type.includes(event.type));
+    }
+
+    return events;
+  } catch (err) {
+    throw "Server error";
   }
-
-  return events;
 };
 
 const eventsApi = {

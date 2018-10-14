@@ -32,7 +32,7 @@ app.get("/api/events", (req, res) => {
   // it's valid if every type included in eventApi.EVENT_TYPES
   function getTypeFilters() {
     const { type } = query;
-    let filtersType = [];
+    let filtersType = eventApi.EVENT_TYPES;
 
     if (type) {
       const types = type.split(":");
@@ -43,7 +43,9 @@ app.get("/api/events", (req, res) => {
 
       if (!isValidTypes) {
         res.status(400);
-        res.send("incorrect type");
+        res.send({
+          error: "incorrect type"
+        });
       } else {
         filtersType = types;
       }
@@ -59,6 +61,10 @@ app.get("/api/events", (req, res) => {
   });
 
   res.send(events);
+});
+
+app.get("*", function(req, res) {
+  res.send("<h1>Page not found</h1>", 404);
 });
 
 app.listen(port, () => {
