@@ -5,7 +5,8 @@
   "author": "Borisov Semen <devsnice@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "gulp --watch"
+    "dev": "gulp --watch",
+    "server": "nodemon server/index.js"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.3",
@@ -23,6 +24,7 @@
   "dependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
+    "express": "^4.16.4",
     "gulp-postcss": "^7.0.1",
     "gulp-sass": "^4.0.1",
     "gulp-svg-symbols": "^3.1.1",
