@@ -9,12 +9,16 @@
           
           .vc-player__controls
             label.vc-player__control
+              span Контраст
+              input.vc-player__contrast(type="range" min="-100" max="100" value="0")
+
+            label.vc-player__control
               span Яркость
-              input.vc-player__brightness(type="range" min="0" max="100")
+              input.vc-player__brightness(type="range" min="-100" max="100" value="0")
 
             label.vc-player__control
               span Звук
-              input.vc-player__noise-level(type="range" min="0" max="100")
+              input.vc-player__noise-level(type="range" min="0" max="100" value="0")
     
 
 

@@ -42,8 +42,8 @@ export class Player {
     };
 
     this.videoSettings = {
-      brightness: 50,
-      contrast: 50
+      brightness: 0,
+      contrast: 0
     };
 
     this.containerElement = containerElement;
@@ -55,6 +55,7 @@ export class Player {
     this.noiseLevelRange = playerElement.querySelector(
       ".vc-player__noise-level"
     );
+    this.contrastRange = playerElement.querySelector(".vc-player__contrast");
 
     this.webglVideo = new WebglVideo({
       video: this.video,
@@ -188,7 +189,8 @@ export class Player {
         width: this.settings.containerBounds.width,
         height: this.settings.containerBounds.height
       },
-      brightness: this.videoSettings.brightness
+      brightness: this.videoSettings.brightness,
+      contrast: this.videoSettings.contrast
     });
 
     this.settings.canvasInited = true;
@@ -202,9 +204,19 @@ export class Player {
     this.playVideoOnCanvas();
   }
 
+  changeContrast(value) {
+    this.videoSettings.contrast = value;
+
+    this.playVideoOnCanvas();
+  }
+
   initEvents() {
     this.brightnessRange.addEventListener("change", e => {
       this.changeBrightness(e.target.value);
+    });
+
+    this.contrastRange.addEventListener("change", e => {
+      this.changeContrast(e.target.value);
     });
 
     this.analyser = new Analyse({
