@@ -9,6 +9,19 @@ const port = 8000;
 var startTime;
 
 app.use(bodyParser.json());
+bodyParser.urlencoded({ extended: false });
+
+/**
+ * Cors - allow all
+ */
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 /**
  * GET /status
@@ -27,8 +40,10 @@ app.get("/status", (req, res) => {
  * limit (default is 10)
  * return events
  */
-app.get("/api/events", (req, res) => {
-  const query = req.query;
+app.post("/api/events", (req, res) => {
+  const query = req.body;
+
+  console.log(req);
 
   // Validate type
   // it's valid if every type included in eventApi.EVENT_TYPES
