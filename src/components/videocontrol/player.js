@@ -1,4 +1,5 @@
 import WebglVideo from "./webglVideo";
+import CanvasVideo from "./canvasVideo";
 import Analyse from "./audioAnalyse";
 
 /**
@@ -32,12 +33,20 @@ export class PlayerTemplate {
  * it has special behavior for our application.
  */
 export class Player {
-  constructor({ id, url, playerElement }) {
+  constructor({ url, containerElement, playerElement }) {
     this.settings = {
       url,
-      webglInited: false
+      webglInited: false,
+      canvasInited: false,
+      containerBounds: null
     };
 
+    this.videoSettings = {
+      brightness: 50,
+      contrast: 50
+    };
+
+    this.containerElement = containerElement;
     this.player = playerElement;
     this.video = playerElement.querySelector("video");
     this.brightnessRange = playerElement.querySelector(
@@ -52,10 +61,21 @@ export class Player {
       videoPlayer: this.player
     });
 
+    this.canvasVideo = new CanvasVideo({
+      video: this.video,
+      videoPlayer: this.player
+    });
+
     this.initPromise = null;
 
     this.init();
     this.initEvents();
+  }
+
+  setContainerBounds() {
+    if (!this.settings.containerBounds) {
+      this.settings.containerBounds = this.containerElement.getBoundingClientRect();
+    }
   }
 
   init() {
@@ -91,7 +111,9 @@ export class Player {
     this.video.pause();
   }
 
-  openFullscreen({ listBounds }) {
+  openFullscreen() {
+    this.setContainerBounds();
+
     this.video.muted = false;
 
     const playerBounds = this.player.getBoundingClientRect();
@@ -113,12 +135,12 @@ export class Player {
 
       // move element to top/left bounder of the list-container
       this.player.style.transform = `
-        translateX(-${playerBounds.left - listBounds.left}px)
-        translateY(-${playerBounds.top - listBounds.top}px)
+        translateX(-${playerBounds.left - this.settings.containerBounds.left}px)
+        translateY(-${playerBounds.top - this.settings.containerBounds.top}px)
       `;
 
-      this.player.style.width = listBounds.width + "px";
-      this.player.style.height = listBounds.height + "px";
+      this.player.style.width = this.settings.containerBounds.width + "px";
+      this.player.style.height = this.settings.containerBounds.height + "px";
     });
   }
 
@@ -138,17 +160,42 @@ export class Player {
     });
   }
 
-  changeBrightness(value) {
+  playVideoOnWebgl() {
     if (!this.settings.webglInited) {
       this.video.classList.add("vc-player__video_state-hidden");
     }
 
-    this.webglVideo.show({
-      brightness: value,
+    this.webglVideo.play({
+      brightness: this.videoSettings.brightness,
       webglInited: this.settings.webglInited
     });
 
     this.settings.webglInited = true;
+  }
+
+  playVideoOnCanvas() {
+    if (!this.settings.canvasInited) {
+      this.video.classList.add("vc-player__video_state-hidden");
+    }
+
+    this.canvasVideo.play({
+      canvasInited: this.settings.canvasInited,
+      size: {
+        width: this.settings.containerBounds.width,
+        height: this.settings.containerBounds.height
+      },
+      brightness: this.videoSettings.brightness
+    });
+
+    this.settings.canvasInited = true;
+  }
+
+  changeBrightness(value) {
+    this.videoSettings.brightness = value;
+
+    // turn on webgl instead of canvas
+    // this.playVideoOnWebgl();
+    this.playVideoOnCanvas();
   }
 
   initEvents() {

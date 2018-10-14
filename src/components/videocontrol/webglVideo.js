@@ -17,7 +17,7 @@ class WebglVideo {
     return (value - 50) / 100;
   }
 
-  show({ webglInited, brightness }) {
+  play({ webglInited, brightness }) {
     if (!webglInited) {
       this.canvas = document.createElement("canvas");
 

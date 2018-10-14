@@ -33,10 +33,8 @@ class Videocontrol {
       .filter(broadcast => broadcast.id !== id)
       .forEach(broadcast => broadcast.player.stop());
 
-    const listBounds = this.element.getBoundingClientRect();
-
     // open player in fullscreen
-    this.broadcasts[id].player.openFullscreen({ listBounds });
+    this.broadcasts[id].player.openFullscreen();
 
     this.state.fullscreenId = id;
   }
@@ -59,6 +57,7 @@ class Videocontrol {
       this.element.appendChild(listVideoElement);
 
       const VideoPlayer = new Player({
+        containerElement: this.element,
         playerElement: listVideoElement.querySelector(".vc-player"),
         url: broadcast.url
       });
