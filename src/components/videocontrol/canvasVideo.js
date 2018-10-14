@@ -7,15 +7,15 @@ class CanvasVideo {
     this.canvas = null;
   }
 
-  play({ canvasInited, brightness }) {
+  play({ canvasInited, brightness, size: { width, height } }) {
     if (!canvasInited) {
       this.canvas = document.createElement("canvas");
 
-      this.canvas.style.width = "auto";
-      this.canvas.style.height = "100%";
+      this.canvas.style.width = width;
+      this.canvas.style.height = height;
 
-      this.canvas.width = 1320;
-      this.canvas.height = 700;
+      this.canvas.width = width;
+      this.canvas.height = height;
 
       this.videoPlayer.appendChild(this.canvas);
     } else {
@@ -26,7 +26,7 @@ class CanvasVideo {
 
     const draw = () => {
       requestAnimationFrame(() => {
-        context.drawImage(this.video, 0, 0, 1320, 700);
+        context.drawImage(this.video, 0, 0, width, height);
 
         if (!this.stopVideo) {
           draw();

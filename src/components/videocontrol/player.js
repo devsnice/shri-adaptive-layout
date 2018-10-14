@@ -161,6 +161,8 @@ export class Player {
   }
 
   playVideoOnWebgl() {
+    this.setContainerBounds();
+
     if (!this.settings.webglInited) {
       this.video.classList.add("vc-player__video_state-hidden");
     }
@@ -174,6 +176,8 @@ export class Player {
   }
 
   playVideoOnCanvas() {
+    this.setContainerBounds();
+
     if (!this.settings.canvasInited) {
       this.video.classList.add("vc-player__video_state-hidden");
     }
