@@ -21,8 +21,10 @@ app.get("/status", (req, res) => {
 });
 
 /**
- * GET /api/events?type=info:critical
+ * GET /api/events?type=info:critical?offset=limit=
  * type is a filter by event type
+ * offset (default is 0)
+ * limit (default is 10)
  * return events
  */
 app.get("/api/events", (req, res) => {
@@ -57,6 +59,10 @@ app.get("/api/events", (req, res) => {
   const events = eventApi.getEvents({
     filters: {
       type: getTypeFilters()
+    },
+    pagination: {
+      offset: +query.offset || eventApi.DEFAULT_OFFSET,
+      limit: +query.limit || eventApi.DEFAULT_LIMIT
     }
   });
 
