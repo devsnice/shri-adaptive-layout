@@ -2,36 +2,29 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const eventApi = require("./api/events");
+const statusApi = require("./api/status");
 
 const app = express();
 const port = 8000;
-const startTime = new Date();
+var startTime;
 
 app.use(bodyParser.json());
 
+/**
+ * GET /status
+ * return current server running time in format hh:mm:ss
+ */
 app.get("/status", (req, res) => {
-  const currentTime = new Date();
-  const passedTime = new Date(currentTime - startTime);
-
-  const hours = passedTime.getUTCHours();
-  const minutes = passedTime.getUTCMinutes();
-  const seconds = passedTime.getUTCSeconds();
-
-  const parseToTwoSigns = value => {
-    if (value.toString().length === 1) {
-      return `0${value}`;
-    }
-
-    return value;
-  };
-
-  const time = `${parseToTwoSigns(hours)}:${parseToTwoSigns(
-    minutes
-  )}:${parseToTwoSigns(seconds)}`;
+  const time = statusApi.calculateServerRunningTime(startTime);
 
   res.send(time);
 });
 
+/**
+ * GET /api/events?type=info:critical
+ * type is a filter by event type
+ * return events
+ */
 app.get("/api/events", (req, res) => {
   const query = req.query;
 
@@ -68,4 +61,7 @@ app.get("/api/events", (req, res) => {
   res.send(events);
 });
 
-app.listen(port, () => console.log(`App listening on port ${port}!`));
+app.listen(port, () => {
+  startTime = new Date();
+  console.log(`App listening on port ${port}!`);
+});
