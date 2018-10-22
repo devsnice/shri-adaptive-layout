@@ -199,7 +199,17 @@ const headerNavigation = new _components_header_header__WEBPACK_IMPORTED_MODULE_
 });
 
 function loadEvents() {
-  return fetch("./scripts/events.json").then(response => response.json()).then(result => result.events).catch(err => alert(err));
+  return fetch("http://localhost:8000/api/events", {
+    method: "POST",
+    body: JSON.stringify({
+      type: "critical:info",
+      offset: 0,
+      limit: 20
+    }),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(response => response.json()).then(result => result).catch(err => alert(err));
 }
 
 const WIDGET_TYPES = {

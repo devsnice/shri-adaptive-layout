@@ -6,11 +6,13 @@
   "license": "MIT",
   "scripts": {
     "dev": "gulp --watch",
-    "server": "nodemon server/index.js"
+    "server": "nodemon server/index.js",
+    "cypress:open": "cypress open"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.3",
     "browser-sync": "^2.19.0",
+    "cypress": "^3.1.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-concat-css": "^2.3.0",
