@@ -1,0 +1,11 @@
+extends ../layout/layout.pug
+include ../components/icon/icon.pug
+
+block page-content 
+	.dashboard
+		h1.dashboard-title Видеонаблюдение
+
+		.dashboard-videocontrol
+			include ../components/videocontrol/videocontrol.pug
+				
+			

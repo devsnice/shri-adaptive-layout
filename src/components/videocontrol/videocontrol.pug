@@ -1,0 +1,24 @@
+.videocontrol#vc
+  button.videocontrol-show-all#vc-showall Показать все
+
+  .videocontrol-list#vc-list
+    template(id="template-player")
+      .videocontrol-list__item
+        .vc-player
+          video.vc-player__video(muted="true" autoplay="true")
+          
+          .vc-player__controls
+            label.vc-player__control
+              span Контраст
+              input.vc-player__contrast(type="range" min="-100" max="100" value="0")
+
+            label.vc-player__control
+              span Яркость
+              input.vc-player__brightness(type="range" min="-100" max="100" value="0")
+
+            label.vc-player__control
+              span Звук
+              input.vc-player__noise-level(type="range" min="0" max="100" value="0")
+    
+
+

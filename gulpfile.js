@@ -21,7 +21,7 @@ const browserSync = require("browser-sync").create();
 
 const paths = {
   public: "./docs",
-  views: "./src/**/*.pug",
+  views: "./src/components/**/*.pug",
   pages: "./src/pages/**/*.pug",
   styles: "./src/**/*.scss",
   scripts: "./src/**/*.js",

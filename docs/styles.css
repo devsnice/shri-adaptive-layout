@@ -117,6 +117,10 @@
     display: block;
   }
 }
+
+.dashboard-videocontrol {
+  margin-top: 20px;
+}
 /**
  *  Media mixin
  *  
@@ -584,46 +588,6 @@ template {
  *  rem(30) - 3rem
 **/
 
-.camera-info {
-  display: none;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  margin-top: 16px;
-}
-
-@media (max-width: 768px) {
-  .camera-info {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-  }
-}
-
-.camera-info-data {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  font-size: 1.2rem;
-}
-
-.camera-info-data__value {
-  padding-left: 3px;
-}
-/**
- *  Media mixin
- *  
- *  How to use:
- *  @include media("mobile") - @media screen and (max-width: 768px)
-**/
-
-/**
- *  Rem function, from pixels to rem
- *  
- *  How to use:
- *  rem(30) - 3rem
-**/
-
 .button {
   display: block;
   width: 132px;
@@ -655,6 +619,46 @@ template {
 
 .button_m-r-18 {
   margin-right: 18px;
+}
+/**
+ *  Media mixin
+ *  
+ *  How to use:
+ *  @include media("mobile") - @media screen and (max-width: 768px)
+**/
+
+/**
+ *  Rem function, from pixels to rem
+ *  
+ *  How to use:
+ *  rem(30) - 3rem
+**/
+
+.camera-info {
+  display: none;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+  .camera-info {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+.camera-info-data {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 1.2rem;
+}
+
+.camera-info-data__value {
+  padding-left: 3px;
 }
 /**
  *  Media mixin
@@ -1022,6 +1026,102 @@ template {
 .player-control_next {
   -webkit-transform: rotate(180deg);
   transform: rotate(180deg);
+}
+/**
+ *  Media mixin
+ *  
+ *  How to use:
+ *  @include media("mobile") - @media screen and (max-width: 768px)
+**/
+
+/**
+ *  Rem function, from pixels to rem
+ *  
+ *  How to use:
+ *  rem(30) - 3rem
+**/
+
+.videocontrol-show-all {
+  font-size: 20px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  text-align: right;
+}
+
+.videocontrol-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  position: relative;
+  width: 100%;
+}
+
+.videocontrol-list__item {
+  width: 50%;
+  height: 350px;
+}
+
+@media (max-width: 768px) {
+  .videocontrol-list__item {
+    width: 100%;
+    height: 200px;
+  }
+}
+
+.vc-player {
+  width: 100%;
+  height: 100%;
+  background: black;
+  position: relative;
+  overflow: hidden;
+}
+
+.vc-player__video {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .vc-player__video {
+    -o-object-fit: contain;
+    object-fit: contain;
+  }
+}
+
+.vc-player__video_state-hidden {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  -webkit-transition: none;
+  transition: none;
+}
+
+.vc-player__control {
+  color: #fff;
+  font-size: 14px;
+}
+
+.vc-player__controls {
+  position: absolute;
+  bottom: 0;
+  height: 40px;
+  width: 100%;
+  left: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 0 10px;
 }
 /**
  *  Media mixin
