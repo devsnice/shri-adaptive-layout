@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 
 /**
  * GET /status
- * return current server running time in format hh:mm:ss
+ * @return {string} time - Current server running time in format hh:mm:ss
  */
 app.get("/status", (req, res) => {
   const time = statusApi.calculateServerRunningTime(startTime);
@@ -37,21 +37,21 @@ app.get("/status", (req, res) => {
 
 /**
  * GET /api/events?type=info:critical?offset=limit=
- * type is a filter by event type
- * offset (default is 0)
- * limit (default is 10)
- * return events
+ * @bodyparam {string} type - is a filter by event type
+ * @bodyparam {number} offset - (default is 0)
+ * @bodyparam {number} limit - (default is 10)
+ * @return {Events} events
  */
-app.post("/api/events", (req, res) => {
+app.post("/api/events", async (req, res) => {
   const query = req.body;
   let typeFilters;
 
   try {
     typeFilters = Helpers.getTypeFilters(query);
 
-    const events = eventApi.getEvents({
+    const events = await eventApi.getEvents({
       filters: {
-        type: typeFilters
+        types: typeFilters
       },
       pagination: {
         offset: +query.offset || eventApi.DEFAULT_OFFSET,
@@ -60,8 +60,7 @@ app.post("/api/events", (req, res) => {
     });
 
     res.send(events);
-  }
-  catch (e) {
+  } catch (e) {
     res.status(e.status);
     res.send({
       error: e.error

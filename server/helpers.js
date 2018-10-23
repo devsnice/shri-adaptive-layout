@@ -1,6 +1,6 @@
 const EVENT_TYPES = ["info", "critical"];
 
-const pagination = (data, offset, limit) => {
+const pagination = ({ data, offset, limit }) => {
   return data.slice(offset, offset + limit);
 };
 
