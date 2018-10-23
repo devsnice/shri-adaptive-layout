@@ -4,9 +4,11 @@ const bodyParser = require("body-parser");
 const eventApi = require("./api/events");
 const statusApi = require("./api/status");
 
+const Helpers = require("./helpers");
+
 const app = express();
 const port = 8000;
-var startTime;
+let startTime;
 
 app.use(bodyParser.json());
 bodyParser.urlencoded({ extended: false });
@@ -14,7 +16,7 @@ bodyParser.urlencoded({ extended: false });
 /**
  * Cors - allow all
  */
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -42,53 +44,37 @@ app.get("/status", (req, res) => {
  */
 app.post("/api/events", (req, res) => {
   const query = req.body;
+  let typeFilters;
 
-  console.log(req);
+  try {
+    typeFilters = Helpers.getTypeFilters(query);
 
-  // Validate type
-  // it's valid if every type included in eventApi.EVENT_TYPES
-  function getTypeFilters() {
-    const { type } = query;
-    let filtersType = eventApi.EVENT_TYPES;
-
-    if (type) {
-      const types = type.split(":");
-
-      const isValidTypes = types.every(type =>
-        eventApi.EVENT_TYPES.includes(type)
-      );
-
-      if (!isValidTypes) {
-        res.status(400);
-        res.send({
-          error: "incorrect type"
-        });
-      } else {
-        filtersType = types;
+    const events = eventApi.getEvents({
+      filters: {
+        type: typeFilters
+      },
+      pagination: {
+        offset: +query.offset || eventApi.DEFAULT_OFFSET,
+        limit: +query.limit || eventApi.DEFAULT_LIMIT
       }
-    }
+    });
 
-    return filtersType;
+    res.send(events);
   }
-
-  const events = eventApi.getEvents({
-    filters: {
-      type: getTypeFilters()
-    },
-    pagination: {
-      offset: +query.offset || eventApi.DEFAULT_OFFSET,
-      limit: +query.limit || eventApi.DEFAULT_LIMIT
-    }
-  });
-
-  res.send(events);
+  catch (e) {
+    res.status(e.status);
+    res.send({
+      error: e.error
+    });
+  }
 });
 
-app.get("*", function(req, res) {
+app.get("*", (req, res) => {
   res.send("<h1>Page not found</h1>", 404);
 });
 
 app.listen(port, () => {
   startTime = new Date();
+
   console.log(`App listening on port ${port}!`);
 });
