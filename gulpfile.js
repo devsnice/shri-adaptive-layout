@@ -66,7 +66,7 @@ gulp.task("scss", () => {
 
 gulp.task("scripts", () =>
   gulp
-    .src("./src/pages/index.js")
+    .src("./src/pages/index.ts")
     .pipe(
       webpackStream({
         output: {
@@ -77,10 +77,16 @@ gulp.task("scripts", () =>
         module: {
           rules: [
             {
-              test: /\.(js)$/,
-              loader: "babel-loader"
+              test: /\.(ts)$/,
+              loader: "ts-loader",
+              options: {
+                configFile: require.resolve("./tsconfig.json")
+              }
             }
           ]
+        },
+        resolve: {
+          extensions: [".ts", ".js"]
         }
       })
     )
@@ -145,10 +151,7 @@ gulp.task("watch", () => {
   gulp.watch(paths.scripts, ["scripts-watch"]);
 });
 
-gulp.task(
-  "sequence-gulp",
-  gulpSequence(["icons", "pug", "scss", "scripts", "images", "watch"])
-);
+gulp.task("sequence-gulp", gulpSequence(["icons", "pug", "scss", "scripts", "images", "watch"]));
 
 gulp.task("default", ["sequence-gulp"], () => {
   browserSync.init({

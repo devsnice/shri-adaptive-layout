@@ -146,6 +146,7 @@ class Navigation {
   }
 }
 
+
 /***/ }),
 
 /***/ "./src/components/videocontrol/audioAnalyse.js":
@@ -218,6 +219,7 @@ class Analyse {
 
 /* harmony default export */ __webpack_exports__["default"] = (Analyse);
 
+
 /***/ }),
 
 /***/ "./src/components/videocontrol/canvasVideo.js":
@@ -248,7 +250,7 @@ class CanvasVideo {
   }
 
   applyContrast(data, contrast) {
-    const factor = 259.0 * (contrast + 255.0) / (255.0 * (259.0 - contrast));
+    const factor = (259.0 * (contrast + 255.0)) / (255.0 * (259.0 - contrast));
 
     for (let i = 0; i < data.length; i += 4) {
       data[i] = this.truncateColor(factor * (data[i] - 128.0) + 128.0);
@@ -334,6 +336,7 @@ class CanvasVideo {
 
 /* harmony default export */ __webpack_exports__["default"] = (CanvasVideo);
 
+
 /***/ }),
 
 /***/ "./src/components/videocontrol/player.js":
@@ -363,7 +366,9 @@ class PlayerTemplate {
   }
 
   render(id) {
-    const element = this.template.content.querySelector(".videocontrol-list__item").cloneNode(true);
+    const element = this.template.content
+      .querySelector(".videocontrol-list__item")
+      .cloneNode(true);
 
     // player-{id}
     element.querySelector(".vc-player").setAttribute("id", id);
@@ -400,8 +405,12 @@ class Player {
     this.containerElement = containerElement;
     this.player = playerElement;
     this.video = playerElement.querySelector("video");
-    this.brightnessRange = playerElement.querySelector(".vc-player__brightness");
-    this.noiseLevelRange = playerElement.querySelector(".vc-player__noise-level");
+    this.brightnessRange = playerElement.querySelector(
+      ".vc-player__brightness"
+    );
+    this.noiseLevelRange = playerElement.querySelector(
+      ".vc-player__noise-level"
+    );
     this.contrastRange = playerElement.querySelector(".vc-player__contrast");
 
     this.webglVideo = new _webglVideo__WEBPACK_IMPORTED_MODULE_0__["default"]({
@@ -589,6 +598,7 @@ class Player {
   }
 }
 
+
 /***/ }),
 
 /***/ "./src/components/videocontrol/videocontrol.js":
@@ -632,7 +642,9 @@ class Videocontrol {
 
   openFullPlayer(id) {
     // stop all players except a fullscreen
-    this.broadcasts.filter(broadcast => broadcast.id !== id).forEach(broadcast => broadcast.player.stop());
+    this.broadcasts
+      .filter(broadcast => broadcast.id !== id)
+      .forEach(broadcast => broadcast.player.stop());
 
     // open player in fullscreen
     this.broadcasts[id].player.openFullscreen();
@@ -663,27 +675,30 @@ class Videocontrol {
         url: broadcast.url
       });
 
-      VideoPlayer.init().then(() => {
-        VideoPlayer.play();
+      VideoPlayer.init()
+        .then(() => {
+          VideoPlayer.play();
 
-        // Init events
-        VideoPlayer.addEventListener("click", e => {
-          this.openFullPlayer(index);
-        });
+          // Init events
+          VideoPlayer.addEventListener("click", e => {
+            this.openFullPlayer(index);
+          });
 
-        VideoPlayer.addEventListener("touchend", e => {
-          this.openFullPlayer(index);
-        });
+          VideoPlayer.addEventListener("touchend", e => {
+            this.openFullPlayer(index);
+          });
 
-        // Save player to broadcasts array
-        this.broadcasts[index].id = index;
-        this.broadcasts[index].player = VideoPlayer;
-      }).catch(err => console.err(err));
+          // Save player to broadcasts array
+          this.broadcasts[index].id = index;
+          this.broadcasts[index].player = VideoPlayer;
+        })
+        .catch(err => console.err(err));
     });
   }
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Videocontrol);
+
 
 /***/ }),
 
@@ -779,7 +794,20 @@ class WebglVideo {
     /** Magic
      * set rectange
      */
-    const vertices = new Float32Array([-1, -1, -1, 1, 1, 1, -1, -1, 1, 1, 1, -1]);
+    const vertices = new Float32Array([
+      -1,
+      -1,
+      -1,
+      1,
+      1,
+      1,
+      -1,
+      -1,
+      1,
+      1,
+      1,
+      -1
+    ]);
 
     const vertexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
@@ -798,7 +826,14 @@ class WebglVideo {
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, texture);
 
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.video);
+        gl.texImage2D(
+          gl.TEXTURE_2D,
+          0,
+          gl.RGBA,
+          gl.RGBA,
+          gl.UNSIGNED_BYTE,
+          this.video
+        );
 
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
@@ -820,6 +855,7 @@ class WebglVideo {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (WebglVideo);
+
 
 /***/ }),
 
@@ -879,7 +915,10 @@ class PlayerWidget {
   render() {
     this.setCover();
 
-    this.setInnerText(".player-now__title", `${this.data.artist} ${this.data.track.name}`);
+    this.setInnerText(
+      ".player-now__title",
+      `${this.data.artist} ${this.data.track.name}`
+    );
 
     this.setInnerText(".player-progress__time", this.data.track.length);
     this.setInnerText(".player-volume__percentage", `${this.data.volume}%`);
@@ -976,9 +1015,15 @@ class ThemalWidget {
   }
 
   render() {
-    this.setInnerText(".widget-sensor_type-temp .widget-sensor__value", `${this.data.temperature}C`);
+    this.setInnerText(
+      ".widget-sensor_type-temp .widget-sensor__value",
+      `${this.data.temperature}C`
+    );
 
-    this.setInnerText(".widget-sensor_type-humidity .widget-sensor__value", `${this.data.humidity}%`);
+    this.setInnerText(
+      ".widget-sensor_type-humidity .widget-sensor__value",
+      `${this.data.humidity}%`
+    );
 
     return this.widget;
   }
@@ -1029,22 +1074,36 @@ class Widget {
 
   setDescription() {
     if (this.event.description) {
-      this.widget.querySelector(".widget-content__text").classList.add(`widget-content__text_width-${this.event.size}`);
+      this.widget
+        .querySelector(".widget-content__text")
+        .classList.add(`widget-content__text_width-${this.event.size}`);
 
-      this.widget.querySelector(".widget-content__text").innerText = this.event.description;
+      this.widget.querySelector(
+        ".widget-content__text"
+      ).innerText = this.event.description;
     }
   }
 
   setHeaderData() {
-    this.widget.querySelector(".widget-header-about__title").innerText = this.event.title;
+    this.widget.querySelector(
+      ".widget-header-about__title"
+    ).innerText = this.event.title;
 
-    this.widget.querySelector(".widget-header__type").innerText = this.event.source;
+    this.widget.querySelector(
+      ".widget-header__type"
+    ).innerText = this.event.source;
 
-    this.widget.querySelector(".widget-header__date").innerText = this.event.time;
+    this.widget.querySelector(
+      ".widget-header__date"
+    ).innerText = this.event.time;
 
-    this.widget.querySelector(".widget-header-about__icon > use").setAttribute("xlink:href", `#${this.event.icon}`);
+    this.widget
+      .querySelector(".widget-header-about__icon > use")
+      .setAttribute("xlink:href", `#${this.event.icon}`);
 
-    this.widget.querySelector(".widget-header-about__icon").classList.add(`icon_${this.event.icon}`);
+    this.widget
+      .querySelector(".widget-header-about__icon")
+      .classList.add(`icon_${this.event.icon}`);
   }
 
   getDataTemplateType() {
@@ -1125,12 +1184,16 @@ class Widget {
     }
 
     if (dataContentBlock) {
-      this.widget.querySelector(".widget-content").appendChild(dataContentBlock);
+      this.widget
+        .querySelector(".widget-content")
+        .appendChild(dataContentBlock);
     }
   }
 
   render() {
-    this.widget = this.template.content.querySelector(".widget").cloneNode(true);
+    this.widget = this.template.content
+      .querySelector(".widget")
+      .cloneNode(true);
 
     this.widget.classList.add(`widget_size-${this.event.size}`);
     this.widget.classList.add(`widget_type-${this.event.type}`);
@@ -1175,6 +1238,7 @@ class ApplicationLayout {
 const Layout = new ApplicationLayout("#application");
 
 /* harmony default export */ __webpack_exports__["default"] = (Layout);
+
 
 /***/ }),
 
@@ -1269,7 +1333,10 @@ class IndexPage {
       headers: {
         "Content-Type": "application/json"
       }
-    }).then(response => response.json()).then(result => result).catch(err => alert(err));
+    })
+      .then(response => response.json())
+      .then(result => result)
+      .catch(err => alert(err));
   }
 
   init() {
@@ -1298,15 +1365,24 @@ __webpack_require__.r(__webpack_exports__);
 
 class VideoControlPage {
   constructor() {
-    this.broadcasts = [{
-      url: "http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fsosed%2Fmaster.m3u8"
-    }, {
-      url: "http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fcat%2Fmaster.m3u8"
-    }, {
-      url: "http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fdog%2Fmaster.m3u8"
-    }, {
-      url: "http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fhall%2Fmaster.m3u8"
-    }];
+    this.broadcasts = [
+      {
+        url:
+          "http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fsosed%2Fmaster.m3u8"
+      },
+      {
+        url:
+          "http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fcat%2Fmaster.m3u8"
+      },
+      {
+        url:
+          "http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fdog%2Fmaster.m3u8"
+      },
+      {
+        url:
+          "http://localhost:9191/master?url=http%3A%2F%2Flocalhost%3A3102%2Fstreams%2Fhall%2Fmaster.m3u8"
+      }
+    ];
 
     this.init();
   }

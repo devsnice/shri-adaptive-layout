@@ -8,6 +8,8 @@ class InitApplication {
   constructor() {
     this.currentPage = window.location.pathname;
 
+    alert("work!");
+
     this.init();
   }
 
