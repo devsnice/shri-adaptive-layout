@@ -1,14 +1,15 @@
-const express = require("express");
-const bodyParser = require("body-parser");
+import express from "express";
+import { Request, Response, NextFunction } from "express";
 
-const eventApi = require("./api/events");
-const statusApi = require("./api/status");
+import bodyParser from "body-parser";
 
-const Helpers = require("./helpers");
+import Helpers from "./helpers";
+
+import eventApi from "./api/events";
+import statusApi from "./api/status";
 
 const app = express();
 const port = 8000;
-let startTime;
 
 app.use(bodyParser.json());
 bodyParser.urlencoded({ extended: false });
@@ -16,12 +17,9 @@ bodyParser.urlencoded({ extended: false });
 /**
  * Cors - allow all
  */
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
@@ -29,8 +27,8 @@ app.use((req, res, next) => {
  * GET /status
  * @return {string} time - Current server running time in format hh:mm:ss
  */
-app.get("/status", (req, res) => {
-  const time = statusApi.calculateServerRunningTime(startTime);
+app.get("/status", (req: Request, res: Response) => {
+  const time = statusApi.calculateServerRunningTime();
 
   res.send(time);
 });
@@ -42,12 +40,12 @@ app.get("/status", (req, res) => {
  * @bodyparam {number} limit - (default is 10)
  * @return {Events} events
  */
-app.post("/api/events", async (req, res) => {
+app.post("/api/events", async (req: Request, res: Response) => {
   const query = req.body;
   let typeFilters;
 
   try {
-    typeFilters = Helpers.getTypeFilters(query);
+    typeFilters = Helpers.getTypeFilters(query.type);
 
     const events = await eventApi.getEvents({
       filters: {
@@ -61,19 +59,18 @@ app.post("/api/events", async (req, res) => {
 
     res.send(events);
   } catch (e) {
-    res.status(e.status);
-    res.send({
+    res.status(e.status).send({
       error: e.error
     });
   }
 });
 
-app.get("*", (req, res) => {
-  res.send("<h1>Page not found</h1>", 404);
+app.get("*", (req: Request, res: Response) => {
+  res.status(404).send("<h1>Page not found</h1>");
 });
 
 app.listen(port, () => {
-  startTime = new Date();
+  statusApi.setServerStartTime(new Date());
 
   console.log(`App listening on port ${port}!`);
 });
