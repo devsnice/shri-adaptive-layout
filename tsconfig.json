@@ -1,17 +1,25 @@
 {
   "compilerOptions": {
+    "noEmitOnError": true,
     "esModuleInterop": true,
     "target": "es6",
-    "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
     "baseUrl": ".",
+    "outDir": "docs/scripts",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false,
     "strict": false,
     "paths": {
       "*": ["node_modules/*"]
     },
-    "typeRoots": ["./types"],
+    "typeRoots": ["./node_modules/@types"],
     "lib": ["dom", "es7"]
   },
-  "include": ["./src/**/*.ts"]
+  "include": ["./src/**/*.ts"],
+  "exclude": ["./server"]
 }

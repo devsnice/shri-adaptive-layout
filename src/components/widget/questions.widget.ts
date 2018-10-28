@@ -1,12 +1,18 @@
+import { IWidgetQuestionsData } from "../../types/index";
+
 class QuestionsWidget {
-  constructor({ data }) {
-    this.template = document.getElementById("widget-questions-template");
+  template: HTMLTemplateElement;
+  data: IWidgetQuestionsData;
+  widget: Node;
+
+  constructor({ data }: { data: IWidgetQuestionsData }) {
+    this.template = document.getElementById("widget-questions-template") as HTMLTemplateElement;
     this.data = data;
     this.widget = this.template.content.cloneNode(true);
   }
 
-  setInnerText(selector, text) {
-    const block = this.widget.querySelector(selector);
+  setInnerText(selector: string, text: string) {
+    const block: HTMLElement = (<Element>this.widget).querySelector(selector);
 
     if (block) {
       block.innerText = text;

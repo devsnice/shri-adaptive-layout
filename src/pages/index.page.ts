@@ -1,11 +1,13 @@
 import Widget from "../components/widget/widget";
 
+import * as Types from "../types";
+
 class IndexPage {
   constructor() {
     this.init();
   }
 
-  renderDashboardWidgets(events) {
+  renderDashboardWidgets(events: Array<Types.Event>) {
     const dashboardWidgetsList = document.getElementById("dashboard-list");
 
     events.forEach(event => {

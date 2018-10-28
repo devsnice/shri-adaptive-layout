@@ -1,17 +1,34 @@
 import { PlayerTemplate, Player } from "./player";
+import { Broadcast } from "../../types/index";
 
 /**
  * Videocontrol represents controller over our feature,
  * it initializes broadcasts and interact with user's actions
  */
 class Videocontrol {
-  constructor({ broadcasts, elementShowAll, element }) {
+  broadcasts: Array<Broadcast>;
+  element: HTMLElement;
+  elementShowAll: HTMLElement;
+
+  state: {
+    fullscreenId: number;
+  };
+
+  constructor({
+    broadcasts,
+    elementShowAll,
+    element
+  }: {
+    broadcasts: Array<Broadcast>;
+    elementShowAll: HTMLElement;
+    element: HTMLElement;
+  }) {
     this.broadcasts = broadcasts;
     this.element = element;
     this.elementShowAll = elementShowAll;
 
     this.state = {
-      fullscreenId: null
+      fullscreenId: Infinity
     };
 
     this.initPlayers();
@@ -27,7 +44,7 @@ class Videocontrol {
     this.state.fullscreenId = null;
   }
 
-  openFullPlayer(id) {
+  openFullPlayer(id: number) {
     // stop all players except a fullscreen
     this.broadcasts
       .filter(broadcast => broadcast.id !== id)
@@ -51,14 +68,14 @@ class Videocontrol {
 
   initPlayers() {
     this.broadcasts.forEach((broadcast, index) => {
-      const VideoTemplate = new PlayerTemplate();
-      const listVideoElement = VideoTemplate.render(`player-${index + 1}`);
+      const VideoTemplate: PlayerTemplate = new PlayerTemplate();
+      const listVideoElement: Node = VideoTemplate.render(`player-${index + 1}`);
 
       this.element.appendChild(listVideoElement);
 
       const VideoPlayer = new Player({
         containerElement: this.element,
-        playerElement: listVideoElement.querySelector(".vc-player"),
+        playerElement: (<Element>listVideoElement).querySelector(".vc-player"),
         url: broadcast.url
       });
 
@@ -79,7 +96,7 @@ class Videocontrol {
           this.broadcasts[index].id = index;
           this.broadcasts[index].player = VideoPlayer;
         })
-        .catch(err => console.err(err));
+        .catch(err => console.warn(err));
     });
   }
 }

@@ -1,8 +1,10 @@
 import StatsWidget from "./stats.widget";
 import CameraWidget from "./camera.widget";
 import QuestionsWidget from "./questions.widget";
-import ThemalWidget from "./themal.widget"
+import ThemalWidget from "./themal.widget";
 import PlayerWidget from "./player.widget";
+
+import * as Types from "../../types";
 
 const WIDGET_TYPES = {
   STATS: "STATS",
@@ -14,52 +16,73 @@ const WIDGET_TYPES = {
 };
 
 class Widget {
-  constructor({ event, container }) {
+  event: Types.Event;
+  container: HTMLElement;
+  template: HTMLTemplateElement;
+  widget: HTMLElement;
+
+  constructor({ event, container }: { event: Types.Event; container: HTMLElement }) {
     this.event = event;
     this.container = container;
-    this.template = document.getElementById("widget-template");
-    this.widget = null;
+    this.template = document.getElementById("widget-template") as HTMLTemplateElement;
+
+    // @ts-ignore
+    this.widget = this.template.content.querySelector(".widget").cloneNode(true);
 
     this.render();
   }
 
   setDescription() {
-    if (this.event.description) {
-      this.widget
-        .querySelector(".widget-content__text")
-        .classList.add(`widget-content__text_width-${this.event.size}`);
+    if (this.event.description && this.widget) {
+      const contentText = this.widget.querySelector(".widget-content__text");
+      const textElement: HTMLElement | null = this.widget.querySelector(".widget-content__text");
 
-      this.widget.querySelector(
-        ".widget-content__text"
-      ).innerText = this.event.description;
+      if (contentText) {
+        contentText.classList.add(`widget-content__text_width-${this.event.size}`);
+      }
+
+      if (textElement) {
+        textElement.innerText = this.event.description;
+      }
     }
   }
 
   setHeaderData() {
-    this.widget.querySelector(
+    const titleElement: HTMLElement | null = this.widget.querySelector(
       ".widget-header-about__title"
-    ).innerText = this.event.title;
+    );
+    const typeElement: HTMLElement | null = this.widget.querySelector(".widget-header__type");
+    const dateElement: HTMLElement | null = this.widget.querySelector(".widget-header__date");
+    const iconUseElement: HTMLElement | null = this.widget.querySelector(
+      ".widget-header-about__icon > use"
+    );
+    const iconElement: HTMLElement | null = this.widget.querySelector(".widget-header-about__icon");
 
-    this.widget.querySelector(
-      ".widget-header__type"
-    ).innerText = this.event.source;
+    if (titleElement) {
+      titleElement.innerText = this.event.title;
+    }
 
-    this.widget.querySelector(
-      ".widget-header__date"
-    ).innerText = this.event.time;
+    if (typeElement) {
+      typeElement.innerText = this.event.source;
+    }
 
-    this.widget
-      .querySelector(".widget-header-about__icon > use")
-      .setAttribute("xlink:href", `#${this.event.icon}`);
+    if (dateElement) {
+      dateElement.innerText = this.event.time;
+    }
 
-    this.widget
-      .querySelector(".widget-header-about__icon")
-      .classList.add(`icon_${this.event.icon}`);
+    if (iconUseElement) {
+      iconUseElement.setAttribute("xlink:href", `#${this.event.icon}`);
+    }
+
+    if (iconElement) {
+      iconElement.classList.add(`icon_${this.event.icon}`);
+    }
   }
 
   getDataTemplateType() {
-    const { data = {}, icon } = this.event;
+    const { data, icon } = this.event;
 
+    // @ts-ignore
     if (data.type === "graph") {
       return WIDGET_TYPES.STATS;
     }
@@ -68,14 +91,17 @@ class Widget {
       return WIDGET_TYPES.CAMERA;
     }
 
+    // @ts-ignore
     if (data.temperature) {
       return WIDGET_TYPES.THERMAL;
     }
 
+    // @ts-ignore
     if (data.albumcover) {
       return WIDGET_TYPES.PLAYER;
     }
 
+    // @ts-ignore
     if (data.buttons) {
       return WIDGET_TYPES.QUESTIONS;
     }
@@ -89,25 +115,23 @@ class Widget {
 
     switch (templateDataType) {
       case WIDGET_TYPES.STATS:
-        const statsWidget = new StatsWidget({
-          data: this.event.data
-        });
+        const statsWidget = new StatsWidget();
 
         dataContentBlock = statsWidget.render();
 
         break;
 
       case WIDGET_TYPES.CAMERA:
-        const cameraWidget = new CameraWidget({
-          data: this.event.data
-        });
+        const cameraWidget = new CameraWidget();
 
         dataContentBlock = cameraWidget.render();
 
         break;
 
       case WIDGET_TYPES.PLAYER:
+        // @ts-ignore
         const playerWidget = new PlayerWidget({
+          // @ts-ignore
           data: this.event.data
         });
 
@@ -116,7 +140,9 @@ class Widget {
         break;
 
       case WIDGET_TYPES.QUESTIONS:
+        // @ts-ignore
         const questionsWidget = new QuestionsWidget({
+          // @ts-ignore
           data: this.event.data
         });
 
@@ -125,7 +151,9 @@ class Widget {
         break;
 
       case WIDGET_TYPES.THERMAL:
+        // @ts-ignore
         const thermalWidget = new ThemalWidget({
+          // @ts-ignore
           data: this.event.data
         });
 
@@ -135,17 +163,13 @@ class Widget {
     }
 
     if (dataContentBlock) {
-      this.widget
-        .querySelector(".widget-content")
-        .appendChild(dataContentBlock);
+      const widgetContent: HTMLElement | null = this.widget.querySelector(".widget-content");
+
+      widgetContent && widgetContent.appendChild(dataContentBlock);
     }
   }
 
   render() {
-    this.widget = this.template.content
-      .querySelector(".widget")
-      .cloneNode(true);
-
     this.widget.classList.add(`widget_size-${this.event.size}`);
     this.widget.classList.add(`widget_type-${this.event.type}`);
 

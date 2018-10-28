@@ -1,14 +1,15 @@
-import layout from "../layout/layout";
 import HeaderNavigation from "../components/header/header";
 
 import IndexPage from "./index.page";
 import VideocontrolPage from "./videocontrol.page";
 
 class InitApplication {
+  page: any;
+  headerNavigation: any;
+  currentPage: string;
+
   constructor() {
     this.currentPage = window.location.pathname;
-
-    alert("work!");
 
     this.init();
   }
@@ -27,8 +28,7 @@ class InitApplication {
 
   init() {
     this.headerNavigation = new HeaderNavigation({
-      selector: "#header-menu",
-      layout
+      selector: "#header-menu"
     });
 
     this.routing();

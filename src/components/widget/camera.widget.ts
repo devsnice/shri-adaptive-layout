@@ -1,6 +1,8 @@
 class CameraWidget {
+  template: HTMLTemplateElement;
+
   constructor() {
-    this.template = document.getElementById("widget-camera-template");
+    this.template = document.getElementById("widget-camera-template") as HTMLTemplateElement;
   }
 
   render() {

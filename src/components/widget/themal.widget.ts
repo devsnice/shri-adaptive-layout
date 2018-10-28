@@ -1,12 +1,18 @@
+import { IWidgetThemalData } from "../../types/index";
+
 class ThemalWidget {
-  constructor({ data }) {
-    this.template = document.getElementById("widget-thermal-template");
+  template: HTMLTemplateElement;
+  data: IWidgetThemalData;
+  widget: Node;
+
+  constructor({ data }: { data: IWidgetThemalData }) {
+    this.template = document.getElementById("widget-thermal-template") as HTMLTemplateElement;
     this.data = data;
     this.widget = this.template.content.cloneNode(true);
   }
 
-  setInnerText(selector, text) {
-    const block = this.widget.querySelector(selector);
+  setInnerText(selector: string, text: string) {
+    const block: HTMLElement = (<Element>this.widget).querySelector(selector);
 
     if (block) {
       block.innerText = text;

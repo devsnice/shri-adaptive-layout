@@ -1,12 +1,18 @@
+import { IWidgetPlayerData } from "../../types/index";
+
 class PlayerWidget {
-  constructor({ data }) {
-    this.template = document.getElementById("widget-player-template");
+  template: HTMLTemplateElement;
+  data: IWidgetPlayerData;
+  widget: Node;
+
+  constructor({ data }: { data: IWidgetPlayerData }) {
+    this.template = document.getElementById("widget-player-template") as HTMLTemplateElement;
     this.data = data;
     this.widget = this.template.content.cloneNode(true);
   }
 
-  setInnerText(selector, text) {
-    const block = this.widget.querySelector(selector);
+  setInnerText(selector: string, text: string) {
+    const block: HTMLElement = (<HTMLElement>this.widget).querySelector(selector);
 
     if (block) {
       block.innerText = text;
@@ -14,7 +20,7 @@ class PlayerWidget {
   }
 
   setCover() {
-    const block = this.widget.querySelector(".player-now__cover");
+    const block = (<Element>this.widget).querySelector(".player-now__cover");
 
     block.setAttribute("src", this.data.albumcover);
   }
@@ -22,10 +28,7 @@ class PlayerWidget {
   render() {
     this.setCover();
 
-    this.setInnerText(
-      ".player-now__title",
-      `${this.data.artist} ${this.data.track.name}`
-    );
+    this.setInnerText(".player-now__title", `${this.data.artist} ${this.data.track.name}`);
 
     this.setInnerText(".player-progress__time", this.data.track.length);
     this.setInnerText(".player-volume__percentage", `${this.data.volume}%`);

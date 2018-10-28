@@ -1,4 +1,3 @@
-import WebglVideo from "./webglVideo";
 import CanvasVideo from "./canvasVideo";
 import Analyse from "./audioAnalyse";
 
@@ -6,23 +5,30 @@ import Analyse from "./audioAnalyse";
  * PlayerTemplate - generate video-player from <template> tag
  */
 export class PlayerTemplate {
+  template: HTMLTemplateElement;
+
   constructor() {
-    this.template = document.getElementById("template-player");
+    this.template = document.getElementById("template-player") as HTMLTemplateElement;
   }
 
-  render(id) {
-    const element = this.template.content
+  render(id: string): Node {
+    const element: Node = this.template.content
       .querySelector(".videocontrol-list__item")
       .cloneNode(true);
 
     // player-{id}
-    element.querySelector(".vc-player").setAttribute("id", id);
+    const playerElement: HTMLElement | null = (<Element>element).querySelector(".vc-player");
+
+    playerElement && playerElement.setAttribute("id", id);
 
     // player-{id}-video
-    element.querySelector("video").setAttribute("id", `${id}-video`);
+    const videoElement: HTMLElement | null = (<Element>element).querySelector("video");
+
+    videoElement && videoElement.setAttribute("id", `${id}-video`);
 
     // player-{id}-webgl-video
-    element.querySelector("input").setAttribute("id", `${id}-webgl-video`);
+    const inputElement: HTMLElement | null = (<Element>element).querySelector("input");
+    inputElement && inputElement.setAttribute("id", `${id}-webgl-video`);
 
     return element;
   }
@@ -33,35 +39,69 @@ export class PlayerTemplate {
  * it has special behavior for our application.
  */
 export class Player {
-  constructor({ url, containerElement, playerElement }) {
+  settings: {
+    url: string;
+    canvasInited: boolean;
+    containerBounds: {
+      left: number;
+      top: number;
+      width: number;
+      height: number;
+    };
+    isFullscreen: boolean;
+  };
+
+  videoSettings: {
+    brightness: string;
+    contrast: string;
+    isFullscreen: boolean;
+  };
+
+  containerElement: HTMLElement;
+  player: HTMLElement | null;
+  video: HTMLVideoElement | null;
+  brightnessRange: HTMLInputElement | null;
+  noiseLevelRange: HTMLInputElement | null;
+  contrastRange: HTMLInputElement | null;
+
+  canvasVideo: CanvasVideo;
+
+  initPromise: Promise<HTMLVideoElement>;
+  analyser: any;
+
+  constructor({
+    url,
+    containerElement,
+    playerElement
+  }: {
+    url: string;
+    containerElement: HTMLElement;
+    playerElement: HTMLElement;
+  }) {
     this.settings = {
       url,
-      webglInited: false,
       canvasInited: false,
-      containerBounds: null
+      containerBounds: {
+        left: 0,
+        top: 0,
+        width: 0,
+        height: 0
+      },
+      isFullscreen: false
     };
 
     this.videoSettings = {
-      brightness: 0,
-      contrast: 0,
+      brightness: "0",
+      contrast: "0",
       isFullscreen: false
     };
 
     this.containerElement = containerElement;
     this.player = playerElement;
     this.video = playerElement.querySelector("video");
-    this.brightnessRange = playerElement.querySelector(
-      ".vc-player__brightness"
-    );
-    this.noiseLevelRange = playerElement.querySelector(
-      ".vc-player__noise-level"
-    );
+    this.brightnessRange = playerElement.querySelector(".vc-player__brightness");
+    this.noiseLevelRange = playerElement.querySelector(".vc-player__noise-level");
     this.contrastRange = playerElement.querySelector(".vc-player__contrast");
-
-    this.webglVideo = new WebglVideo({
-      video: this.video,
-      videoPlayer: this.player
-    });
 
     this.canvasVideo = new CanvasVideo({
       video: this.video,
@@ -88,13 +128,13 @@ export class Player {
     }
 
     this.initPromise = new Promise((resolve, reject) => {
-      if (Hls.isSupported()) {
-        const hls = new Hls();
+      if (window.Hls.isSupported()) {
+        const hls = new window.Hls();
 
         hls.loadSource(this.settings.url);
         hls.attachMedia(this.video);
 
-        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        hls.on(window.Hls.Events.MANIFEST_PARSED, () => {
           resolve(this.video);
         });
       } else if (this.video.canPlayType("application/vnd.apple.mpegurl")) {
@@ -174,21 +214,6 @@ export class Player {
     this.settings.isFullscreen = false;
   }
 
-  playVideoOnWebgl() {
-    this.setContainerBounds();
-
-    if (!this.settings.webglInited) {
-      this.video.classList.add("vc-player__video_state-hidden");
-    }
-
-    this.webglVideo.play({
-      brightness: this.videoSettings.brightness,
-      webglInited: this.settings.webglInited
-    });
-
-    this.settings.webglInited = true;
-  }
-
   playVideoOnCanvas() {
     this.setContainerBounds();
 
@@ -209,15 +234,13 @@ export class Player {
     this.settings.canvasInited = true;
   }
 
-  changeBrightness(value) {
+  changeBrightness(value: string) {
     this.videoSettings.brightness = value;
 
-    // turn on webgl instead of canvas
-    // this.playVideoOnWebgl();
     this.playVideoOnCanvas();
   }
 
-  changeContrast(value) {
+  changeContrast(value: string) {
     this.videoSettings.contrast = value;
 
     this.playVideoOnCanvas();
@@ -225,11 +248,11 @@ export class Player {
 
   initEvents() {
     this.brightnessRange.addEventListener("change", e => {
-      this.changeBrightness(e.target.value);
+      this.changeBrightness((<HTMLInputElement>e.target).value);
     });
 
     this.contrastRange.addEventListener("change", e => {
-      this.changeContrast(e.target.value);
+      this.changeContrast((<HTMLInputElement>e.target).value);
     });
 
     this.analyser = new Analyse({
@@ -238,7 +261,7 @@ export class Player {
     });
   }
 
-  addEventListener(event, callback) {
+  addEventListener(event: string, callback: (e: Event) => void) {
     this.player.addEventListener(event, callback);
   }
 }

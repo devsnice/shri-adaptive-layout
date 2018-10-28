@@ -1,5 +1,12 @@
 class CanvasVideo {
-  constructor({ video, videoPlayer }) {
+  video: HTMLVideoElement;
+  videoPlayer: HTMLElement;
+  stopVideo: boolean;
+
+  canvas: HTMLCanvasElement | null;
+  canvasHelper: HTMLCanvasElement | null;
+
+  constructor({ video, videoPlayer }: { video: HTMLVideoElement; videoPlayer: HTMLElement }) {
     this.video = video;
     this.videoPlayer = videoPlayer;
     this.stopVideo = false;
@@ -8,16 +15,16 @@ class CanvasVideo {
     this.canvasHelper = null;
   }
 
-  applyBrightness(data, brightness) {
+  applyBrightness(data: Uint8ClampedArray, brightness: string) {
     for (let i = 0; i < data.length; i += 4) {
-      data[i] += 255 * (brightness / 100);
-      data[i + 1] += 255 * (brightness / 100);
-      data[i + 2] += 255 * (brightness / 100);
+      data[i] += 255 * (+brightness / 100);
+      data[i + 1] += 255 * (+brightness / 100);
+      data[i + 2] += 255 * (+brightness / 100);
     }
   }
 
-  applyContrast(data, contrast) {
-    const factor = (259.0 * (contrast + 255.0)) / (255.0 * (259.0 - contrast));
+  applyContrast(data: Uint8ClampedArray, contrast: string) {
+    const factor = (259.0 * (+contrast + 255.0)) / (255.0 * (259.0 - +contrast));
 
     for (let i = 0; i < data.length; i += 4) {
       data[i] = this.truncateColor(factor * (data[i] - 128.0) + 128.0);
@@ -26,7 +33,7 @@ class CanvasVideo {
     }
   }
 
-  truncateColor(value) {
+  truncateColor(value: number) {
     if (value < 0) {
       value = 0;
     } else if (value > 255) {
@@ -36,7 +43,19 @@ class CanvasVideo {
     return value;
   }
 
-  filter({ video, width, height, contrast, brightness }) {
+  filter({
+    video,
+    width,
+    height,
+    contrast,
+    brightness
+  }: {
+    video: HTMLVideoElement;
+    width: number;
+    height: number;
+    contrast: string;
+    brightness: string;
+  }) {
     if (!this.canvasHelper) {
       this.canvasHelper = document.createElement("canvas");
 
@@ -46,24 +65,36 @@ class CanvasVideo {
 
     const contextHelper = this.canvasHelper.getContext("2d");
 
-    contextHelper.drawImage(video, 0, 0, width, height);
+    if (contextHelper) {
+      contextHelper.drawImage(video, 0, 0, width, height);
 
-    const idata = contextHelper.getImageData(0, 0, width, height);
+      const idata = contextHelper.getImageData(0, 0, width, height);
 
-    var data = idata.data;
+      var data = idata.data;
 
-    this.applyBrightness(data, brightness);
-    this.applyContrast(data, contrast);
+      this.applyBrightness(data, brightness);
+      this.applyContrast(data, contrast);
 
-    return idata;
+      return idata;
+    }
   }
 
-  play({ canvasInited, brightness, contrast, size: { width, height } }) {
+  play({
+    canvasInited,
+    brightness,
+    contrast,
+    size: { width, height }
+  }: {
+    canvasInited: boolean;
+    brightness: string;
+    contrast: string;
+    size: { width: number; height: number };
+  }) {
     if (!canvasInited) {
       this.canvas = document.createElement("canvas");
 
-      this.canvas.style.width = width;
-      this.canvas.style.height = height;
+      this.canvas.style.width = `${width}`;
+      this.canvas.style.height = `${height}`;
 
       this.canvas.width = width;
       this.canvas.height = height;
@@ -73,31 +104,35 @@ class CanvasVideo {
       this.stopVideo = true;
     }
 
-    const context = this.canvas.getContext("2d");
+    if (this.canvas) {
+      const context = this.canvas.getContext("2d");
 
-    const draw = () => {
-      requestAnimationFrame(() => {
-        const filteredImage = this.filter({
-          video: this.video,
-          width,
-          height,
-          contrast,
-          brightness
+      if (!context) return;
+
+      const draw = () => {
+        requestAnimationFrame(() => {
+          const filteredImage = this.filter({
+            video: this.video,
+            width,
+            height,
+            contrast,
+            brightness
+          });
+
+          context.putImageData(filteredImage, 0, 0);
+
+          if (this.stopVideo || this.video.paused || this.video.ended) {
+            this.stopVideo = false;
+
+            return false;
+          } else {
+            draw();
+          }
         });
+      };
 
-        context.putImageData(filteredImage, 0, 0);
-
-        if (this.stopVideo || this.video.paused || this.video.ended) {
-          this.stopVideo = false;
-
-          return false;
-        } else {
-          draw();
-        }
-      });
-    };
-
-    draw();
+      draw();
+    }
   }
 }
 

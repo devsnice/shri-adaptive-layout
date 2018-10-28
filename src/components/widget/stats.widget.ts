@@ -1,6 +1,8 @@
 class StatsWidget {
+  template: HTMLTemplateElement;
+
   constructor() {
-    this.template = document.getElementById("widget-stats-template");
+    this.template = document.getElementById("widget-stats-template") as HTMLTemplateElement;
   }
 
   render() {

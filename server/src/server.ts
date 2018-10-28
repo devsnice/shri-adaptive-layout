@@ -1,7 +1,7 @@
-import express from "express";
+const express = require("express");
 import { Request, Response, NextFunction } from "express";
 
-import bodyParser from "body-parser";
+const bodyParser = require("body-parser");
 
 import Helpers from "./helpers";
 

@@ -24,7 +24,7 @@ const paths = {
   views: "./src/components/**/*.pug",
   pages: "./src/pages/**/*.pug",
   styles: "./src/**/*.scss",
-  scripts: "./src/**/*.js",
+  scripts: "./src/**/*.ts",
   images: "./src/images/**/*.{png,svg,jpeg}",
   icons: "./src/icons/**/*.svg"
 };
@@ -73,7 +73,7 @@ gulp.task("scripts", () =>
           filename: "main.js"
         },
         mode: "development",
-        devtool: "source-map",
+        devtool: "inline-source-map",
         module: {
           rules: [
             {
@@ -81,12 +81,13 @@ gulp.task("scripts", () =>
               loader: "ts-loader",
               options: {
                 configFile: require.resolve("./tsconfig.json")
-              }
+              },
+              exclude: /node_modules/
             }
           ]
         },
         resolve: {
-          extensions: [".ts", ".js"]
+          extensions: [".ts"]
         }
       })
     )
