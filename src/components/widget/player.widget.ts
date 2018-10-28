@@ -11,7 +11,7 @@ class PlayerWidget {
     this.widget = this.template.content.cloneNode(true);
   }
 
-  setInnerText(selector: string, text: string) {
+  private setInnerText(selector: string, text: string) {
     const block: HTMLElement = (<HTMLElement>this.widget).querySelector(selector);
 
     if (block) {
@@ -19,13 +19,13 @@ class PlayerWidget {
     }
   }
 
-  setCover() {
+  private setCover() {
     const block = (<Element>this.widget).querySelector(".player-now__cover");
 
     block.setAttribute("src", this.data.albumcover);
   }
 
-  render() {
+  public render(): Node {
     this.setCover();
 
     this.setInnerText(".player-now__title", `${this.data.artist} ${this.data.track.name}`);

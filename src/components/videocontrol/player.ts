@@ -11,7 +11,7 @@ export class PlayerTemplate {
     this.template = document.getElementById("template-player") as HTMLTemplateElement;
   }
 
-  render(id: string): Node {
+  public render(id: string): Node {
     const element: Node = this.template.content
       .querySelector(".videocontrol-list__item")
       .cloneNode(true);
@@ -114,7 +114,7 @@ export class Player {
     this.initEvents();
   }
 
-  setContainerBounds() {
+  private setContainerBounds() {
     if (!this.settings.containerBounds) {
       this.settings.containerBounds = this.containerElement.getBoundingClientRect();
     }
@@ -122,7 +122,7 @@ export class Player {
     return this.settings.containerBounds;
   }
 
-  init() {
+  public init() {
     if (this.initPromise) {
       return this.initPromise;
     }
@@ -147,15 +147,15 @@ export class Player {
     });
   }
 
-  play() {
+  public play() {
     this.video.play();
   }
 
-  stop() {
+  public stop() {
     this.video.pause();
   }
 
-  openFullscreen() {
+  public openFullscreen() {
     if (this.settings.isFullscreen) return false;
 
     this.setContainerBounds();
@@ -194,7 +194,7 @@ export class Player {
     this.settings.isFullscreen = true;
   }
 
-  closeFullscreen() {
+  public closeFullscreen() {
     if (!this.settings.isFullscreen) return false;
 
     this.video.muted = true;
@@ -214,7 +214,7 @@ export class Player {
     this.settings.isFullscreen = false;
   }
 
-  playVideoOnCanvas() {
+  private playVideoOnCanvas() {
     this.setContainerBounds();
 
     if (!this.settings.canvasInited) {
@@ -234,19 +234,19 @@ export class Player {
     this.settings.canvasInited = true;
   }
 
-  changeBrightness(value: string) {
+  private changeBrightness(value: string) {
     this.videoSettings.brightness = value;
 
     this.playVideoOnCanvas();
   }
 
-  changeContrast(value: string) {
+  private changeContrast(value: string) {
     this.videoSettings.contrast = value;
 
     this.playVideoOnCanvas();
   }
 
-  initEvents() {
+  private initEvents() {
     this.brightnessRange.addEventListener("change", e => {
       this.changeBrightness((<HTMLInputElement>e.target).value);
     });
@@ -261,7 +261,7 @@ export class Player {
     });
   }
 
-  addEventListener(event: string, callback: (e: Event) => void) {
+  public addEventListener(event: string, callback: (e: Event) => void) {
     this.player.addEventListener(event, callback);
   }
 }

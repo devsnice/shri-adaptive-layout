@@ -11,7 +11,7 @@ class ThemalWidget {
     this.widget = this.template.content.cloneNode(true);
   }
 
-  setInnerText(selector: string, text: string) {
+  private setInnerText(selector: string, text: string) {
     const block: HTMLElement = (<Element>this.widget).querySelector(selector);
 
     if (block) {
@@ -19,7 +19,7 @@ class ThemalWidget {
     }
   }
 
-  render() {
+  public render(): Node {
     this.setInnerText(
       ".widget-sensor_type-temp .widget-sensor__value",
       `${this.data.temperature}C`

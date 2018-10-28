@@ -22,13 +22,13 @@ export default class Navigation {
     }
   }
 
-  isMobile() {
+  private isMobile() {
     const maxMobileWidth = 768;
 
     return window.innerWidth < maxMobileWidth;
   }
 
-  initNavigation() {
+  private initNavigation() {
     if (this.headerMenu) {
       this.headerMenu.classList.add("header-menu-list_state-mobile");
     }
@@ -44,7 +44,7 @@ export default class Navigation {
     }
   }
 
-  openNavigation() {
+  public openNavigation() {
     if (this.headerMenu) {
       this.headerMenu.classList.add("header-menu-list_state-mobile-opened");
     }
@@ -52,7 +52,7 @@ export default class Navigation {
     this.menuOpened = true;
   }
 
-  closeNavigation() {
+  public closeNavigation() {
     if (this.headerMenu) {
       this.headerMenu.classList.remove("header-menu-list_state-mobile-opened");
     }

@@ -51,7 +51,7 @@ class Analyse {
     });
   }
 
-  getAverageVolume(array: Uint8Array): number {
+  private getAverageVolume(array: Uint8Array): number {
     let values = 0;
 
     for (let i = 0; i < array.length; i++) {
@@ -64,7 +64,7 @@ class Analyse {
     return average === 0 ? 0 : average / 2.56;
   }
 
-  show() {
+  public show() {
     requestAnimationFrame(() => {
       this.noiseLevelRange.value = this.getAverageVolume(this.bands).toString();
 

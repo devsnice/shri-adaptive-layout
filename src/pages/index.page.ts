@@ -7,7 +7,7 @@ class IndexPage {
     this.init();
   }
 
-  renderDashboardWidgets(events: Array<Types.Event>) {
+  private renderDashboardWidgets(events: Array<Types.Event>) {
     const dashboardWidgetsList = document.getElementById("dashboard-list");
 
     events.forEach(event => {
@@ -18,7 +18,7 @@ class IndexPage {
     });
   }
 
-  loadEvents() {
+  private loadEvents() {
     return fetch("http://localhost:8000/api/events", {
       method: "POST",
       body: JSON.stringify({
@@ -32,10 +32,10 @@ class IndexPage {
     })
       .then(response => response.json())
       .then(result => result)
-      .catch(err => alert(err));
+      .catch(err => console.error(err));
   }
 
-  init() {
+  private init() {
     this.loadEvents().then(events => {
       this.renderDashboardWidgets(events);
     });

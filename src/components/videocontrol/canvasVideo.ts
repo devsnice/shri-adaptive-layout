@@ -15,7 +15,7 @@ class CanvasVideo {
     this.canvasHelper = null;
   }
 
-  applyBrightness(data: Uint8ClampedArray, brightness: string) {
+  private applyBrightness(data: Uint8ClampedArray, brightness: string) {
     for (let i = 0; i < data.length; i += 4) {
       data[i] += 255 * (+brightness / 100);
       data[i + 1] += 255 * (+brightness / 100);
@@ -23,7 +23,7 @@ class CanvasVideo {
     }
   }
 
-  applyContrast(data: Uint8ClampedArray, contrast: string) {
+  private applyContrast(data: Uint8ClampedArray, contrast: string) {
     const factor = (259.0 * (+contrast + 255.0)) / (255.0 * (259.0 - +contrast));
 
     for (let i = 0; i < data.length; i += 4) {
@@ -33,7 +33,7 @@ class CanvasVideo {
     }
   }
 
-  truncateColor(value: number) {
+  private truncateColor(value: number): number {
     if (value < 0) {
       value = 0;
     } else if (value > 255) {
@@ -43,7 +43,7 @@ class CanvasVideo {
     return value;
   }
 
-  filter({
+  private filter({
     video,
     width,
     height,
@@ -79,7 +79,7 @@ class CanvasVideo {
     }
   }
 
-  play({
+  public play({
     canvasInited,
     brightness,
     contrast,

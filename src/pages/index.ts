@@ -14,7 +14,7 @@ class InitApplication {
     this.init();
   }
 
-  routing() {
+  private routing() {
     switch (this.currentPage) {
       case "/":
         this.page = new IndexPage();
@@ -26,7 +26,7 @@ class InitApplication {
     }
   }
 
-  init() {
+  private init() {
     this.headerNavigation = new HeaderNavigation({
       selector: "#header-menu"
     });

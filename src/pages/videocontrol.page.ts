@@ -36,7 +36,7 @@ class VideoControlPage {
     this.init();
   }
 
-  init() {
+  private init() {
     const VideocontrolWidget = new Videocontrol({
       broadcasts: this.broadcasts,
       element: document.getElementById("vc-list"),

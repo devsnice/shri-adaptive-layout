@@ -11,7 +11,7 @@ class QuestionsWidget {
     this.widget = this.template.content.cloneNode(true);
   }
 
-  setInnerText(selector: string, text: string) {
+  private setInnerText(selector: string, text: string) {
     const block: HTMLElement = (<Element>this.widget).querySelector(selector);
 
     if (block) {
@@ -19,7 +19,7 @@ class QuestionsWidget {
     }
   }
 
-  render() {
+  public render(): Node {
     this.setInnerText(".button_type-yellow", this.data.buttons[0]);
     this.setInnerText(".button_type-grey", this.data.buttons[1]);
 

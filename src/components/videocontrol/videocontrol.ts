@@ -35,7 +35,7 @@ class Videocontrol {
     this.initEvents();
   }
 
-  closeFullPlayer() {
+  private closeFullPlayer() {
     // play all players
     this.broadcasts.forEach(broadcast => broadcast.player.play());
 
@@ -44,7 +44,7 @@ class Videocontrol {
     this.state.fullscreenId = null;
   }
 
-  openFullPlayer(id: number) {
+  private openFullPlayer(id: number) {
     // stop all players except a fullscreen
     this.broadcasts
       .filter(broadcast => broadcast.id !== id)
@@ -56,7 +56,7 @@ class Videocontrol {
     this.state.fullscreenId = id;
   }
 
-  initEvents() {
+  private initEvents() {
     this.elementShowAll.addEventListener("click", () => {
       this.closeFullPlayer();
     });
@@ -66,7 +66,7 @@ class Videocontrol {
     });
   }
 
-  initPlayers() {
+  private initPlayers() {
     this.broadcasts.forEach((broadcast, index) => {
       const VideoTemplate: PlayerTemplate = new PlayerTemplate();
       const listVideoElement: Node = VideoTemplate.render(`player-${index + 1}`);

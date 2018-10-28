@@ -32,7 +32,7 @@ class Widget {
     this.render();
   }
 
-  setDescription() {
+  private setDescription() {
     if (this.event.description && this.widget) {
       const contentText = this.widget.querySelector(".widget-content__text");
       const textElement: HTMLElement | null = this.widget.querySelector(".widget-content__text");
@@ -47,7 +47,7 @@ class Widget {
     }
   }
 
-  setHeaderData() {
+  private setHeaderData() {
     const titleElement: HTMLElement | null = this.widget.querySelector(
       ".widget-header-about__title"
     );
@@ -79,37 +79,33 @@ class Widget {
     }
   }
 
-  getDataTemplateType() {
+  private getDataTemplateType(): string {
     const { data, icon } = this.event;
-
-    // @ts-ignore
-    if (data.type === "graph") {
-      return WIDGET_TYPES.STATS;
-    }
 
     if (icon === "cam") {
       return WIDGET_TYPES.CAMERA;
     }
 
-    // @ts-ignore
-    if (data.temperature) {
+    if ((<Types.IWidgetDefaultData>data).type === "graph") {
+      return WIDGET_TYPES.STATS;
+    }
+
+    if ((<Types.IWidgetThemalData>data).temperature) {
       return WIDGET_TYPES.THERMAL;
     }
 
-    // @ts-ignore
-    if (data.albumcover) {
+    if ((<Types.IWidgetPlayerData>data).albumcover) {
       return WIDGET_TYPES.PLAYER;
     }
 
-    // @ts-ignore
-    if (data.buttons) {
+    if ((<Types.IWidgetQuestionsData>data).buttons) {
       return WIDGET_TYPES.QUESTIONS;
     }
 
     return WIDGET_TYPES.DEFAULT;
   }
 
-  renderDataTemplate() {
+  private renderDataTemplate() {
     const templateDataType = this.getDataTemplateType();
     let dataContentBlock = null;
 
@@ -129,10 +125,11 @@ class Widget {
         break;
 
       case WIDGET_TYPES.PLAYER:
-        // @ts-ignore
+        /**
+         * TODO: Не понимаю, как здесь можно обойтись без assignment
+         */
         const playerWidget = new PlayerWidget({
-          // @ts-ignore
-          data: this.event.data
+          data: this.event.data as Types.IWidgetPlayerData
         });
 
         dataContentBlock = playerWidget.render();
@@ -140,10 +137,8 @@ class Widget {
         break;
 
       case WIDGET_TYPES.QUESTIONS:
-        // @ts-ignore
         const questionsWidget = new QuestionsWidget({
-          // @ts-ignore
-          data: this.event.data
+          data: this.event.data as Types.IWidgetQuestionsData
         });
 
         dataContentBlock = questionsWidget.render();
@@ -151,10 +146,8 @@ class Widget {
         break;
 
       case WIDGET_TYPES.THERMAL:
-        // @ts-ignore
         const thermalWidget = new ThemalWidget({
-          // @ts-ignore
-          data: this.event.data
+          data: this.event.data as Types.IWidgetThemalData
         });
 
         dataContentBlock = thermalWidget.render();
@@ -169,7 +162,7 @@ class Widget {
     }
   }
 
-  render() {
+  public render() {
     this.widget.classList.add(`widget_size-${this.event.size}`);
     this.widget.classList.add(`widget_type-${this.event.type}`);
 

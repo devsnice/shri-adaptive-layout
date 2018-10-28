@@ -5,7 +5,7 @@ class CameraWidget {
     this.template = document.getElementById("widget-camera-template") as HTMLTemplateElement;
   }
 
-  render() {
+  public render(): Node {
     return this.template.content.cloneNode(true);
   }
 }

@@ -25,9 +25,8 @@ export interface IWidgetThemalData {
   humidity: number;
 }
 
-interface WidgetDefaultData {
-  temperature: number;
-  humidity: number;
+export interface IWidgetDefaultData {
+  type: string;
 }
 
 export interface Event {
@@ -38,7 +37,7 @@ export interface Event {
   description: string;
   icon: string;
   size: string;
-  data?: WidgetDefaultData | IWidgetPlayerData | IWidgetQuestionsData | IWidgetThemalData;
+  data?: IWidgetDefaultData | IWidgetPlayerData | IWidgetQuestionsData | IWidgetThemalData;
 }
 
 export interface Broadcast {
