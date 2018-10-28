@@ -6,9 +6,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "gulp --watch",
-    "server": "nodemon server/dist/server.js",
+    "server": "ts-node server/src/server.ts",
     "tslint": "npx tslint --project tsconfig.json",
-    "server-watch-ts": "cd server && tsc -w",
     "cypress:open": "cypress open"
   },
   "devDependencies": {
@@ -38,6 +37,7 @@
     "gulp-sass": "^4.0.1",
     "gulp-svg-symbols": "^3.1.1",
     "gulp-svgmin": "^1.2.4",
-    "ts-loader": "^5.2.2"
+    "ts-loader": "^5.2.2",
+    "ts-node": "^7.0.1"
   }
 }

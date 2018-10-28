@@ -1,12 +1,11 @@
-const express = require("express");
+import express from "express";
 import { Request, Response, NextFunction } from "express";
 
-const bodyParser = require("body-parser");
-
-import Helpers from "./helpers";
+import bodyParser from "body-parser";
 
 import eventApi from "./api/events";
 import statusApi from "./api/status";
+import Helpers from "./helpers";
 
 const app = express();
 const port = 8000;
@@ -59,7 +58,7 @@ app.post("/api/events", async (req: Request, res: Response) => {
 
     res.send(events);
   } catch (e) {
-    res.status(e.status).send({
+    res.status(e.status || 500).send({
       error: e.error
     });
   }

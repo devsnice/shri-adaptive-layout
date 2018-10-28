@@ -1,14 +1,6 @@
 const EVENT_TYPES = ["info", "critical"];
 
-const pagination = ({
-  data,
-  offset,
-  limit
-}: {
-  data: Array<any>;
-  offset: number;
-  limit: number;
-}) => {
+const pagination = ({ data, offset, limit }: { data: any[]; offset: number; limit: number }) => {
   return data.slice(offset, offset + limit);
 };
 
@@ -16,13 +8,13 @@ const pagination = ({
  *  Validate type
  *  it's valid if every type included in EVENT_TYPES
  */
-function getTypeFilters(type: string): Array<string> {
+function getTypeFilters(type: string): string[] {
   let filtersType = EVENT_TYPES;
 
   if (type) {
     const types = type.split(":");
 
-    const isValidTypes = types.every(type => EVENT_TYPES.includes(type));
+    const isValidTypes = types.every(currentType => EVENT_TYPES.includes(currentType));
 
     if (!isValidTypes) {
       throw {

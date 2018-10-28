@@ -1,18 +1,15 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import Helpers from "../helpers";
 import * as Types from "../../types/index";
+import Helpers from "../helpers";
 
 const pathToEvents = path.join(__dirname, "../data/events.json");
 
 const DEFAULT_OFFSET = 0;
 const DEFAULT_LIMIT = 10;
 
-const filterEventsByType = (
-  events: Array<Types.Event>,
-  filterTypes: Array<string>
-): Array<Types.Event> =>
+const filterEventsByType = (events: Types.Event[], filterTypes: string[]): Types.Event[] =>
   !filterTypes ? events : events.filter(event => filterTypes.includes(event.type));
 
 const getEvents = ({
@@ -37,16 +34,17 @@ const getEvents = ({
           })
         );
       } else {
-        reject("Server error");
+        reject({
+          status: 500,
+          error: "Server error"
+        });
       }
     });
   });
 };
 
-const eventsApi = {
+export default {
   DEFAULT_OFFSET,
   DEFAULT_LIMIT,
   getEvents
 };
-
-export default eventsApi;
