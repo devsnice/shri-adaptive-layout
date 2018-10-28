@@ -4,7 +4,8 @@
     "trailing-comma": false,
     "arrow-parens": false,
     "ordered-imports": false,
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "no-angle-bracket-type-assertion": false
   },
   "jsRules": {}
 }

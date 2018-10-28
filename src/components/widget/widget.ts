@@ -12,7 +12,7 @@ const WIDGET_TYPES = {
   THERMAL: "THERMAL",
   PLAYER: "PLAYER",
   QUESTIONS: "QUESTIONS",
-  DEFAULT: "DEFAULT",
+  DEFAULT: "DEFAULT"
 };
 
 class Widget {
@@ -60,12 +60,12 @@ class Widget {
 
   private setHeaderData() {
     const titleElement: HTMLElement | null = this.widget.querySelector(
-      ".widget-header-about__title",
+      ".widget-header-about__title"
     );
     const typeElement: HTMLElement | null = this.widget.querySelector(".widget-header__type");
     const dateElement: HTMLElement | null = this.widget.querySelector(".widget-header__date");
     const iconUseElement: HTMLElement | null = this.widget.querySelector(
-      ".widget-header-about__icon > use",
+      ".widget-header-about__icon > use"
     );
     const iconElement: HTMLElement | null = this.widget.querySelector(".widget-header-about__icon");
 
@@ -91,14 +91,10 @@ class Widget {
   }
 
   private getDataTemplateType(): string {
-    const { data, icon } = this.event;
+    const { data = { type: "empty" }, icon } = this.event;
 
     if (icon === "cam") {
       return WIDGET_TYPES.CAMERA;
-    }
-
-    if ((data as Types.IWidgetDefaultData).type === "graph") {
-      return WIDGET_TYPES.STATS;
     }
 
     if ((data as Types.IWidgetThemalData).temperature) {
@@ -111,6 +107,10 @@ class Widget {
 
     if ((data as Types.IWidgetQuestionsData).buttons) {
       return WIDGET_TYPES.QUESTIONS;
+    }
+
+    if ((data as Types.IWidgetDefaultData).type === "graph") {
+      return WIDGET_TYPES.STATS;
     }
 
     return WIDGET_TYPES.DEFAULT;
@@ -140,7 +140,7 @@ class Widget {
          * TODO: Не понимаю, как здесь можно обойтись без assignment
          */
         const playerWidget = new PlayerWidget({
-          data: this.event.data as Types.IWidgetPlayerData,
+          data: this.event.data as Types.IWidgetPlayerData
         });
 
         dataContentBlock = playerWidget.render();
@@ -149,7 +149,7 @@ class Widget {
 
       case WIDGET_TYPES.QUESTIONS:
         const questionsWidget = new QuestionsWidget({
-          data: this.event.data as Types.IWidgetQuestionsData,
+          data: this.event.data as Types.IWidgetQuestionsData
         });
 
         dataContentBlock = questionsWidget.render();
@@ -158,7 +158,7 @@ class Widget {
 
       case WIDGET_TYPES.THERMAL:
         const thermalWidget = new ThemalWidget({
-          data: this.event.data as Types.IWidgetThemalData,
+          data: this.event.data as Types.IWidgetThemalData
         });
 
         dataContentBlock = thermalWidget.render();
@@ -169,7 +169,9 @@ class Widget {
     if (dataContentBlock) {
       const widgetContent: HTMLElement | null = this.widget.querySelector(".widget-content");
 
-      widgetContent && widgetContent.appendChild(dataContentBlock);
+      if (widgetContent) {
+        widgetContent.appendChild(dataContentBlock);
+      }
     }
   }
 }
