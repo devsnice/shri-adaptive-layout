@@ -1,25 +1,25 @@
-import { PlayerTemplate, Player } from "./player";
 import { Broadcast } from "../../types/index";
+import { Player, PlayerTemplate } from "./player";
 
 /**
  * Videocontrol represents controller over our feature,
  * it initializes broadcasts and interact with user's actions
  */
 class Videocontrol {
-  broadcasts: Array<Broadcast>;
-  element: HTMLElement;
-  elementShowAll: HTMLElement;
+  public broadcasts: Broadcast[];
+  public element: HTMLElement;
+  public elementShowAll: HTMLElement;
 
-  state: {
+  public state: {
     fullscreenId: number;
   };
 
   constructor({
     broadcasts,
     elementShowAll,
-    element
+    element,
   }: {
-    broadcasts: Array<Broadcast>;
+    broadcasts: Broadcast[];
     elementShowAll: HTMLElement;
     element: HTMLElement;
   }) {
@@ -28,7 +28,7 @@ class Videocontrol {
     this.elementShowAll = elementShowAll;
 
     this.state = {
-      fullscreenId: Infinity
+      fullscreenId: Infinity,
     };
 
     this.initPlayers();
@@ -37,7 +37,7 @@ class Videocontrol {
 
   private closeFullPlayer() {
     // play all players
-    this.broadcasts.forEach(broadcast => broadcast.player.play());
+    this.broadcasts.forEach((broadcast) => broadcast.player.play());
 
     this.broadcasts[this.state.fullscreenId].player.closeFullscreen();
 
@@ -47,8 +47,8 @@ class Videocontrol {
   private openFullPlayer(id: number) {
     // stop all players except a fullscreen
     this.broadcasts
-      .filter(broadcast => broadcast.id !== id)
-      .forEach(broadcast => broadcast.player.stop());
+      .filter((broadcast) => broadcast.id !== id)
+      .forEach((broadcast) => broadcast.player.stop());
 
     // open player in fullscreen
     this.broadcasts[id].player.openFullscreen();
@@ -75,8 +75,8 @@ class Videocontrol {
 
       const VideoPlayer = new Player({
         containerElement: this.element,
-        playerElement: (<Element>listVideoElement).querySelector(".vc-player"),
-        url: broadcast.url
+        playerElement: (listVideoElement as Element).querySelector(".vc-player"),
+        url: broadcast.url,
       });
 
       VideoPlayer.init()
@@ -84,11 +84,11 @@ class Videocontrol {
           VideoPlayer.play();
 
           // Init events
-          VideoPlayer.addEventListener("click", e => {
+          VideoPlayer.addEventListener("click", (e) => {
             this.openFullPlayer(index);
           });
 
-          VideoPlayer.addEventListener("touchend", e => {
+          VideoPlayer.addEventListener("touchend", (e) => {
             this.openFullPlayer(index);
           });
 
@@ -96,7 +96,7 @@ class Videocontrol {
           this.broadcasts[index].id = index;
           this.broadcasts[index].player = VideoPlayer;
         })
-        .catch(err => console.warn(err));
+        .catch((err) => console.warn(err));
     });
   }
 }

@@ -1,11 +1,11 @@
-import CanvasVideo from "./canvasVideo";
 import Analyse from "./audioAnalyse";
+import CanvasVideo from "./canvasVideo";
 
 /**
  * PlayerTemplate - generate video-player from <template> tag
  */
 export class PlayerTemplate {
-  template: HTMLTemplateElement;
+  public template: HTMLTemplateElement;
 
   constructor() {
     this.template = document.getElementById("template-player") as HTMLTemplateElement;
@@ -17,17 +17,19 @@ export class PlayerTemplate {
       .cloneNode(true);
 
     // player-{id}
-    const playerElement: HTMLElement | null = (<Element>element).querySelector(".vc-player");
+    const playerElement: HTMLElement | null = (element as Element).querySelector(".vc-player");
 
     playerElement && playerElement.setAttribute("id", id);
 
     // player-{id}-video
-    const videoElement: HTMLElement | null = (<Element>element).querySelector("video");
+    const videoElement: HTMLElement | null = (element as Element).querySelector("video");
 
-    videoElement && videoElement.setAttribute("id", `${id}-video`);
+    if (videoElement) {
+      videoElement.setAttribute("id", `${id}-video`);
+    }
 
     // player-{id}-webgl-video
-    const inputElement: HTMLElement | null = (<Element>element).querySelector("input");
+    const inputElement: HTMLElement | null = (element as Element).querySelector("input");
     inputElement && inputElement.setAttribute("id", `${id}-webgl-video`);
 
     return element;
@@ -39,7 +41,7 @@ export class PlayerTemplate {
  * it has special behavior for our application.
  */
 export class Player {
-  settings: {
+  public settings: {
     url: string;
     canvasInited: boolean;
     containerBounds: {
@@ -51,23 +53,23 @@ export class Player {
     isFullscreen: boolean;
   };
 
-  videoSettings: {
+  public videoSettings: {
     brightness: string;
     contrast: string;
     isFullscreen: boolean;
   };
 
-  containerElement: HTMLElement;
-  player: HTMLElement | null;
-  video: HTMLVideoElement | null;
-  brightnessRange: HTMLInputElement | null;
-  noiseLevelRange: HTMLInputElement | null;
-  contrastRange: HTMLInputElement | null;
+  public containerElement: HTMLElement;
+  public player: HTMLElement | null;
+  public video: HTMLVideoElement | null;
+  public brightnessRange: HTMLInputElement | null;
+  public noiseLevelRange: HTMLInputElement | null;
+  public contrastRange: HTMLInputElement | null;
 
-  canvasVideo: CanvasVideo;
+  public canvasVideo: CanvasVideo;
 
-  initPromise: Promise<HTMLVideoElement>;
-  analyser: any;
+  public initPromise: Promise<HTMLVideoElement>;
+  public analyser: any;
 
   constructor({
     url,
@@ -114,14 +116,6 @@ export class Player {
     this.initEvents();
   }
 
-  private setContainerBounds() {
-    if (!this.settings.containerBounds) {
-      this.settings.containerBounds = this.containerElement.getBoundingClientRect();
-    }
-
-    return this.settings.containerBounds;
-  }
-
   public init() {
     if (this.initPromise) {
       return this.initPromise;
@@ -156,7 +150,9 @@ export class Player {
   }
 
   public openFullscreen() {
-    if (this.settings.isFullscreen) return false;
+    if (this.settings.isFullscreen) {
+      return false;
+    }
 
     this.setContainerBounds();
 
@@ -195,7 +191,9 @@ export class Player {
   }
 
   public closeFullscreen() {
-    if (!this.settings.isFullscreen) return false;
+    if (!this.settings.isFullscreen) {
+      return false;
+    }
 
     this.video.muted = true;
 
@@ -212,6 +210,18 @@ export class Player {
     });
 
     this.settings.isFullscreen = false;
+  }
+
+  public addEventListener(event: string, callback: (e: Event) => void) {
+    this.player.addEventListener(event, callback);
+  }
+
+  private setContainerBounds() {
+    if (!this.settings.containerBounds) {
+      this.settings.containerBounds = this.containerElement.getBoundingClientRect();
+    }
+
+    return this.settings.containerBounds;
   }
 
   private playVideoOnCanvas() {
@@ -247,21 +257,17 @@ export class Player {
   }
 
   private initEvents() {
-    this.brightnessRange.addEventListener("change", e => {
-      this.changeBrightness((<HTMLInputElement>e.target).value);
+    this.brightnessRange.addEventListener("change", (e) => {
+      this.changeBrightness((e.target as HTMLInputElement).value);
     });
 
-    this.contrastRange.addEventListener("change", e => {
-      this.changeContrast((<HTMLInputElement>e.target).value);
+    this.contrastRange.addEventListener("change", (e) => {
+      this.changeContrast((e.target as HTMLInputElement).value);
     });
 
     this.analyser = new Analyse({
       video: this.video,
       noiseLevelRange: this.noiseLevelRange
     });
-  }
-
-  public addEventListener(event: string, callback: (e: Event) => void) {
-    this.player.addEventListener(event, callback);
   }
 }

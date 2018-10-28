@@ -4,18 +4,18 @@ const AudioContext = window.AudioContext || window.webkitAudioContext;
 const context = new AudioContext();
 
 class Analyse {
-  startShow: boolean;
-  bufferLength: number;
-  bands: Uint8Array;
+  public startShow: boolean;
+  public bufferLength: number;
+  public bands: Uint8Array;
 
-  node: any;
-  noiseLevelRange: HTMLInputElement;
-  analyser: any;
-  source: any;
+  public node: any;
+  public noiseLevelRange: HTMLInputElement;
+  public analyser: any;
+  public source: any;
 
   constructor({
     video,
-    noiseLevelRange
+    noiseLevelRange,
   }: {
     video: HTMLVideoElement;
     noiseLevelRange: HTMLInputElement;
@@ -51,6 +51,14 @@ class Analyse {
     });
   }
 
+  public show() {
+    requestAnimationFrame(() => {
+      this.noiseLevelRange.value = this.getAverageVolume(this.bands).toString();
+
+      this.show();
+    });
+  }
+
   private getAverageVolume(array: Uint8Array): number {
     let values = 0;
 
@@ -62,14 +70,6 @@ class Analyse {
 
     // calculate in 100% scale, 1% is 2.56
     return average === 0 ? 0 : average / 2.56;
-  }
-
-  public show() {
-    requestAnimationFrame(() => {
-      this.noiseLevelRange.value = this.getAverageVolume(this.bands).toString();
-
-      this.show();
-    });
   }
 }
 

@@ -1,8 +1,8 @@
-import StatsWidget from "./stats.widget";
 import CameraWidget from "./camera.widget";
-import QuestionsWidget from "./questions.widget";
-import ThemalWidget from "./themal.widget";
 import PlayerWidget from "./player.widget";
+import QuestionsWidget from "./questions.widget";
+import StatsWidget from "./stats.widget";
+import ThemalWidget from "./themal.widget";
 
 import * as Types from "../../types";
 
@@ -12,14 +12,14 @@ const WIDGET_TYPES = {
   THERMAL: "THERMAL",
   PLAYER: "PLAYER",
   QUESTIONS: "QUESTIONS",
-  DEFAULT: "DEFAULT"
+  DEFAULT: "DEFAULT",
 };
 
 class Widget {
-  event: Types.Event;
-  container: HTMLElement;
-  template: HTMLTemplateElement;
-  widget: HTMLElement;
+  public event: Types.Event;
+  public container: HTMLElement;
+  public template: HTMLTemplateElement;
+  public widget: HTMLElement;
 
   constructor({ event, container }: { event: Types.Event; container: HTMLElement }) {
     this.event = event;
@@ -30,6 +30,17 @@ class Widget {
     this.widget = this.template.content.querySelector(".widget").cloneNode(true);
 
     this.render();
+  }
+
+  public render() {
+    this.widget.classList.add(`widget_size-${this.event.size}`);
+    this.widget.classList.add(`widget_type-${this.event.type}`);
+
+    this.setHeaderData();
+    this.setDescription();
+    this.renderDataTemplate();
+
+    this.container.appendChild(this.widget);
   }
 
   private setDescription() {
@@ -49,12 +60,12 @@ class Widget {
 
   private setHeaderData() {
     const titleElement: HTMLElement | null = this.widget.querySelector(
-      ".widget-header-about__title"
+      ".widget-header-about__title",
     );
     const typeElement: HTMLElement | null = this.widget.querySelector(".widget-header__type");
     const dateElement: HTMLElement | null = this.widget.querySelector(".widget-header__date");
     const iconUseElement: HTMLElement | null = this.widget.querySelector(
-      ".widget-header-about__icon > use"
+      ".widget-header-about__icon > use",
     );
     const iconElement: HTMLElement | null = this.widget.querySelector(".widget-header-about__icon");
 
@@ -86,19 +97,19 @@ class Widget {
       return WIDGET_TYPES.CAMERA;
     }
 
-    if ((<Types.IWidgetDefaultData>data).type === "graph") {
+    if ((data as Types.IWidgetDefaultData).type === "graph") {
       return WIDGET_TYPES.STATS;
     }
 
-    if ((<Types.IWidgetThemalData>data).temperature) {
+    if ((data as Types.IWidgetThemalData).temperature) {
       return WIDGET_TYPES.THERMAL;
     }
 
-    if ((<Types.IWidgetPlayerData>data).albumcover) {
+    if ((data as Types.IWidgetPlayerData).albumcover) {
       return WIDGET_TYPES.PLAYER;
     }
 
-    if ((<Types.IWidgetQuestionsData>data).buttons) {
+    if ((data as Types.IWidgetQuestionsData).buttons) {
       return WIDGET_TYPES.QUESTIONS;
     }
 
@@ -129,7 +140,7 @@ class Widget {
          * TODO: Не понимаю, как здесь можно обойтись без assignment
          */
         const playerWidget = new PlayerWidget({
-          data: this.event.data as Types.IWidgetPlayerData
+          data: this.event.data as Types.IWidgetPlayerData,
         });
 
         dataContentBlock = playerWidget.render();
@@ -138,7 +149,7 @@ class Widget {
 
       case WIDGET_TYPES.QUESTIONS:
         const questionsWidget = new QuestionsWidget({
-          data: this.event.data as Types.IWidgetQuestionsData
+          data: this.event.data as Types.IWidgetQuestionsData,
         });
 
         dataContentBlock = questionsWidget.render();
@@ -147,7 +158,7 @@ class Widget {
 
       case WIDGET_TYPES.THERMAL:
         const thermalWidget = new ThemalWidget({
-          data: this.event.data as Types.IWidgetThemalData
+          data: this.event.data as Types.IWidgetThemalData,
         });
 
         dataContentBlock = thermalWidget.render();
@@ -160,17 +171,6 @@ class Widget {
 
       widgetContent && widgetContent.appendChild(dataContentBlock);
     }
-  }
-
-  public render() {
-    this.widget.classList.add(`widget_size-${this.event.size}`);
-    this.widget.classList.add(`widget_type-${this.event.type}`);
-
-    this.setHeaderData();
-    this.setDescription();
-    this.renderDataTemplate();
-
-    this.container.appendChild(this.widget);
   }
 }
 

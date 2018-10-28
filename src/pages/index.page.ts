@@ -7,13 +7,13 @@ class IndexPage {
     this.init();
   }
 
-  private renderDashboardWidgets(events: Array<Types.Event>) {
+  private renderDashboardWidgets(events: Types.Event[]) {
     const dashboardWidgetsList = document.getElementById("dashboard-list");
 
-    events.forEach(event => {
+    events.forEach((event) => {
       new Widget({
         event,
-        container: dashboardWidgetsList
+        container: dashboardWidgetsList,
       });
     });
   }
@@ -24,19 +24,19 @@ class IndexPage {
       body: JSON.stringify({
         type: "critical:info",
         offset: 0,
-        limit: 20
+        limit: 20,
       }),
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => response.json())
-      .then(result => result)
-      .catch(err => console.error(err));
+      .then((response) => response.json())
+      .then((result) => result)
+      .catch((err) => console.error(err));
   }
 
   private init() {
-    this.loadEvents().then(events => {
+    this.loadEvents().then((events) => {
       this.renderDashboardWidgets(events);
     });
   }

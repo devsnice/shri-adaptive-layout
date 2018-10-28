@@ -4,9 +4,9 @@ import IndexPage from "./index.page";
 import VideocontrolPage from "./videocontrol.page";
 
 class InitApplication {
-  page: any;
-  headerNavigation: any;
-  currentPage: string;
+  public page: any;
+  public headerNavigation: any;
+  public currentPage: string;
 
   constructor() {
     this.currentPage = window.location.pathname;
@@ -28,7 +28,7 @@ class InitApplication {
 
   private init() {
     this.headerNavigation = new HeaderNavigation({
-      selector: "#header-menu"
+      selector: "#header-menu",
     });
 
     this.routing();

@@ -1,16 +1,16 @@
 const domUtils = {
   doesNodeContainClick: (node: HTMLElement, e: Event): boolean => {
-    if (!node || !e) return false;
+    if (!node || !e) { return false; }
 
     // @ts-ignore
     return node.contains(e.target);
-  }
+  },
 };
 
 export default class Navigation {
-  menuOpened: boolean;
-  headerMenu: HTMLElement | null;
-  headerBurgerMenu: HTMLElement | null;
+  public menuOpened: boolean;
+  public headerMenu: HTMLElement | null;
+  public headerBurgerMenu: HTMLElement | null;
 
   constructor({ selector }: { selector: string }) {
     this.menuOpened = false;
@@ -20,6 +20,22 @@ export default class Navigation {
     if (this.isMobile()) {
       this.initNavigation();
     }
+  }
+
+  public openNavigation() {
+    if (this.headerMenu) {
+      this.headerMenu.classList.add("header-menu-list_state-mobile-opened");
+    }
+
+    this.menuOpened = true;
+  }
+
+  public closeNavigation() {
+    if (this.headerMenu) {
+      this.headerMenu.classList.remove("header-menu-list_state-mobile-opened");
+    }
+
+    this.menuOpened = false;
   }
 
   private isMobile() {
@@ -42,21 +58,5 @@ export default class Navigation {
         }
       });
     }
-  }
-
-  public openNavigation() {
-    if (this.headerMenu) {
-      this.headerMenu.classList.add("header-menu-list_state-mobile-opened");
-    }
-
-    this.menuOpened = true;
-  }
-
-  public closeNavigation() {
-    if (this.headerMenu) {
-      this.headerMenu.classList.remove("header-menu-list_state-mobile-opened");
-    }
-
-    this.menuOpened = false;
   }
 }

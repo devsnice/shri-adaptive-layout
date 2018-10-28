@@ -1,5 +1,5 @@
 class ApplicationLayout {
-  layout: HTMLElement;
+  public layout: HTMLElement;
 
   constructor(selector: string) {
     this.layout = document.querySelector(selector);

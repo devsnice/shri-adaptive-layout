@@ -1,10 +1,10 @@
 class CanvasVideo {
-  video: HTMLVideoElement;
-  videoPlayer: HTMLElement;
-  stopVideo: boolean;
+  public video: HTMLVideoElement;
+  public videoPlayer: HTMLElement;
+  public stopVideo: boolean;
 
-  canvas: HTMLCanvasElement | null;
-  canvasHelper: HTMLCanvasElement | null;
+  public canvas: HTMLCanvasElement | null;
+  public canvasHelper: HTMLCanvasElement | null;
 
   constructor({ video, videoPlayer }: { video: HTMLVideoElement; videoPlayer: HTMLElement }) {
     this.video = video;
@@ -13,6 +13,62 @@ class CanvasVideo {
 
     this.canvas = null;
     this.canvasHelper = null;
+  }
+
+  public play({
+    canvasInited,
+    brightness,
+    contrast,
+    size: { width, height },
+  }: {
+    canvasInited: boolean;
+    brightness: string;
+    contrast: string;
+    size: { width: number; height: number };
+  }) {
+    if (!canvasInited) {
+      this.canvas = document.createElement("canvas");
+
+      this.canvas.style.width = `${width}`;
+      this.canvas.style.height = `${height}`;
+
+      this.canvas.width = width;
+      this.canvas.height = height;
+
+      this.videoPlayer.appendChild(this.canvas);
+    } else {
+      this.stopVideo = true;
+    }
+
+    if (this.canvas) {
+      const context = this.canvas.getContext("2d");
+
+      if (!context) { return; }
+
+      const draw = () => {
+        requestAnimationFrame(() => {
+          const filteredImage = this.filter({
+            video: this.video,
+            width,
+            height,
+            contrast,
+            brightness,
+          });
+
+          context.putImageData(filteredImage, 0, 0);
+
+          if (this.stopVideo || this.video.paused || this.video.ended) {
+            this.stopVideo = false;
+
+            return false;
+          } else {
+            draw();
+          }
+        });
+      };
+
+      draw();
+    }
   }
 
   private applyBrightness(data: Uint8ClampedArray, brightness: string) {
@@ -48,7 +104,7 @@ class CanvasVideo {
     width,
     height,
     contrast,
-    brightness
+    brightness,
   }: {
     video: HTMLVideoElement;
     width: number;
@@ -70,68 +126,12 @@ class CanvasVideo {
 
       const idata = contextHelper.getImageData(0, 0, width, height);
 
-      var data = idata.data;
+      const data = idata.data;
 
       this.applyBrightness(data, brightness);
       this.applyContrast(data, contrast);
 
       return idata;
-    }
-  }
-
-  public play({
-    canvasInited,
-    brightness,
-    contrast,
-    size: { width, height }
-  }: {
-    canvasInited: boolean;
-    brightness: string;
-    contrast: string;
-    size: { width: number; height: number };
-  }) {
-    if (!canvasInited) {
-      this.canvas = document.createElement("canvas");
-
-      this.canvas.style.width = `${width}`;
-      this.canvas.style.height = `${height}`;
-
-      this.canvas.width = width;
-      this.canvas.height = height;
-
-      this.videoPlayer.appendChild(this.canvas);
-    } else {
-      this.stopVideo = true;
-    }
-
-    if (this.canvas) {
-      const context = this.canvas.getContext("2d");
-
-      if (!context) return;
-
-      const draw = () => {
-        requestAnimationFrame(() => {
-          const filteredImage = this.filter({
-            video: this.video,
-            width,
-            height,
-            contrast,
-            brightness
-          });
-
-          context.putImageData(filteredImage, 0, 0);
-
-          if (this.stopVideo || this.video.paused || this.video.ended) {
-            this.stopVideo = false;
-
-            return false;
-          } else {
-            draw();
-          }
-        });
-      };
-
-      draw();
     }
   }
 }
