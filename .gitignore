@@ -1,5 +1,4 @@
 node_modules
 .DS_Store
 docs/.DS_Store
-docs
 server/dist

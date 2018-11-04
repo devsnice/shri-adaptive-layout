@@ -77,7 +77,7 @@ class IndexPage {
         .catch(err => console.error(err));
     }
 
-    return fetch("events.json")
+    return fetch("data/events.json")
       .then(response => response.json())
       .then(response => response.events)
       .catch(err => console.error(err));
