@@ -1,4 +1,4 @@
-# Shri adaptive layout 
+# Shri adaptive layout
 
 ## Решение
 
@@ -48,5 +48,5 @@
 
 ```
 npm install
-npm run dev
+npm start
 ```

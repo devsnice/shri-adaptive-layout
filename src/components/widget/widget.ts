@@ -4,6 +4,11 @@ import QuestionsWidget from "./questions.widget";
 import StatsWidget from "./stats.widget";
 import ThemalWidget from "./themal.widget";
 
+import Dispatcher from "../../store";
+import { markEventAsRead } from "../../store/events/actionCreators";
+
+import UserReadEventsService from "../../services/userReadEventsService";
+
 import * as Types from "../../types";
 
 const WIDGET_TYPES = {
@@ -15,6 +20,7 @@ const WIDGET_TYPES = {
   DEFAULT: "DEFAULT"
 };
 
+// TODO: add method destoy, for removing events, when widget deleted from dom
 class Widget {
   public event: Types.Event;
   public container: HTMLElement;
@@ -39,8 +45,15 @@ class Widget {
     this.setHeaderData();
     this.setDescription();
     this.renderDataTemplate();
+    this.setEventListeners();
 
     this.container.appendChild(this.widget);
+  }
+
+  public markWidgetAsRead(): void {
+    UserReadEventsService.markEventAsRead(this.event.id);
+
+    Dispatcher.dispatch(markEventAsRead(this.event.id));
   }
 
   private setDescription() {
@@ -87,6 +100,16 @@ class Widget {
 
     if (iconElement) {
       iconElement.classList.add(`icon_${this.event.icon}`);
+    }
+  }
+
+  private setEventListeners() {
+    const closeElement: HTMLElement | null = this.widget.querySelector(".widget__control_close");
+
+    if (closeElement) {
+      closeElement.addEventListener("click", () => {
+        this.markWidgetAsRead();
+      });
     }
   }
 

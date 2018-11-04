@@ -30,6 +30,7 @@ export interface IWidgetDefaultData {
 }
 
 export interface Event {
+  id: string;
   type: string;
   title: string;
   source: string;
@@ -38,6 +39,7 @@ export interface Event {
   icon: string;
   size: string;
   data?: IWidgetDefaultData | IWidgetPlayerData | IWidgetQuestionsData | IWidgetThemalData;
+  userRead?: boolean;
 }
 
 export interface Broadcast {
