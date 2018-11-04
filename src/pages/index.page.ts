@@ -1,5 +1,9 @@
 import Widget from "../components/widget/widget";
 
+import EventsStore from "../store/events/events.store";
+import { setEventsData } from "../store/events/actionCreators";
+import Dispatcher from "../store";
+
 import * as Types from "../types";
 
 class IndexPage {
@@ -7,13 +11,31 @@ class IndexPage {
     this.init();
   }
 
-  private renderDashboardWidgets(events: Types.Event[]) {
+  private init() {
+    EventsStore.subscribe(this.renderDashboardWidgets);
+
+    this.loadEvents().then(events => {
+      Dispatcher.dispatch(setEventsData(events));
+    });
+  }
+
+  private renderDashboardWidgets() {
+    const eventsStoreData = EventsStore.getData();
+    const events: Types.Event[] = eventsStoreData.events;
+
     const dashboardWidgetsList = document.getElementById("dashboard-list");
 
-    events.forEach((event) => {
-      new Widget({
+    // Clear dashboard
+    dashboardWidgetsList.innerHTML = "";
+
+    events.forEach(event => {
+      if (event.userRead) {
+        return;
+      }
+
+      const widget = new Widget({
         event,
-        container: dashboardWidgetsList,
+        container: dashboardWidgetsList
       });
     });
   }
@@ -24,21 +46,14 @@ class IndexPage {
       body: JSON.stringify({
         type: "critical:info",
         offset: 0,
-        limit: 20,
+        limit: 20
       }),
       headers: {
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     })
-      .then((response) => response.json())
-      .then((result) => result)
-      .catch((err) => console.error(err));
-  }
-
-  private init() {
-    this.loadEvents().then((events) => {
-      this.renderDashboardWidgets(events);
-    });
+      .then(response => response.json())
+      .catch(err => console.error(err));
   }
 }
 

@@ -5,7 +5,7 @@
   "author": "Borisov Semen <devsnice@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "gulp --watch",
+    "start": "gulp --watch",
     "server": "ts-node server/src/server.ts",
     "tslint": "npx tslint --project tsconfig.json",
     "cypress:open": "cypress open"
@@ -37,6 +37,7 @@
     "gulp-sass": "^4.0.1",
     "gulp-svg-symbols": "^3.1.1",
     "gulp-svgmin": "^1.2.4",
+    "shriflux": "^1.1.0",
     "ts-loader": "^5.2.2",
     "ts-node": "^7.0.1"
   }
