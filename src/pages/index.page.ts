@@ -37,23 +37,25 @@ class IndexPage {
 
   private renderDashboardWidgets() {
     const eventsStoreData = EventsStore.getData();
-    const events: Types.Event[] = eventsStoreData.events;
+    const events: Types.Event[] = eventsStoreData.events.filter(
+      (event: Types.Event) => !event.userRead
+    );
 
     const dashboardWidgetsList = document.getElementById("dashboard-list");
 
     // Clear dashboard
     dashboardWidgetsList.innerHTML = "";
 
-    events.forEach(event => {
-      if (event.userRead) {
-        return;
-      }
-
-      const widget = new Widget({
-        event,
-        container: dashboardWidgetsList
+    if (!events.length) {
+      dashboardWidgetsList.innerHTML = "<h2>У вас нет новых событий</h2>";
+    } else {
+      events.forEach(event => {
+        const widget = new Widget({
+          event,
+          container: dashboardWidgetsList
+        });
       });
-    });
+    }
   }
 
   private loadEvents() {
