@@ -4,6 +4,8 @@ import EventsStore from "../store/events/events.store";
 import { setEventsData } from "../store/events/actionCreators";
 import Dispatcher from "../store";
 
+import UserReadEventsService from "../services/userReadEventsService";
+
 import * as Types from "../types";
 
 class IndexPage {
@@ -14,8 +16,22 @@ class IndexPage {
   private init() {
     EventsStore.subscribe(this.renderDashboardWidgets);
 
-    this.loadEvents().then(events => {
-      Dispatcher.dispatch(setEventsData(events));
+    this.initEvents();
+  }
+
+  private initEvents() {
+    const userReadEvents: string[] = UserReadEventsService.getReadEvents();
+
+    this.loadEvents().then((events: Types.Event[]) => {
+      let filteredEvents: Types.Event[] = [];
+
+      if (!userReadEvents) {
+        filteredEvents = events;
+      } else {
+        filteredEvents = events.filter((event: Types.Event) => !userReadEvents.includes(event.id));
+      }
+
+      Dispatcher.dispatch(setEventsData(filteredEvents));
     });
   }
 

@@ -7,6 +7,8 @@ import ThemalWidget from "./themal.widget";
 import Dispatcher from "../../store";
 import { markEventAsRead } from "../../store/events/actionCreators";
 
+import UserReadEventsService from "../../services/userReadEventsService";
+
 import * as Types from "../../types";
 
 const WIDGET_TYPES = {
@@ -49,6 +51,8 @@ class Widget {
   }
 
   public markWidgetAsRead(): void {
+    UserReadEventsService.markEventAsRead(this.event.id);
+
     Dispatcher.dispatch(markEventAsRead(this.event.id));
   }
 
