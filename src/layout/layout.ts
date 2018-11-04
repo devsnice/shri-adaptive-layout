@@ -1,14 +1,16 @@
 class ApplicationLayout {
-  constructor(selector) {
+  public layout: HTMLElement;
+
+  constructor(selector: string) {
     this.layout = document.querySelector(selector);
   }
 
-  block() {
+  public block() {
     this.layout.classList.add("application_state-frozen");
     this.layout.classList.add("application_state-blured");
   }
 
-  unblock() {
+  public unblock() {
     this.layout.classList.remove("application_state-frozen");
     this.layout.classList.remove("application_state-blured");
   }

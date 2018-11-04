@@ -1,9 +1,25 @@
+// @ts-ignore
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 
 const context = new AudioContext();
 
 class Analyse {
-  constructor({ video, noiseLevelRange }) {
+  public startShow: boolean;
+  public bufferLength: number;
+  public bands: Uint8Array;
+
+  public node: any;
+  public noiseLevelRange: HTMLInputElement;
+  public analyser: any;
+  public source: any;
+
+  constructor({
+    video,
+    noiseLevelRange,
+  }: {
+    video: HTMLVideoElement;
+    noiseLevelRange: HTMLInputElement;
+  }) {
     this.node = context.createScriptProcessor(2048, 1, 1);
     this.noiseLevelRange = noiseLevelRange;
 
@@ -23,7 +39,7 @@ class Analyse {
         this.node.connect(context.destination);
         this.source.connect(context.destination);
 
-        this.node.onaudioprocess = e => {
+        this.node.onaudioprocess = (e: EventTarget) => {
           this.analyser.getByteFrequencyData(this.bands); // copy current data to this.bands
 
           if (!this.startShow) {
@@ -35,7 +51,15 @@ class Analyse {
     });
   }
 
-  getAverageVolume(array) {
+  public show() {
+    requestAnimationFrame(() => {
+      this.noiseLevelRange.value = this.getAverageVolume(this.bands).toString();
+
+      this.show();
+    });
+  }
+
+  private getAverageVolume(array: Uint8Array): number {
     let values = 0;
 
     for (let i = 0; i < array.length; i++) {
@@ -46,14 +70,6 @@ class Analyse {
 
     // calculate in 100% scale, 1% is 2.56
     return average === 0 ? 0 : average / 2.56;
-  }
-
-  show() {
-    requestAnimationFrame(() => {
-      this.noiseLevelRange.value = this.getAverageVolume(this.bands);
-
-      this.show();
-    });
   }
 }
 

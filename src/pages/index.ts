@@ -1,17 +1,20 @@
-import layout from "../layout/layout";
 import HeaderNavigation from "../components/header/header";
 
 import IndexPage from "./index.page";
 import VideocontrolPage from "./videocontrol.page";
 
 class InitApplication {
+  public page: any;
+  public headerNavigation: any;
+  public currentPage: string;
+
   constructor() {
     this.currentPage = window.location.pathname;
 
     this.init();
   }
 
-  routing() {
+  private routing() {
     switch (this.currentPage) {
       case "/":
         this.page = new IndexPage();
@@ -23,10 +26,9 @@ class InitApplication {
     }
   }
 
-  init() {
+  private init() {
     this.headerNavigation = new HeaderNavigation({
       selector: "#header-menu",
-      layout
     });
 
     this.routing();
