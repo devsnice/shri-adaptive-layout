@@ -17,10 +17,12 @@ class InitApplication {
   private routing() {
     switch (this.currentPage) {
       case "/":
+      case "/shri-adaptive-layout/":
+      case "/shri-adaptive-layout/index.html":
         this.page = new IndexPage();
         break;
 
-      case "/videocontrol.html":
+      case "/shri-adaptive-layout/videocontrol.html":
         this.page = new VideocontrolPage();
         break;
     }
@@ -28,7 +30,7 @@ class InitApplication {
 
   private init() {
     this.headerNavigation = new HeaderNavigation({
-      selector: "#header-menu",
+      selector: "#header-menu"
     });
 
     this.routing();
