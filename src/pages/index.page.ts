@@ -58,19 +58,28 @@ class IndexPage {
     }
   }
 
-  private loadEvents() {
-    return fetch("http://localhost:8000/api/events", {
-      method: "POST",
-      body: JSON.stringify({
-        type: "critical:info",
-        offset: 0,
-        limit: 20
-      }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
+  private loadEvents(): Promise<Types.Event[]> {
+    // server works only on localmachine
+    // run npm start server for it
+    if (location.hostname === "localhost") {
+      return fetch("http://localhost:8000/api/events", {
+        method: "POST",
+        body: JSON.stringify({
+          type: "critical:info",
+          offset: 0,
+          limit: 20
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+        .then(response => response.json())
+        .catch(err => console.error(err));
+    }
+
+    return fetch("events.json")
       .then(response => response.json())
+      .then(response => response.events)
       .catch(err => console.error(err));
   }
 }
