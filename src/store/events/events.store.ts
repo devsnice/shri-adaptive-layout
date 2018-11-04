@@ -31,8 +31,10 @@ export const EventsEffects = (action: Types.IAction) => {
       });
       break;
     case EventsActions.MARK_EVENT_AS_READ:
+      const data = EventsStore.getData();
+
       EventsStore.updateData({
-        events: payload.events.map(
+        events: data.events.map(
           (event: AppModelTypes.Event) =>
             event.id === payload.id ? { ...event, userRead: true } : event
         )
