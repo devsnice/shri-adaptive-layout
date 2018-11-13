@@ -136,8 +136,8 @@ export class Player {
         translateY(0px)
     `;
 
-    this.player.style.width = playerBounds.width + "px";
-    this.player.style.height = playerBounds.height + "px";
+    this.player.style.width = `${playerBounds.width}px`;
+    this.player.style.height = `${playerBounds.height}px`;
     this.player.style.transitionProperty = "";
     this.player.style.transitionDuration = "";
     this.player.style.zIndex = "2";
@@ -152,8 +152,8 @@ export class Player {
         translateY(-${playerBounds.top - containerBounds.top}px)
       `;
 
-      this.player.style.width = containerBounds.width + "px";
-      this.player.style.height = containerBounds.height + "px";
+      this.player.style.width = `${containerBounds.width}px`;
+      this.player.style.height = `${containerBounds.height}px`;
     });
 
     this.settings.isFullscreen = true;
@@ -233,6 +233,12 @@ export class Player {
     this.contrastRange.addEventListener("change", e => {
       this.changeContrast((e.target as HTMLInputElement).value);
     });
+
+    this.player
+      .querySelector(".vc-player__controls")
+      .addEventListener("click", e => {
+        e.stopPropagation();
+      });
 
     this.analyser = new Analyse({
       video: this.video,
