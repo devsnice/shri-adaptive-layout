@@ -69,6 +69,7 @@ class Videocontrol {
 
   private initPlayers() {
     this.broadcasts.forEach((broadcast, index) => {
+      // TODO: to function
       const VideoTemplate: PlayerTemplate = new PlayerTemplate();
       const listVideoElement: Node = VideoTemplate.render(
         `player-${index + 1}`
@@ -76,11 +77,17 @@ class Videocontrol {
 
       this.element.appendChild(listVideoElement);
 
+      const playerElement: HTMLElement | null = (listVideoElement as Element).querySelector(
+        ".vc-player"
+      );
+
+      if (!playerElement) {
+        return;
+      }
+
       const VideoPlayer = new Player({
         containerElement: this.element,
-        playerElement: (listVideoElement as Element).querySelector(
-          ".vc-player"
-        ),
+        playerElement,
         url: broadcast.url
       });
 

@@ -25,7 +25,7 @@ export class Player {
   };
 
   public containerElement: HTMLElement;
-  public player: HTMLElement | null;
+  public player: HTMLElement;
   public video: HTMLVideoElement | null;
   public brightnessRange: HTMLInputElement | null;
   public noiseLevelRange: HTMLInputElement | null;
