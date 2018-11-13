@@ -38,4 +38,4 @@ class InitApplication {
   }
 }
 
-new InitApplication();
+const App = new InitApplication();
