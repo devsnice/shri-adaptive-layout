@@ -17,6 +17,7 @@ class InitApplication {
   private routing() {
     switch (this.currentPage) {
       case "/":
+      case "/index.html":
       case "/shri-adaptive-layout/":
       case "/shri-adaptive-layout/index.html":
         this.page = new IndexPage();
