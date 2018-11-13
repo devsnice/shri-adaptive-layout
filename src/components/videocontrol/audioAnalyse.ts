@@ -15,7 +15,7 @@ class Analyse {
 
   constructor({
     video,
-    noiseLevelRange,
+    noiseLevelRange
   }: {
     video: HTMLVideoElement;
     noiseLevelRange: HTMLInputElement;
@@ -69,7 +69,7 @@ class Analyse {
     const average = values / array.length;
 
     // calculate in 100% scale, 1% is 2.56
-    return average === 0 ? 0 : average / 2.56;
+    return average === 0 ? 0 : average / 0.39;
   }
 }
 
