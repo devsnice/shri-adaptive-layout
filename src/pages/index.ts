@@ -22,6 +22,7 @@ class InitApplication {
         this.page = new IndexPage();
         break;
 
+      case "/videocontrol.html":
       case "/shri-adaptive-layout/videocontrol.html":
         this.page = new VideocontrolPage();
         break;

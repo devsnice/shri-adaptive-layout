@@ -2,41 +2,6 @@ import Analyse from "./audioAnalyse";
 import CanvasVideo from "./canvasVideo";
 
 /**
- * PlayerTemplate - generate video-player from <template> tag
- */
-export class PlayerTemplate {
-  public template: HTMLTemplateElement;
-
-  constructor() {
-    this.template = document.getElementById("template-player") as HTMLTemplateElement;
-  }
-
-  public render(id: string): Node {
-    const element: Node = this.template.content
-      .querySelector(".videocontrol-list__item")
-      .cloneNode(true);
-
-    // player-{id}
-    const playerElement: HTMLElement | null = (element as Element).querySelector(".vc-player");
-
-    playerElement && playerElement.setAttribute("id", id);
-
-    // player-{id}-video
-    const videoElement: HTMLElement | null = (element as Element).querySelector("video");
-
-    if (videoElement) {
-      videoElement.setAttribute("id", `${id}-video`);
-    }
-
-    // player-{id}-webgl-video
-    const inputElement: HTMLElement | null = (element as Element).querySelector("input");
-    inputElement && inputElement.setAttribute("id", `${id}-webgl-video`);
-
-    return element;
-  }
-}
-
-/**
  * Player is a wrapper around html5 video element and HLS standart,
  * it has special behavior for our application.
  */
@@ -101,8 +66,12 @@ export class Player {
     this.containerElement = containerElement;
     this.player = playerElement;
     this.video = playerElement.querySelector("video");
-    this.brightnessRange = playerElement.querySelector(".vc-player__brightness");
-    this.noiseLevelRange = playerElement.querySelector(".vc-player__noise-level");
+    this.brightnessRange = playerElement.querySelector(
+      ".vc-player__brightness"
+    );
+    this.noiseLevelRange = playerElement.querySelector(
+      ".vc-player__noise-level"
+    );
     this.contrastRange = playerElement.querySelector(".vc-player__contrast");
 
     this.canvasVideo = new CanvasVideo({
@@ -217,7 +186,7 @@ export class Player {
   }
 
   private setContainerBounds() {
-    if (!this.settings.containerBounds) {
+    if (!this.settings.containerBounds.width) {
       this.settings.containerBounds = this.containerElement.getBoundingClientRect();
     }
 
@@ -257,11 +226,11 @@ export class Player {
   }
 
   private initEvents() {
-    this.brightnessRange.addEventListener("change", (e) => {
+    this.brightnessRange.addEventListener("change", e => {
       this.changeBrightness((e.target as HTMLInputElement).value);
     });
 
-    this.contrastRange.addEventListener("change", (e) => {
+    this.contrastRange.addEventListener("change", e => {
       this.changeContrast((e.target as HTMLInputElement).value);
     });
 
