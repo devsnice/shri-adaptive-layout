@@ -3,6 +3,8 @@ const AudioContext = window.AudioContext || window.webkitAudioContext;
 
 const context = new AudioContext();
 
+const NOISE_PER_PERCENT = 100 / 256;
+
 class Analyse {
   public startShow: boolean;
   public bufferLength: number;
@@ -68,8 +70,7 @@ class Analyse {
 
     const average = values / array.length;
 
-    // calculate in 100% scale, 1% is 2.56
-    return average === 0 ? 0 : average / 0.39;
+    return average === 0 ? 0 : average / NOISE_PER_PERCENT;
   }
 }
 
