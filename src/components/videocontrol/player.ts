@@ -1,5 +1,4 @@
 import Analyse from "./audioAnalyse";
-import CanvasVideo from "./canvasVideo";
 
 /**
  * Player is a wrapper around html5 video element and HLS standart,
@@ -8,7 +7,6 @@ import CanvasVideo from "./canvasVideo";
 export class Player {
   public settings: {
     url: string;
-    canvasInited: boolean;
     containerBounds: {
       left: number;
       top: number;
@@ -31,8 +29,6 @@ export class Player {
   public noiseLevelRange: HTMLInputElement | null;
   public contrastRange: HTMLInputElement | null;
 
-  public canvasVideo: CanvasVideo;
-
   public initPromise: Promise<HTMLVideoElement>;
   public analyser: any;
 
@@ -47,7 +43,6 @@ export class Player {
   }) {
     this.settings = {
       url,
-      canvasInited: false,
       containerBounds: {
         left: 0,
         top: 0,
@@ -58,8 +53,8 @@ export class Player {
     };
 
     this.videoSettings = {
-      brightness: "0",
-      contrast: "0",
+      brightness: "100",
+      contrast: "100",
       isFullscreen: false
     };
 
@@ -73,11 +68,6 @@ export class Player {
       ".vc-player__noise-level"
     );
     this.contrastRange = playerElement.querySelector(".vc-player__contrast");
-
-    this.canvasVideo = new CanvasVideo({
-      video: this.video,
-      videoPlayer: this.player
-    });
 
     this.initPromise = null;
 
@@ -136,8 +126,8 @@ export class Player {
         translateY(0px)
     `;
 
-    this.player.style.width = playerBounds.width + "px";
-    this.player.style.height = playerBounds.height + "px";
+    this.player.style.width = `${playerBounds.width}px`;
+    this.player.style.height = `${playerBounds.height}px`;
     this.player.style.transitionProperty = "";
     this.player.style.transitionDuration = "";
     this.player.style.zIndex = "2";
@@ -152,8 +142,8 @@ export class Player {
         translateY(-${playerBounds.top - containerBounds.top}px)
       `;
 
-      this.player.style.width = containerBounds.width + "px";
-      this.player.style.height = containerBounds.height + "px";
+      this.player.style.width = `${containerBounds.width}px`;
+      this.player.style.height = `${containerBounds.height}px`;
     });
 
     this.settings.isFullscreen = true;
@@ -193,36 +183,23 @@ export class Player {
     return this.settings.containerBounds;
   }
 
-  private playVideoOnCanvas() {
-    this.setContainerBounds();
-
-    if (!this.settings.canvasInited) {
-      this.video.classList.add("vc-player__video_state-hidden");
-    }
-
-    this.canvasVideo.play({
-      canvasInited: this.settings.canvasInited,
-      size: {
-        width: this.settings.containerBounds.width,
-        height: this.settings.containerBounds.height
-      },
-      brightness: this.videoSettings.brightness,
-      contrast: this.videoSettings.contrast
-    });
-
-    this.settings.canvasInited = true;
+  private applyFilters() {
+    this.video.style.filter = `
+      brightness(${+this.videoSettings.brightness / 100})
+      contrast(${+this.videoSettings.contrast / 100})
+    `;
   }
 
   private changeBrightness(value: string) {
     this.videoSettings.brightness = value;
 
-    this.playVideoOnCanvas();
+    this.applyFilters();
   }
 
   private changeContrast(value: string) {
     this.videoSettings.contrast = value;
 
-    this.playVideoOnCanvas();
+    this.applyFilters();
   }
 
   private initEvents() {
@@ -233,6 +210,12 @@ export class Player {
     this.contrastRange.addEventListener("change", e => {
       this.changeContrast((e.target as HTMLInputElement).value);
     });
+
+    this.player
+      .querySelector(".vc-player__controls")
+      .addEventListener("click", e => {
+        e.stopPropagation();
+      });
 
     this.analyser = new Analyse({
       video: this.video,

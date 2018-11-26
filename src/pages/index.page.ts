@@ -28,7 +28,9 @@ class IndexPage {
       if (!userReadEvents) {
         filteredEvents = events;
       } else {
-        filteredEvents = events.filter((event: Types.Event) => !userReadEvents.includes(event.id));
+        filteredEvents = events.filter(
+          (event: Types.Event) => !userReadEvents.includes(event.id)
+        );
       }
 
       Dispatcher.dispatch(setEventsData(filteredEvents));
@@ -61,21 +63,21 @@ class IndexPage {
   private loadEvents(): Promise<Types.Event[]> {
     // server works only on localmachine
     // run npm start server for it
-    if (location.hostname === "localhost") {
-      return fetch("http://localhost:8000/api/events", {
-        method: "POST",
-        body: JSON.stringify({
-          type: "critical:info",
-          offset: 0,
-          limit: 20
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-        .then(response => response.json())
-        .catch(err => console.error(err));
-    }
+    // if (location.hostname === "localhost") {
+    //   return fetch("http://localhost:8000/api/events", {
+    //     method: "POST",
+    //     body: JSON.stringify({
+    //       type: "critical:info",
+    //       offset: 0,
+    //       limit: 20
+    //     }),
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     }
+    //   })
+    //     .then(response => response.json())
+    //     .catch(err => console.error(err));
+    // }
 
     return fetch("data/events.json")
       .then(response => response.json())
